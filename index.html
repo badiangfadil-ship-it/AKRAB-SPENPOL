@@ -192,10 +192,10 @@
                 </div>
             </div>
 
-            <!-- Tab Jurnal Sekolah -->
+            <!-- Tab Jurnal Sekolah dengan 5 Kategori Penilaian -->
             <div id="tab-admin-school" class="tab-pane d-none fade-in">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3 class="fw-bold mb-0">Ceklis Jurnal & Program Sekolah</h3>
+                    <h3 class="fw-bold mb-0">Penilaian Jurnal & Program Sekolah</h3>
                 </div>
                 <div class="card p-4 mb-4 shadow-sm border-0">
                     <div class="row align-items-end g-3">
@@ -213,17 +213,20 @@
                     </div>
                 </div>
                 <div class="card p-4 shadow-sm border-0 d-none" id="school-student-area">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h6 class="fw-bold mb-0 text-primary" id="school-activity-title">Daftar Siswa</h6>
-                        <button class="btn btn-sm btn-outline-secondary" onclick="checkAllSchool()">Centang Semua Hadir</button>
+                    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                        <h6 class="fw-bold mb-0 text-primary" id="school-activity-title">Penilaian Siswa</h6>
+                        <div>
+                            <button class="btn btn-sm btn-outline-success me-2" onclick="setAllEvaluations('Melaksanakan Dengan Baik')">Set Semua: Baik</button>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="setAllEvaluations('Tidak Hadir')">Set Semua: Tidak Hadir</button>
+                        </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
-                            <thead class="table-light"><tr><th width="50" class="text-center">Hadir</th><th>Nama Lengkap</th><th>Username</th></tr></thead>
+                            <thead class="table-light"><tr><th>Nama Lengkap</th><th>Username</th><th width="320">Penilaian Pelaksanaan</th></tr></thead>
                             <tbody id="school-student-list"></tbody>
                         </table>
                     </div>
-                    <button class="btn btn-success mt-3" id="btn-save-school" onclick="saveSchoolChecklist()">Simpan Checklist Kehadiran</button>
+                    <button class="btn btn-success mt-3" id="btn-save-school" onclick="saveSchoolChecklist()">Simpan Penilaian Jurnal Sekolah</button>
                 </div>
             </div>
 
@@ -614,14 +617,22 @@
     
     document.getElementById('form-profile-siswa').onsubmit = function(e) {
         e.preventDefault(); const btn = document.getElementById('btn-save-profile'); btn.innerText = "Menyimpan..."; const fd = new FormData(this);
-        callAPI('updateProfileSisswa', { username: currentUser.username, kelas: fd.get('kelas'), citaCita: fd.get('cita_cita') })
+        callAPI('updateProfileSiswa', { username: currentUser.username, kelas: fd.get('kelas'), citaCita: fd.get('cita_cita') })
             .then(() => { currentUser.kelas = fd.get('kelas'); currentUser.cita_cita = fd.get('cita_cita'); btn.innerText = "Simpan Perubahan"; showToast("Profil tersimpan!"); })
             .catch(() => { btn.innerText = "Simpan Perubahan"; showToast("Gagal menyimpan", "danger"); });
     };
 
     function fetchAdminDashboard() { callAPI('getAdminStudents', { namaGuru: currentUser.nama }).then(res => { document.getElementById('admin-total-siswa').innerText = res.length; }); }
 
-    // Logika Jurnal Sekolah Berdasarkan Jadwal Hari
+    // 5 Kategori Penilaian Jurnal Sekolah
+    const evaluationOptions = [
+        "Tidak Hadir",
+        "Melaksanakan Kurang Baik",
+        "Melaksanakan Cukup Baik",
+        "Melaksanakan Dengan Baik",
+        "Melaksanakan Dengan Sangat Baik"
+    ];
+
     const jadwalSekolah = {
         1: ["Upacara Bendera (07.00-08.10)", "Pelita Iman (12.10-12.50)"],
         2: ["Pelita Iman (12.50-13.30)"],
@@ -650,7 +661,7 @@
             showToast("Tidak ada kegiatan di tanggal/hari ini.", "warning"); return;
         }
         document.getElementById('school-student-area').classList.remove('d-none');
-        document.getElementById('school-activity-title').innerText = "Ceklis Kehadiran: " + kegiatan;
+        document.getElementById('school-activity-title').innerText = "Penilaian: " + kegiatan;
         const tbody = document.getElementById('school-student-list');
         tbody.innerHTML = `<tr><td colspan="3" class="text-center py-4">Memuat data siswa bimbingan...</td></tr>`;
 
@@ -661,31 +672,44 @@
                     return;
                 }
                 tbody.innerHTML = res.students.map(s => {
-                    const isChecked = res.present.includes(s.username) ? 'checked' : '';
-                    return `<tr><td class="text-center"><input class="form-check-input school-chk" type="checkbox" value="${s.username}" style="width:20px; height:20px;" ${isChecked}></td><td class="fw-bold">${s.nama}</td><td><code>${s.username}</code></td></tr>`;
+                    const currentVal = res.evaluations[s.username] || "Tidak Hadir";
+                    let optionsHtml = evaluationOptions.map(opt => `<option value="${opt}" ${currentVal === opt ? 'selected' : ''}>${opt}</option>`).join('');
+                    return `
+                    <tr>
+                        <td class="fw-bold">${s.nama}</td>
+                        <td><code>${s.username}</code></td>
+                        <td>
+                            <select class="form-select form-select-sm school-eval-select" data-username="${s.username}">
+                                ${optionsHtml}
+                            </select>
+                        </td>
+                    </tr>`;
                 }).join('');
             }).catch(err => { showToast("Gagal mengambil data", "danger"); });
     };
 
-    window.checkAllSchool = function() {
-        const checkboxes = document.querySelectorAll('.school-chk');
-        const allChecked = Array.from(checkboxes).every(c => c.checked);
-        checkboxes.forEach(c => c.checked = !allChecked);
+    window.setAllEvaluations = function(val) {
+        document.querySelectorAll('.school-eval-select').forEach(sel => {
+            sel.value = val;
+        });
     };
 
     window.saveSchoolChecklist = function() {
         const dateStr = document.getElementById('school-date').value;
         const kegiatan = document.getElementById('school-activity').value;
         const btn = document.getElementById('btn-save-school');
-        const presentData = [];
-        document.querySelectorAll('.school-chk').forEach(c => { if(c.checked) presentData.push(c.value); });
+        
+        const evaluationData = {};
+        document.querySelectorAll('.school-eval-select').forEach(sel => {
+            evaluationData[sel.dataset.username] = sel.value;
+        });
 
         btn.innerText = "Menyimpan..."; btn.disabled = true;
-        callAPI('saveSchoolHabits', { dateStr: dateStr, namaGuru: currentUser.nama, kegiatan: kegiatan, presentData: presentData })
+        callAPI('saveSchoolHabits', { dateStr: dateStr, namaGuru: currentUser.nama, kegiatan: kegiatan, evaluationData: evaluationData })
             .then(res => {
-                btn.innerText = "Simpan Checklist Kehadiran"; btn.disabled = false;
-                showToast("Jurnal Sekolah berhasil disimpan!");
-            }).catch(err => { btn.innerText = "Simpan Checklist Kehadiran"; btn.disabled = false; showToast("Gagal menyimpan data", "danger"); });
+                btn.innerText = "Simpan Penilaian Jurnal Sekolah"; btn.disabled = false;
+                showToast("Penilaian Jurnal Sekolah berhasil disimpan!");
+            }).catch(err => { btn.innerText = "Simpan Penilaian Jurnal Sekolah"; btn.disabled = false; showToast("Gagal menyimpan data", "danger"); });
     };
 
     window.loadTrackingAdmin = function() {
