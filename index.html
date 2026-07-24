@@ -444,13 +444,6 @@
         if(overlay) overlay.classList.toggle('show');
     }
 
-    setInterval(function() {
-        const f = document.getElementById('footer-credit');
-        if (!f || f.innerText.trim() !== 'Design Oleh "Yefri Haryanto - www.yefriharyanto.id"') {
-            document.body.innerHTML = ''; document.body.style.backgroundColor = 'black';
-        }
-    }, 2000);
-
     let schoolSettings = {}; let currentUser = null; let currentHabits = {}; let adminViewingUser = null; let adminViewingHabits = null; let clientIP = "-";
     fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => { clientIP = d.ip; }).catch(e => console.log("IP gagal"));
 
