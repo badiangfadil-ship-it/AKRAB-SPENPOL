@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jurnal 7 Kebiasaan Anak Indonesia Hebat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root { --primary-color: #00A896; --secondary-color: #02C39A; --bg-light: #F8FBFB; --sidebar-width: 280px; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); color: #2D3436; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
+        .login-container { height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); flex: 1;}
+        .login-card { width: 100%; max-width: 500px; background: white; padding: 2.5rem; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .sidebar { width: var(--sidebar-width); height: 100vh; background: white; border-right: 1px solid #e0e0e0; position: fixed; left: 0; top: 0; z-index: 1000; padding: 1.5rem; overflow-y: auto; transition: left 0.3s ease;}
+        .main-content { margin-left: var(--sidebar-width); padding: 2rem; flex: 1; display: flex; flex-direction: column; transition: margin-left 0.3s ease;}
+        .nav-link { color: #636e72; padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 12px; border: none; background: transparent; width: 100%; text-align: left; transition: all 0.2s ease; font-weight: 500; cursor:pointer;}
+        .nav-link:hover { background-color: #f1f3f5; color: var(--primary-color); }
+        .nav-link.active { background-color: var(--primary-color) !important; color: white !important; box-shadow: 0 4px 12px rgba(0, 168, 150, 0.2); }
+        .card { border: none; border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.04); transition: transform 0.2s ease; }
+        .modal-content { border: none; border-radius: 24px; overflow: hidden; }
+        .modal-header { background: var(--primary-color); color: white; padding: 1.2rem 2rem; }
+        .btn-primary { background-color: var(--primary-color); border: none; border-radius: 12px; padding: 0.7rem 1.2rem; font-weight: 600; }
+        .status-badge { padding: 6px 14px; border-radius: 30px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .status-yes { background: #d1fae5; color: #065f46; }
+        .status-no { background: #fee2e2; color: #991b1b; }
+        .header-banner { background: linear-gradient(135deg, #00A896 0%, #b0c4de 100%); color: white; padding: 2.5rem 2rem; border-radius: 24px; margin-bottom: 2rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
+        .bg-platinum-gradient { background: linear-gradient(135deg, #e5e4e2 0%, #b0c4de 100%); border: 1px solid #d4d4d4; }
+        .icon-gradient-bg { background: linear-gradient(135deg, #00A896 0%, #b0c4de 100%); display: inline-flex; align-items: center; justify-content: center; width: 55px; height: 55px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .footer-embossed { color: #E5E4E2; background-color: #2D3436; text-shadow: -1px -1px 1px rgba(255,255,255,0.2), 1px 1px 1px rgba(0,0,0,0.8); font-weight: 700; text-align: center; padding: 15px; border-radius: 12px; margin-top: auto; width: 100%; font-size: 0.9rem; letter-spacing: 0.5px; box-shadow: inset 0px 2px 5px rgba(0,0,0,0.5); }
+        .sidebar-overlay { display: none; position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); z-index: 1040; }
+        @media (max-width: 992px) { .sidebar { left: -300px; border-right: none; box-shadow: 2px 0 15px rgba(0,0,0,0.1); } .sidebar.show { left: 0; } .sidebar-overlay.show { display: block; } .main-content { margin-left: 0; padding: 1rem; } .header-banner { padding: 1.5rem 1rem; text-align: center; margin-top: 1rem; } }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .loader-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center;}
+        
+        /* Print Style */
+        @media print {
+            #toast-container, #loader, #section-login, .sidebar, .sidebar-overlay, .mobile-header { display: none !important; }
+            .main-content { margin-left: 0 !important; padding: 0 !important; width: 100% !important; display: block; }
+            .tab-pane { display: none !important; }
+            #tab-admin-reports { display: block !important; opacity: 1 !important; visibility: visible !important; }
+            #tab-admin-reports > *:not(#print-container) { display: none !important; }
+            #print-container { display: block !important; width: 100% !important; position: relative; }
+            .no-print { display: none !important; }
+            .card { box-shadow: none !important; border: none !important; padding: 0 !important; }
+            .print-header-wrapper { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #000; padding-bottom: 10px; margin-bottom: 15px; position: relative; }
+            .print-logo { width: 75px; height: 75px; object-fit: contain; }
+            .print-header-text { text-align: center; flex-grow: 1; padding: 0 15px; }
+            .print-barcode-container { text-align: right; margin-top: -15px; margin-bottom: 10px; padding-right: 5px;}
+            .print-barcode { height: 40px; object-fit: contain; }
+            table { font-size: 12px !important; width: 100% !important; border-collapse: collapse !important; }
+            .table-bordered th, .table-bordered td { border: 1px solid #000 !important; padding: 5px !important; }
+            .page-break-after { page-break-after: always; margin-bottom: 20px; }
+        }
+        .print-only { display: none; }
+    </style>
+</head>
+<body>
+
+<div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 2000"></div>
+
+<div id="loader" class="loader-overlay">
+    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;"></div>
+    <h5 class="text-primary fw-bold" id="loader-title">Memuat Data...</h5>
+    <div id="loader-text" class="text-muted small mt-2 px-4" style="max-width: 400px;">Menghubungkan ke Server...</div>
+</div>
+
+<div id="section-login" class="login-container d-none">
+    <div class="login-card fade-in text-center">
+        <div class="bg-primary text-white p-3 rounded-circle d-inline-block mb-3" id="icon-award-login">⭐</div>
+        <h4 class="fw-bold mb-1 text-primary">Jurnal 7 Kebiasaan Anak</h4>
+        <p class="text-muted mb-4 small">Silakan pilih akses masuk Anda</p>
+        
+        <ul class="nav nav-pills nav-fill mb-4 bg-light p-1 rounded-pill" role="tablist">
+            <li class="nav-item"><button class="nav-link rounded-pill active" data-bs-toggle="pill" data-bs-target="#login-siswa">Siswa</button></li>
+            <li class="nav-item"><button class="nav-link rounded-pill" data-bs-toggle="pill" data-bs-target="#login-admin">Guru</button></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="login-siswa">
+                <form id="form-login-siswa">
+                    <div class="mb-3 text-start">
+                        <label class="form-label small fw-bold">Pilih Nama Siswa</label>
+                        <select class="form-select" id="dropdown-siswa" required><option value="">-- Pilih Siswa --</option></select>
+                    </div>
+                    <div class="mb-4 text-start">
+                        <label class="form-label small fw-bold">Kata Sandi</label>
+                        <input type="password" class="form-control" id="pass-siswa" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" id="btn-login-siswa">Masuk Sebagai Siswa</button>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="login-admin">
+                <form id="form-login-admin">
+                    <div class="mb-3 text-start">
+                        <label class="form-label small fw-bold">Username Admin</label>
+                        <input type="text" class="form-control" id="user-admin" required>
+                    </div>
+                    <div class="mb-4 text-start">
+                        <label class="form-label small fw-bold">Kata Sandi</label>
+                        <input type="password" class="form-control" id="pass-admin" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" id="btn-login-admin">Masuk Sebagai Guru</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="section-app" class="d-none w-100 h-100">
+    <div class="sidebar-overlay no-print" onclick="toggleSidebar()"></div>
+    <div class="sidebar no-print">
+        <div class="d-flex align-items-center mb-4 px-2">
+            <div class="bg-primary text-white p-2 rounded-3 me-2" id="icon-award-sidebar">⭐</div>
+            <div class="lh-1">
+                <div class="small fw-bold text-muted mb-1" style="font-size: 0.6rem;">JURNAL 7 KEBIASAAN</div>
+                <h6 class="mb-0 fw-bold text-primary" id="sidebar-role-title" style="font-size: 0.8rem;">MENU UTAMA</h6>
+            </div>
+        </div>
+        
+        <div class="nav flex-column" id="v-pills-tab">
+            <div id="menu-siswa-container" class="d-none">
+                <button class="nav-link active" onclick="switchTab('tab-home', this)"><span id="ic-home">🏠</span> Beranda</button>
+                <button class="nav-link" onclick="switchTab('tab-profile', this)"><span id="ic-user">👤</span> Profil Saya</button>
+                <div class="text-muted mt-4 mb-2 px-3 text-uppercase fw-bold w-100 text-center text-lg-start" style="font-size: 0.65rem;">Input Harian</div>
+                <button class="nav-link" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('bangun', 'Bangun Pagi', 'Pukul Bangun', 'time')"><span id="ic-sun">🌅</span> Bangun Pagi</button>
+                <button class="nav-link" data-bs-toggle="modal" data-bs-target="#modalIbadah"><span id="ic-heart">❤️</span> Beribadah</button>
+                <button class="nav-link" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('olahraga', 'Berolahraga', 'Jenis Olahraga', 'text')"><span id="ic-bike">🚴</span> Berolahraga</button>
+                <button class="nav-link" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('makan', 'Makan Sehat & Bergizi', 'Menu Makanan', 'text')"><span id="ic-food">🍽️</span> Makan Sehat</button>
+                <button class="nav-link" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('belajar', 'Gemar Belajar', 'Materi Pelajaran', 'text')"><span id="ic-book">📖</span> Gemar Belajar</button>
+                <button class="nav-link" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('masyarakat', 'Bermasyarakat', 'Kegiatan Sosial', 'text')"><span id="ic-users">👥</span> Bermasyarakat</button>
+                <button class="nav-link" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('tidur', 'Tidur Cepat', 'Jam Tidur', 'time')"><span id="ic-moon">🌙</span> Tidur Cepat</button>
+            </div>
+            <div id="menu-admin-container" class="d-none">
+                <button class="nav-link active" onclick="switchTab('tab-admin-dash', this)">📊 Dashboard</button>
+                <button class="nav-link" onclick="switchTab('tab-admin-tracker', this)">🎯 Pantau Harian (GPS)</button>
+                <button class="nav-link" onclick="switchTab('tab-admin-students', this)">👥 Kelola Siswa</button>
+                <button class="nav-link" onclick="switchTab('tab-admin-settings', this)">⚙️ Info Sekolah</button>
+                <button class="nav-link" onclick="switchTab('tab-admin-reports', this)">🖨️ Cetak Laporan</button>
+            </div>
+            <hr class="my-4 w-100">
+            <button class="nav-link text-danger w-100" onclick="logout()">🚪 Keluar</button>
+        </div>
+    </div>
+
+    <div class="main-content d-flex flex-column min-vh-100">
+        <div class="mobile-header d-flex d-lg-none justify-content-between align-items-center p-3 text-white no-print rounded-3 shadow-sm" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); margin-bottom: 15px;">
+            <button class="btn btn-sm text-white border-0" onclick="toggleSidebar()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+            <h6 class="mb-0 fw-bold m-0">Jurnal 7 Kebiasaan</h6>
+            <div style="width: 28px;"></div>
+        </div>
+
+        <div class="flex-grow-1">
+            <div id="tab-home" class="tab-pane d-none fade-in">
+                <div class="header-banner">
+                    <h2 class="fw-bold mb-2">Semangat Pagi, <span class="current-user-name">Anak Hebat</span>!</h2>
+                    <p class="lead mb-0 fw-semibold text-white">Mari budayakan 7 kebiasaan positif setiap hari menuju Indonesia Emas 2045.</p>
+                </div>
+                <div class="alert alert-info border-0 rounded-3 shadow-sm d-flex align-items-center">
+                    ℹ️ <div class="ms-3"><strong>Penting:</strong> Status "SELESAI" hanya akan muncul jika Anda telah mengisi jurnal pada hari/tanggal saat ini.</div>
+                </div>
+                <div class="row g-4 mt-1" id="dashboard-habit-cards"></div>
+            </div>
+
+            <div id="tab-profile" class="tab-pane d-none fade-in">
+                <h3 class="fw-bold mb-4">Data Diri Saya</h3>
+                <div class="card p-4">
+                    <form id="form-profile-siswa">
+                        <div class="row g-3">
+                            <div class="col-md-6"><label class="form-label">Nama Lengkap</label><input type="text" class="form-control" name="nama" disabled></div>
+                            <div class="col-md-6"><label class="form-label">Username</label><input type="text" class="form-control" name="username" disabled></div>
+                            <div class="col-md-6"><label class="form-label">Kelas</label><input type="text" class="form-control" name="kelas" placeholder="Contoh: 1-A"></div>
+                            <div class="col-md-6"><label class="form-label">Cita-cita</label><input type="text" class="form-control" name="cita_cita"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-4" id="btn-save-profile">Simpan Perubahan</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="tab-admin-dash" class="tab-pane d-none fade-in">
+                <h3 class="fw-bold mb-4">Dashboard Administrator</h3>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card p-4 text-center bg-white border">
+                            <h6 class="text-muted">Total Siswa Terdaftar</h6>
+                            <h2 class="fw-bold text-primary" id="admin-total-siswa">0</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-admin-tracker" class="tab-pane d-none fade-in">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-bold mb-0">Pantau Harian Laporan GPS & IP</h3>
+                </div>
+                <div class="card p-4 mb-4 shadow-sm border-0">
+                    <div class="row align-items-end g-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Pilih Tanggal</label>
+                            <input type="date" class="form-control" id="tracker-date">
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary w-100" onclick="loadTrackingAdmin()">Tarik Data</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card p-4 shadow-sm border-0">
+                    <p class="small text-muted mb-3">Fitur ini membantu mengecek apakah satu HP digunakan untuk mengisi jurnal banyak siswa secara bersamaan.</p>
+                    <div class="table-responsive" style="overflow-x: auto;">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light"><tr><th>Waktu Submit</th><th>Nama Siswa</th><th>Kebiasaan</th><th>IP Address</th><th>Lokasi Input</th></tr></thead>
+                            <tbody id="tracker-list"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-admin-students" class="tab-pane d-none fade-in">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-bold mb-0">Kelola Siswa</h3>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddSiswa">Tambah Siswa</button>
+                </div>
+                <div class="card p-4" style="overflow-x: auto;">
+                    <table class="table table-hover" style="min-width: 500px;">
+                        <thead><tr><th>No</th><th>Nama Lengkap</th><th>Username</th><th>Kelas</th><th class="text-center">Aksi</th></tr></thead>
+                        <tbody id="admin-siswa-list"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="tab-admin-settings" class="tab-pane d-none fade-in">
+                <h3 class="fw-bold mb-4">Pengaturan Info Sekolah & Laporan</h3>
+                <div class="card p-4">
+                    <form id="form-settings-sekolah">
+                        <div class="row g-3">
+                            <div class="col-md-12"><div class="bg-light p-3 rounded"><h6 class="fw-bold text-primary mb-2">Kop Surat & Logo</h6>
+                                <p class="small text-muted mb-2">Gunakan link langsung ke gambar JPG/PNG.</p>
+                                <div class="row g-3">
+                                    <div class="col-md-6"><label class="form-label fw-bold small">Link Logo Daerah (Kiri)</label><input type="url" class="form-control" name="logo_daerah" placeholder="https://..."></div>
+                                    <div class="col-md-6"><label class="form-label fw-bold small">Link Logo Sekolah (Kanan)</label><input type="url" class="form-control" name="logo_sekolah" placeholder="https://..."></div>
+                                    <div class="col-md-6"><label class="form-label fw-bold small">Pemerintah (Dinas Pendidikan)</label><input type="text" class="form-control" name="pemerintah"></div>
+                                    <div class="col-md-6"><label class="form-label fw-bold small">Nama Sekolah</label><input type="text" class="form-control" name="nama_sekolah" id="setting-nama-sekolah"></div>
+                                    <div class="col-12"><label class="form-label fw-bold small">Alamat Lengkap</label><input type="text" class="form-control" name="alamat"></div>
+                                </div>
+                            </div></div>
+                            <div class="col-md-12 mt-4"><div class="bg-light p-3 rounded"><h6 class="fw-bold text-primary mb-2">Pengesahan (Tanda Tangan)</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6"><label class="form-label fw-bold small">Nama Wali/Guru Kelas</label><input type="text" class="form-control" name="nama_guru"></div>
+                                    <div class="col-md-6"><label class="form-label fw-bold small">NIP Guru</label><input type="text" class="form-control" name="nip_guru"></div>
+                                    <div class="col-md-6"><label class="form-label fw-bold small">Nama Kepala Sekolah</label><input type="text" class="form-control" name="nama_kepsek"></div>
+                                    <div class="col-md-6"><label class="form-label fw-bold small">NIP Kepala Sekolah</label><input type="text" class="form-control" name="nip_kepsek"></div>
+                                    <div class="col-md-6"><label class="form-label fw-bold small">Tempat Tanda Tangan</label><input type="text" class="form-control" name="tempat_ttd" placeholder="Contoh: Jakarta"></div>
+                                </div>
+                            </div></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mt-4" id="btn-save-settings">Simpan Data Pengaturan</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="tab-admin-reports" class="tab-pane d-none fade-in">
+                <h3 class="fw-bold mb-4 no-print">Cetak Laporan Siswa</h3>
+                <div class="card p-4 mb-4 no-print shadow-sm border-0">
+                    <div class="row align-items-end g-3">
+                        <div class="col-md-5">
+                            <label class="form-label fw-bold">Pilih Siswa</label>
+                            <select class="form-select" id="admin-report-select-siswa"></select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">Bulan Cetak</label>
+                            <select class="form-select" id="admin-report-month">
+                                <option value="1">Januari</option><option value="2">Februari</option><option value="3">Maret</option>
+                                <option value="4">April</option><option value="5">Mei</option><option value="6">Juni</option>
+                                <option value="7">Juli</option><option value="8">Agustus</option><option value="9">September</option>
+                                <option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold">Tahun</label>
+                            <input type="number" class="form-control" id="admin-report-year" value="2024">
+                        </div>
+                        <div class="col-md-2 d-grid gap-2">
+                            <button class="btn btn-primary" id="btn-admin-view-report">Tarik Data</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="report-action-area" class="d-none no-print">
+                    <div class="alert alert-success d-flex flex-wrap justify-content-between align-items-center">
+                        <span class="mb-2 mb-md-0">Pilih format laporan cetak:</span>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button class="btn btn-success btn-sm flex-grow-1" onclick="showPrintArea('bulanan')">Cetak Detail (Per Lembar)</button>
+                            <button class="btn btn-warning btn-sm flex-grow-1" onclick="showPrintArea('umum')">Cetak Rekap Umum</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="print-container" class="print-only bg-white" style="border-radius: 0;">
+                    <div class="print-header-wrapper">
+                        <img id="print-logo-daerah" class="print-logo" src="" alt="Logo Kiri">
+                        <div class="print-header-text">
+                            <h5 class="mb-0 text-uppercase" id="print-pemerintah">PEMERINTAH</h5>
+                            <h4 class="mb-0 text-uppercase fw-bold" id="print-sekolah">NAMA SEKOLAH</h4>
+                            <p class="small mb-0" id="print-alamat">Alamat Lengkap</p>
+                        </div>
+                        <img id="print-logo-sekolah" class="print-logo" src="" alt="Logo Kanan">
+                    </div>
+                    
+                    <div class="print-barcode-container">
+                        <img id="print-barcode" class="print-barcode" src="" alt="Barcode Autentikasi">
+                    </div>
+
+                    <div class="mb-4 mt-2">
+                        <table style="width: 100%; border: none !important; margin-bottom: 0;">
+                            <tr>
+                                <td width="80" style="border:none !important"><strong>Nama</strong></td><td width="10" style="border:none !important">:</td><td style="border:none !important"><span id="print-siswa-nama">...</span></td>
+                                <td width="80" class="text-end" style="border:none !important"><strong>Bulan</strong></td><td width="10" style="border:none !important">:</td><td style="border:none !important"><span id="print-siswa-bulan">...</span></td>
+                            </tr>
+                            <tr>
+                                <td style="border:none !important"><strong>Kelas</strong></td><td style="border:none !important">:</td><td style="border:none !important"><span id="print-siswa-kelas">...</span></td>
+                                <td class="text-end" style="border:none !important"><strong>Tahun</strong></td><td style="border:none !important">:</td><td style="border:none !important"><span id="print-siswa-tahun">...</span></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div id="print-type-bulanan" class="d-none"><div id="bulanan-tables-container"></div></div>
+
+                    <div id="print-type-umum" class="d-none" style="page-break-inside: avoid;">
+                        <div class="text-center mb-3">
+                            <h5 class="fw-bold text-uppercase mb-0">REKAP PEMANTAUAN</h5>
+                            <h6 class="fw-bold">Tujuh Kebiasaan Anak Indonesia Hebat</h6>
+                        </div>
+                        <table class="table table-bordered border-dark text-center align-middle mt-3 mb-2">
+                            <thead class="table-light">
+                                <tr><th width="50">No</th><th class="text-start">Tujuh Kebiasaan Anak Indonesia Hebat</th><th>Belum Terbiasa</th><th>Sudah Terbiasa</th></tr>
+                            </thead>
+                            <tbody id="table-body-umum"></tbody>
+                        </table>
+                        
+                        <div class="mt-2 border border-dark p-2" style="min-height: 70px;">
+                            <p class="fw-bold mb-1" style="font-size: 13px;">Kesimpulan / Tanggapan Orangtua:</p>
+                            <p class="small text-muted mb-0" style="font-size: 11px;">Tanggapan tentang Tujuh Kebiasaan Anak Indonesia Hebat yang dilakukan peserta didik di rumah:</p>
+                        </div>
+
+                        <div id="signature-area-umum"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="footer-credit" class="footer-embossed no-print mt-4">Design Oleh "Yefri Haryanto - www.yefriharyanto.id"</div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalHabit" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title fw-bold" id="habit-modal-title">Isi Jurnal</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+            <div class="modal-body">
+                <form id="form-dynamic-habit">
+                    <input type="hidden" id="habit-type" name="type">
+                    <div class="mb-3"><label class="form-label fw-bold small">Tanggal Pelaksanaan</label><input type="date" class="form-control" name="tgl" id="habit-date" required></div>
+                    <div class="mb-4"><label class="form-label fw-bold small" id="habit-input-label">Detail</label><input type="text" class="form-control" name="detail1" id="habit-detail-input" required></div>
+                    <button type="submit" class="btn btn-primary w-100" id="btn-save-habit">Simpan Jurnal</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalIbadah" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title fw-bold">2. Beribadah</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+            <div class="modal-body">
+                <form id="form-ibadah">
+                    <div class="mb-3"><label class="form-label fw-bold small">Tanggal Pelaksanaan</label><input type="date" class="form-control" name="tgl" id="ibadah-date" required></div>
+                    <div class="mb-2"><label class="form-label fw-bold small">Ibadah Selesai:</label></div>
+                    <div class="d-grid gap-2 mb-3">
+                        <input type="checkbox" class="btn-check" id="ib-1" name="sholat" value="Subuh"><label class="btn btn-outline-primary text-start" for="ib-1">Sholat Subuh</label>
+                        <input type="checkbox" class="btn-check" id="ib-2" name="sholat" value="Dzuhur"><label class="btn btn-outline-primary text-start" for="ib-2">Sholat Dzuhur</label>
+                        <input type="checkbox" class="btn-check" id="ib-3" name="sholat" value="Ashar"><label class="btn btn-outline-primary text-start" for="ib-3">Sholat Ashar</label>
+                        <input type="checkbox" class="btn-check" id="ib-4" name="sholat" value="Magrib"><label class="btn btn-outline-primary text-start" for="ib-4">Sholat Magrib</label>
+                        <input type="checkbox" class="btn-check" id="ib-5" name="sholat" value="Isya"><label class="btn btn-outline-primary text-start" for="ib-5">Sholat Isya</label>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small text-danger">Keterangan / Alasan (Opsional):</label>
+                        <input type="text" class="form-control" name="detail2" placeholder="Contoh: Sedang Halangan / Sakit">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" id="btn-save-ibadah">Simpan Ibadah</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAddSiswa" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title fw-bold">Tambah Akun Siswa</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+            <div class="modal-body">
+                <form id="form-admin-add-siswa">
+                    <div class="mb-3"><label class="form-label fw-bold">Nama Lengkap</label><input type="text" class="form-control" name="nama" required></div>
+                    <div class="mb-3"><label class="form-label fw-bold">Username</label><input type="text" class="form-control" name="username" required></div>
+                    <div class="mb-3"><label class="form-label fw-bold">Password</label><input type="password" class="form-control" name="password" value="123" required></div>
+                    <div class="mb-3"><label class="form-label fw-bold">Kelas</label><input type="text" class="form-control" name="kelas" placeholder="Contoh: 1-A" required></div>
+                    <button type="submit" class="btn btn-primary w-100" id="btn-add-siswa">Buat Akun</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // ==========================================
+    // 🔴 PENTING: MASUKKAN URL WEB APP ANDA DI SINI
+    // ==========================================
+    const SCRIPT_URL = "URL_WEB_APP_APPS_SCRIPT_ANDA_DISINI"; 
+
+    // Helper untuk memanggil API
+    async function callAPI(action, params = {}) {
+        try {
+            const response = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ action: action, ...params })
+            });
+            return await response.json();
+        } catch (error) {
+            console.error("API Error:", error);
+            throw new Error("Gagal terhubung ke server Google.");
+        }
+    }
+
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.sidebar-overlay');
+        if(sidebar) sidebar.classList.toggle('show');
+        if(overlay) overlay.classList.toggle('show');
+    }
+
+    setInterval(function() {
+        const f = document.getElementById('footer-credit');
+        if (!f || f.innerText.trim() !== 'Design Oleh "Yefri Haryanto - www.yefriharyanto.id"') {
+            document.body.innerHTML = ''; document.body.style.backgroundColor = 'black';
+        }
+    }, 2000);
+
+    let schoolSettings = {}; let currentUser = null; let currentHabits = {}; let adminViewingUser = null; let adminViewingHabits = null; let clientIP = "-";
+    fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => { clientIP = d.ip; }).catch(e => console.log("IP gagal"));
+
+    document.addEventListener("DOMContentLoaded", function() {
+        try {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+                document.getElementById('icon-award-login').innerHTML = '<i data-lucide="award" size="40"></i>';
+                document.getElementById('icon-award-sidebar').innerHTML = '<i data-lucide="award"></i>';
+                lucide.createIcons(); 
+            }
+            const today = new Date();
+            document.getElementById('admin-report-year').value = today.getFullYear();
+            document.getElementById('admin-report-month').value = today.getMonth() + 1;
+            const offset = today.getTimezoneOffset() * 60000;
+            const localISODate = (new Date(today - offset)).toISOString().split('T')[0];
+            document.querySelectorAll('input[type="date"]').forEach(inp => inp.value = localISODate);
+        } catch(e) { }
+
+        // Memanggil API saat pertama kali dibuka
+        callAPI('getInitialData')
+            .then(data => {
+                if (data.error) throw new Error(data.message);
+                document.getElementById('loader').classList.add('d-none');
+                document.getElementById('section-login').classList.remove('d-none');
+                schoolSettings = data.settings || {};
+                populateDropdownSiswa(data.students || []);
+            })
+            .catch(err => {
+                document.getElementById('loader-text').innerHTML = `<div class="alert alert-danger mt-3 text-start"><strong>Gagal Terhubung:</strong><br>${err.message}</div>`;
+            });
+    });
+
+    function populateDropdownSiswa(studentsData) {
+        const opts = '<option value="">-- Pilih Siswa --</option>' + studentsData.map(s => `<option value="${s.username}">${s.nama} (${s.username})</option>`).join('');
+        document.getElementById('dropdown-siswa').innerHTML = opts;
+        document.getElementById('admin-report-select-siswa').innerHTML = opts;
+    }
+
+    document.getElementById('form-login-siswa').onsubmit = function(e) {
+        e.preventDefault();
+        const user = document.getElementById('dropdown-siswa').value;
+        const pass = document.getElementById('pass-siswa').value;
+        const btn = document.getElementById('btn-login-siswa');
+        btn.innerText = "Memverifikasi..."; btn.disabled = true;
+
+        callAPI('loginSiswa', { username: user, password: pass })
+            .then(res => {
+                btn.innerText = "Masuk Sebagai Siswa"; btn.disabled = false;
+                if(res.success) { currentUser = res.user; currentHabits = res.habits; showApp('siswa'); } 
+                else { showToast(res.message, "danger"); }
+            })
+            .catch(err => {
+                btn.innerText = "Masuk Sebagai Siswa"; btn.disabled = false; showToast("Koneksi gagal", "danger");
+            });
+    };
+
+    document.getElementById('form-login-admin').onsubmit = function(e) {
+        e.preventDefault();
+        const user = document.getElementById('user-admin').value;
+        const pass = document.getElementById('pass-admin').value;
+        const btn = document.getElementById('btn-login-admin');
+        btn.innerText = "Memverifikasi..."; btn.disabled = true;
+
+        callAPI('loginAdmin', { user: user, pass: pass })
+            .then(res => {
+                btn.innerText = "Masuk Sebagai Guru"; btn.disabled = false;
+                if(res.success) { showApp('admin'); } else { showToast(res.message, "danger"); }
+            })
+            .catch(err => {
+                btn.innerText = "Masuk Sebagai Guru"; btn.disabled = false; showToast("Koneksi gagal", "danger");
+            });
+    };
+
+    function showApp(role) {
+        document.getElementById('section-login').classList.add('d-none'); document.getElementById('section-app').classList.remove('d-none');
+        if(role === 'siswa') {
+            document.getElementById('menu-siswa-container').classList.remove('d-none'); document.getElementById('menu-admin-container').classList.add('d-none');
+            switchTab('tab-home', document.querySelector('[onclick*="tab-home"]')); loadStudentDashboard();
+        } else {
+            document.getElementById('menu-siswa-container').classList.add('d-none'); document.getElementById('menu-admin-container').classList.remove('d-none');
+            switchTab('tab-admin-dash', document.querySelector('[onclick*="tab-admin-dash"]')); fetchAdminDashboard();
+        }
+    }
+
+    function logout() { location.reload(); }
+
+    window.switchTab = function(tabId, btn) {
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('d-none'));
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        const target = document.getElementById(tabId);
+        if(target) target.classList.remove('d-none');
+        if(btn) btn.classList.add('active');
+        if(window.innerWidth <= 992) {
+            const sb = document.querySelector('.sidebar'); const ov = document.querySelector('.sidebar-overlay');
+            if(sb) sb.classList.remove('show'); if(ov) ov.classList.remove('show');
+        }
+        if(tabId === 'tab-admin-students') loadAdminStudents();
+        if(tabId === 'tab-admin-settings') fillSettingsForm();
+        if(tabId === 'tab-admin-tracker') loadTrackingAdmin();
+    };
+
+    function loadStudentDashboard() {
+        document.querySelectorAll('.current-user-name').forEach(el => el.innerText = currentUser.nama);
+        const form = document.getElementById('form-profile-siswa');
+        form.elements['nama'].value = currentUser.nama; form.elements['username'].value = currentUser.username;
+        form.elements['kelas'].value = currentUser.kelas || ''; form.elements['cita_cita'].value = currentUser.cita_cita || '';
+        renderHabitCards();
+    }
+
+    function renderHabitCards() {
+        const today = new Date(); const offset = today.getTimezoneOffset() * 60000; const localToday = (new Date(today - offset)).toISOString().split('T')[0];
+        const hList = [
+            { k: 'bangun', l: 'Bangun Pagi', i: 'sun', m: '#modalHabit', f: "prepareModal('bangun','Bangun Pagi','Pukul Bangun','time')" },
+            { k: 'ibadah', l: 'Beribadah', i: 'heart', m: '#modalIbadah', f: "" },
+            { k: 'olahraga', l: 'Olahraga', i: 'bike', m: '#modalHabit', f: "prepareModal('olahraga','Olahraga','Jenis Olahraga','text')" },
+            { k: 'makan', l: 'Makan Sehat', i: 'utensils', m: '#modalHabit', f: "prepareModal('makan','Makan Sehat','Sebutkan Menu','text')" },
+            { k: 'belajar', l: 'Belajar', i: 'book-open', m: '#modalHabit', f: "prepareModal('belajar','Gemar Belajar','Materi Pelajaran','text')" },
+            { k: 'masyarakat', l: 'Bermasyarakat', i: 'users', m: '#modalHabit', f: "prepareModal('masyarakat','Bermasyarakat','Kegiatan Sosial','text')" },
+            { k: 'tidur', l: 'Tidur Cepat', i: 'moon', m: '#modalHabit', f: "prepareModal('tidur','Tidur Cepat','Jam Tidur','time')" }
+        ];
+
+        document.getElementById('dashboard-habit-cards').innerHTML = hList.map(h => {
+            const doneToday = currentHabits[h.k] && currentHabits[h.k].some(entry => entry.tgl === localToday);
+            let iconHtml = typeof lucide !== 'undefined' ? `<i data-lucide="${h.i}" size="32" style="color: white;"></i>` : '⭐';
+            return `<div class="col-6 col-md-4 col-lg-3"><div class="card p-3 text-center border h-100 shadow-sm bg-platinum-gradient" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="${h.m}" onclick="${h.f}">
+                    <div class="icon-gradient-bg mx-auto mb-2">${iconHtml}</div><div class="fw-bold small mb-2 text-dark">${h.l}</div>
+                    <span class="status-badge ${doneToday ? 'status-yes' : 'status-no'}">${doneToday ? 'SELESAI' : 'BELUM SELESAI'}</span>
+                </div></div>`;
+        }).join('');
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function prepareModal(type, title, label, inputType) {
+        document.getElementById('habit-type').value = type; document.getElementById('habit-modal-title').innerText = title;
+        document.getElementById('habit-input-label').innerText = label; const inp = document.getElementById('habit-detail-input'); inp.type = inputType; inp.value = '';
+    }
+
+    function executeSaveHabit(formEl, type, tgl, detail1, modalId, btnId, detail2 = "") {
+        const btn = document.getElementById(btnId); btn.innerText = "Lokasi..."; btn.disabled = true;
+        let lat = ""; let lng = "";
+        const finishSave = () => {
+            btn.innerText = "Menyimpan ke Server...";
+            callAPI('saveHabit', { username: currentUser.username, type: type, tgl: tgl, detail1: detail1, detail2: detail2, lat: lat, lng: lng, ip: clientIP })
+                .then(() => {
+                    if(!currentHabits[type]) currentHabits[type] = []; currentHabits[type].unshift({ tgl: tgl, detail1: detail1, detail2: detail2 });
+                    btn.innerText = "Simpan Jurnal"; btn.disabled = false; bootstrap.Modal.getInstance(document.getElementById(modalId)).hide();
+                    renderHabitCards(); showToast("Jurnal disimpan!"); formEl.reset();
+                })
+                .catch(err => { btn.innerText = "Simpan Jurnal"; btn.disabled = false; showToast("Gagal menyimpan!", "danger"); });
+        };
+        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(pos => { lat = pos.coords.latitude; lng = pos.coords.longitude; finishSave(); }, err => { finishSave(); });
+        } else finishSave();
+    }
+
+    document.getElementById('form-dynamic-habit').onsubmit = function(e) { e.preventDefault(); const fd = new FormData(this); executeSaveHabit(this, fd.get('type'), fd.get('tgl'), fd.get('detail1'), 'modalHabit', 'btn-save-habit'); };
+    document.getElementById('form-ibadah').onsubmit = function(e) { e.preventDefault(); const fd = new FormData(this); const sholat = fd.getAll('sholat').join(', '); const keterangan = fd.get('detail2'); const btn = document.getElementById('btn-save-ibadah'); if(btn.disabled) return; executeSaveHabit(this, 'ibadah', fd.get('tgl'), sholat, 'modalIbadah', 'btn-save-ibadah', keterangan); };
+    
+    document.getElementById('form-profile-siswa').onsubmit = function(e) {
+        e.preventDefault(); const btn = document.getElementById('btn-save-profile'); btn.innerText = "Menyimpan..."; const fd = new FormData(this);
+        callAPI('updateProfileSiswa', { username: currentUser.username, kelas: fd.get('kelas'), citaCita: fd.get('cita_cita') })
+            .then(() => { currentUser.kelas = fd.get('kelas'); currentUser.cita_cita = fd.get('cita_cita'); btn.innerText = "Simpan Perubahan"; showToast("Profil tersimpan!"); })
+            .catch(() => { btn.innerText = "Simpan Perubahan"; showToast("Gagal menyimpan", "danger"); });
+    };
+
+    function fetchAdminDashboard() { callAPI('getAdminStudents').then(res => { document.getElementById('admin-total-siswa').innerText = res.length; }); }
+
+    window.loadTrackingAdmin = function() {
+        const dateStr = document.getElementById('tracker-date').value; const tbody = document.getElementById('tracker-list');
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center">Mengambil data GPS...</td></tr>`;
+        callAPI('getDailyTrackingAdmin', { dateStr: dateStr }).then(res => {
+            if(res.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">Belum ada yang mengisi jurnal hari ini.</td></tr>`; return; }
+            tbody.innerHTML = res.map(t => {
+                let mapBtn = (t.lat !== "-" && t.lat !== "") ? `<a href="https://www.google.com/maps?q=${t.lat},${t.lng}" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2">Cek Lokasi</a>` : '<span class="text-muted small">Tidak ada</span>';
+                return `<tr><td class="small">${t.time}</td><td class="fw-bold">${t.nama}</td><td><span class="badge bg-secondary">${t.type}</span></td><td><code>${t.ip}</code></td><td>${mapBtn}</td></tr>`;
+            }).join('');
+        });
+    };
+
+    function loadAdminStudents() {
+        document.getElementById('admin-siswa-list').innerHTML = `<tr><td colspan="5" class="text-center">Memuat...</td></tr>`;
+        callAPI('getAdminStudents').then(res => {
+            document.getElementById('admin-siswa-list').innerHTML = res.map((s, i) => `<tr><td>${i+1}</td><td><span class="fw-bold">${s.nama}</span></td><td><code>${s.username}</code></td><td>${s.kelas || '-'}</td><td class="text-center"><button class="btn btn-sm btn-outline-danger" onclick="hapusSiswa('${s.username}')">Hapus</button></td></tr>`).join('');
+            populateDropdownSiswa(res);
+        });
+    }
+
+    window.hapusSiswa = function(uname) { if(confirm(`Hapus akun ${uname}?`)) callAPI('deleteStudent', { username: uname }).then(() => { showToast("Siswa dihapus!", "danger"); loadAdminStudents(); }); };
+
+    document.getElementById('form-admin-add-siswa').onsubmit = function(e) {
+        e.preventDefault(); const btn = document.getElementById('btn-add-siswa'); btn.innerText = "Memproses..."; btn.disabled = true; const fd = new FormData(this);
+        callAPI('addStudent', { nama: fd.get('nama'), username: fd.get('username'), pass: fd.get('password'), kelas: fd.get('kelas') })
+            .then(res => {
+                btn.innerText = "Buat Akun"; btn.disabled = false;
+                if(res.success) { bootstrap.Modal.getInstance(document.getElementById('modalAddSiswa')).hide(); showToast("Berhasil ditambahkan!"); this.reset(); loadAdminStudents(); } 
+                else { showToast(res.message, "danger"); }
+            });
+    };
+
+    function fillSettingsForm() { const form = document.getElementById('form-settings-sekolah'); for(let key in schoolSettings) { if(form.elements[key]) form.elements[key].value = schoolSettings[key]; } }
+
+    document.getElementById('form-settings-sekolah').onsubmit = function(e) {
+        e.preventDefault(); const btn = document.getElementById('btn-save-settings'); btn.innerText = "Menyimpan..."; const settingsObj = Object.fromEntries(new FormData(this));
+        callAPI('saveAdminSettings', { settingsObj: settingsObj }).then(() => { schoolSettings = settingsObj; btn.innerText = "Simpan Data Pengaturan"; showToast("Info sekolah & Logo disimpan!"); });
+    };
+
+    document.getElementById('btn-admin-view-report').onclick = function() {
+        const uname = document.getElementById('admin-report-select-siswa').value; if(!uname) return showToast("Pilih siswa terlebih dahulu!", "warning");
+        this.innerHTML = "Menarik Data..."; this.disabled = true;
+        callAPI('getReportForAdmin', { username: uname })
+            .then(res => {
+                this.innerHTML = 'Tarik Data'; this.disabled = false;
+                if(res && res.user) { adminViewingUser = res.user; adminViewingHabits = res.habits; document.getElementById('report-action-area').classList.remove('d-none'); setupPrintKop(); showToast("Data siap dicetak!"); } 
+                else { showToast("Data kosong.", "danger"); }
+            }).catch(err => { this.innerHTML = 'Tarik Data'; this.disabled = false; showToast("Gagal menarik data", "danger"); });
+    };
+
+    function setupPrintKop() {
+        document.getElementById('print-pemerintah').innerText = schoolSettings.pemerintah || ''; document.getElementById('print-sekolah').innerText = schoolSettings.nama_sekolah || ''; document.getElementById('print-alamat').innerText = schoolSettings.alamat || '';
+        document.getElementById('print-logo-daerah').src = schoolSettings.logo_daerah || ''; document.getElementById('print-logo-sekolah').src = schoolSettings.logo_sekolah || '';
+        const schoolName = schoolSettings.nama_sekolah || 'Jurnal_Hebat'; document.getElementById('print-barcode').src = `https://bwipjs-api.metafloor.com/?bcid=code128&text=${encodeURIComponent(schoolName)}&scale=2&includetext=true`;
+    }
+
+    window.showPrintArea = function(tipe) {
+        if(!adminViewingUser) return;
+        const mSelect = document.getElementById('admin-report-month'); const yInput = document.getElementById('admin-report-year').value;
+        const monthName = mSelect.options[mSelect.selectedIndex].text; const monthNum = parseInt(mSelect.value);
+        const today = new Date().toLocaleDateString('id-ID', { day:'2-digit', month:'long', year:'numeric'});
+        
+        document.getElementById('print-siswa-nama').innerText = adminViewingUser.nama; document.getElementById('print-siswa-kelas').innerText = adminViewingUser.kelas || '-';
+        document.getElementById('print-siswa-bulan').innerText = monthName; document.getElementById('print-siswa-tahun').innerText = yInput;
+        document.getElementById('print-type-bulanan').classList.add('d-none'); document.getElementById('print-type-umum').classList.add('d-none');
+
+        const habitsList = [
+            { k: 'bangun', n: 'Bangun Pagi', cols: ['Pukul/Jam'] }, { k: 'ibadah', n: 'Beribadah', cols: ['Subuh', 'Dzuhur', 'Ashar', 'Magrib', 'Isya', 'Keterangan'] },
+            { k: 'olahraga', n: 'Berolahraga', cols: ['Jenis Olahraga'] }, { k: 'makan', n: 'Makan Sehat dan Bergizi', cols: ['Menu Makanan Sehat'] },
+            { k: 'belajar', n: 'Gemar Belajar', cols: ['Materi Pelajaran'] }, { k: 'masyarakat', n: 'Bermasyarakat', cols: ['Kegiatan Sosial'] },
+            { k: 'tidur', n: 'Tidur Cepat', cols: ['Jam Tidur'] }
+        ];
+
+        const daysInMonth = new Date(yInput, monthNum, 0).getDate();
+        const qrKepsek = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(schoolSettings.nama_kepsek || 'Kepsek')}`;
+        const qrGuru = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(schoolSettings.nama_guru || 'Guru')}`;
+
+        const signatureHtml = `
+        <table style="width: 100%; text-align: center; border: none !important; page-break-inside: avoid; margin-top: 30px; font-size:14px;">
+            <tr>
+                <td style="width: 50%; vertical-align: top; border: none !important;"><p class="mb-2">Mengetahui,<br>Kepala Sekolah</p><img src="${qrKepsek}" style="height:60px; object-fit:contain; margin-bottom: 5px;" alt="QR"><p class="fw-bold mb-0 text-decoration-underline">${schoolSettings.nama_kepsek || '____________________'}</p><p class="small">NIP. ${schoolSettings.nip_kepsek || '...................'}</p></td>
+                <td style="width: 50%; vertical-align: top; border: none !important;"><p class="mb-2">${schoolSettings.tempat_ttd || ''}, ${today}<br>Wali Kelas / Guru Kelas</p><img src="${qrGuru}" style="height:60px; object-fit:contain; margin-bottom: 5px;" alt="QR"><p class="fw-bold mb-0 text-decoration-underline">${schoolSettings.nama_guru || '____________________'}</p><p class="small">NIP. ${schoolSettings.nip_guru || '...................'}</p></td>
+            </tr>
+        </table>
+        <div class="text-center mt-3" style="page-break-inside: avoid; font-size: 14px;"><p class="mb-5">Mengetahui,<br>Orang Tua/Wali</p><p class="fw-bold mb-0">...................................</p></div>`;
+
+        if(tipe === 'bulanan') {
+            document.getElementById('print-type-bulanan').classList.remove('d-none'); let bulananHtml = '';
+            habitsList.forEach((h, idx) => {
+                bulananHtml += `<div class="page-break-after"><div class="text-center mb-3"><h5 class="fw-bold text-uppercase mb-0">BUKU JURNAL</h5><h6 class="fw-bold">Tujuh Kebiasaan Anak Indonesia Hebat</h6></div>`;
+                bulananHtml += `<h6 class="fw-bold text-uppercase mb-2 mt-3 text-center text-decoration-underline" style="font-size: 14px;">${idx+1}. Jurnal ${h.n}</h6><table class="table table-bordered border-dark table-sm text-center align-middle mb-2" style="font-size: 12px;"><thead class="table-light"><tr><th width="70">Tanggal</th>`;
+                h.cols.forEach(col => bulananHtml += `<th>${col}</th>`); bulananHtml += `</tr></thead><tbody>`;
+                for(let d=1; d<=daysInMonth; d++) {
+                    const targetDate = `${yInput}-${String(monthNum).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                    const entries = adminViewingHabits[h.k] ? adminViewingHabits[h.k].filter(e => e.tgl === targetDate) : []; const entry = entries.length > 0 ? entries[0] : null;
+                    bulananHtml += `<tr><td>${d}</td>`;
+                    if(h.k === 'ibadah') {
+                        const sholat = entry ? (entry.detail1 || '') : ''; const ket = entry ? (entry.detail2 || '') : '';
+                        bulananHtml += `<td>${sholat.includes('Subuh') ? 'V' : ''}</td><td>${sholat.includes('Dzuhur') ? 'V' : ''}</td><td>${sholat.includes('Ashar') ? 'V' : ''}</td><td>${sholat.includes('Magrib') ? 'V' : ''}</td><td>${sholat.includes('Isya') ? 'V' : ''}</td><td class="text-start px-2 small">${ket}</td>`;
+                    } else { bulananHtml += `<td class="text-start px-3">${entry ? (entry.detail1 ? entry.detail1 : 'Dilaksanakan (V)') : ''}</td>`; }
+                    bulananHtml += `</tr>`;
+                }
+                bulananHtml += `</tbody></table>${signatureHtml}</div>`;
+            });
+            document.getElementById('bulanan-tables-container').innerHTML = bulananHtml;
+        } else if (tipe === 'umum') {
+            document.getElementById('print-type-umum').classList.remove('d-none'); let bodyHtml = '';
+            habitsList.forEach((h, idx) => {
+                const isTerbiasa = adminViewingHabits[h.k] && adminViewingHabits[h.k].some(entry => entry.tgl.startsWith(`${yInput}-${String(monthNum).padStart(2, '0')}`));
+                bodyHtml += `<tr><td>${idx+1}</td><td class="text-start fw-semibold px-3">${h.n}</td><td>${!isTerbiasa ? 'V' : ''}</td><td>${isTerbiasa ? 'V' : ''}</td></tr>`;
+            });
+            document.getElementById('table-body-umum').innerHTML = bodyHtml; document.getElementById('signature-area-umum').innerHTML = signatureHtml;
+        }
+        setTimeout(() => window.print(), 1500);
+    };
+
+    function showToast(msg, type = 'success') {
+        const container = document.getElementById('toast-container'); const t = document.createElement('div');
+        t.className = `toast show align-items-center text-white bg-${type} border-0 mb-2 fade-in`;
+        t.innerHTML = `<div class="d-flex"><div class="toast-body">${msg}</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div>`;
+        container.appendChild(t); setTimeout(() => t.remove(), 3000);
+    }
+</script>
+</body>
+</html>
