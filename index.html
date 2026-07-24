@@ -2,14 +2,16 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#00A896">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Jurnal 7 Kebiasaan Anak Indonesia Hebat</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root { --primary-color: #00A896; --secondary-color: #02C39A; --bg-light: #F8FBFB; --sidebar-width: 280px; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); color: #2D3436; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); color: #2D3436; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none;}
         .login-container { height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); flex: 1;}
         .login-card { width: 100%; max-width: 500px; background: white; padding: 2.5rem; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
         .sidebar { width: var(--sidebar-width); height: 100vh; background: white; border-right: 1px solid #e0e0e0; position: fixed; left: 0; top: 0; z-index: 1000; padding: 1.5rem; overflow-y: auto; transition: left 0.3s ease;}
@@ -29,12 +31,34 @@
         .icon-gradient-bg { background: linear-gradient(135deg, #00A896 0%, #b0c4de 100%); display: inline-flex; align-items: center; justify-content: center; width: 55px; height: 55px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .footer-embossed { color: #E5E4E2; background-color: #2D3436; text-shadow: -1px -1px 1px rgba(255,255,255,0.2), 1px 1px 1px rgba(0,0,0,0.8); font-weight: 700; text-align: center; padding: 15px; border-radius: 12px; margin-top: auto; width: 100%; font-size: 0.9rem; letter-spacing: 0.5px; box-shadow: inset 0px 2px 5px rgba(0,0,0,0.5); }
         .sidebar-overlay { display: none; position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); z-index: 1040; }
-        @media (max-width: 992px) { .sidebar { left: -300px; border-right: none; box-shadow: 2px 0 15px rgba(0,0,0,0.1); } .sidebar.show { left: 0; } .sidebar-overlay.show { display: block; } .main-content { margin-left: 0; padding: 1rem; } .header-banner { padding: 1.5rem 1rem; text-align: center; margin-top: 1rem; } }
         .fade-in { animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .loader-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center;}
+        
+        /* STANDAR UI MOBILE / TOUCH TARGETS */
+        input[type="date"], select, .form-control, .btn { min-height: 48px; }
+        .form-check-input { width: 1.5em !important; height: 1.5em !important; cursor: pointer; }
+
+        @media (max-width: 992px) {
+            .sidebar { left: -300px; border-right: none; box-shadow: 2px 0 15px rgba(0,0,0,0.1); }
+            .sidebar.show { left: 0; }
+            .sidebar-overlay.show { display: block; }
+            .main-content { margin-left: 0; padding: 1rem 0.5rem !important; }
+            
+            /* Sticky Header Khusus HP */
+            .mobile-header { position: sticky; top: 0; z-index: 1020; margin-bottom: 0 !important; border-radius: 0 0 16px 16px !important; box-shadow: 0 4px 15px rgba(0, 168, 150, 0.2) !important; }
+            
+            .card { padding: 1.25rem !important; border-radius: 16px; }
+            .header-banner { margin-top: 1rem; padding: 1.5rem 1rem; border-radius: 16px; text-align: center; }
+            .header-banner h2 { font-size: 1.4rem; }
+            .table { font-size: 0.85rem; white-space: nowrap; }
+            .table .btn { min-height: 32px; padding: 0.25rem 0.5rem; font-size: 0.75rem; }
+            .modal-dialog { margin: 0.5rem; display: flex; align-items: center; min-height: calc(100% - 1rem); }
+            .modal-content { border-radius: 20px; }
+        }
+
         @media print {
-            #toast-container, #loader, #section-login, .sidebar, .sidebar-overlay, .mobile-header { display: none !important; }
+            #toast-container, #loader, #section-login, .sidebar, .sidebar-overlay, .mobile-header, .footer-embossed { display: none !important; }
             .main-content { margin-left: 0 !important; padding: 0 !important; width: 100% !important; display: block; }
             .tab-pane { display: none !important; }
             #tab-admin-reports { display: block !important; opacity: 1 !important; visibility: visible !important; }
@@ -66,8 +90,10 @@
 
 <div id="section-login" class="login-container d-none">
     <div class="login-card fade-in text-center">
+        <!-- LOGO HALAMAN LOGIN -->
         <img src="https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png" alt="Logo Sekolah" style="width: 100px; height: 100px; object-fit: contain; margin-bottom: 15px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-        <h4 class="fw-bold mb-1 text-primary">JURNAL 7 KAIH</h4>
+        
+        <h4 class="fw-bold mb-1 text-primary">Jurnal 7 Kebiasaan</h4>
         <p class="text-muted mb-4 small">Silakan pilih akses masuk Anda</p>
         
         <ul class="nav nav-pills nav-fill mb-4 bg-light p-1 rounded-pill" role="tablist">
@@ -110,7 +136,9 @@
     <div class="sidebar-overlay no-print" onclick="toggleSidebar()"></div>
     <div class="sidebar no-print">
         <div class="d-flex align-items-center mb-4 px-2">
+            <!-- LOGO SIDEBAR -->
             <img src="https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png" alt="Logo Sekolah" style="width: 45px; height: 45px; object-fit: contain;" class="me-2">
+            
             <div class="lh-1">
                 <div class="small fw-bold text-muted mb-1" style="font-size: 0.6rem;">JURNAL 7 KAIH</div>
                 <h6 class="mb-0 fw-bold text-primary" id="sidebar-role-title" style="font-size: 0.8rem;">MENU UTAMA</h6>
@@ -145,11 +173,18 @@
     </div>
 
     <div class="main-content d-flex flex-column min-vh-100">
-        <div class="mobile-header d-flex d-lg-none justify-content-between align-items-center p-3 text-white no-print rounded-3 shadow-sm" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); margin-bottom: 15px;">
+        <!-- HEADER MOBILE STICKY -->
+        <div class="mobile-header d-flex d-lg-none justify-content-between align-items-center p-3 text-white no-print shadow-sm" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
             <button class="btn btn-sm text-white border-0" onclick="toggleSidebar()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
             </button>
-            <h6 class="mb-0 fw-bold m-0">Jurnal 7 Kebiasaan</h6>
+            
+            <div class="d-flex align-items-center">
+                <!-- LOGO HEADER HP -->
+                <img src="https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png" alt="Logo Sekolah" style="width: 28px; height: 28px; object-fit: contain; background: white; border-radius: 50%; padding: 2px; margin-right: 8px;">
+                <h6 class="mb-0 fw-bold m-0">Jurnal 7 Kebiasaan</h6>
+            </div>
+            
             <div style="width: 28px;"></div>
         </div>
 
@@ -216,8 +251,8 @@
                     <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                         <h6 class="fw-bold mb-0 text-primary" id="school-activity-title">Penilaian Siswa</h6>
                         <div>
-                            <button class="btn btn-sm btn-outline-success me-2" onclick="setAllEvaluations('Melaksanakan Dengan Baik')">Set Semua: Baik</button>
-                            <button class="btn btn-sm btn-outline-secondary" onclick="setAllEvaluations('Tidak Hadir')">Set Semua: Tidak Hadir</button>
+                            <button class="btn btn-sm btn-outline-success me-2 mb-1" onclick="setAllEvaluations('Melaksanakan Dengan Baik')">Set Semua: Baik</button>
+                            <button class="btn btn-sm btn-outline-secondary mb-1" onclick="setAllEvaluations('Tidak Hadir')">Set Semua: Tidak Hadir</button>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -226,7 +261,7 @@
                             <tbody id="school-student-list"></tbody>
                         </table>
                     </div>
-                    <button class="btn btn-success mt-3" id="btn-save-school" onclick="saveSchoolChecklist()">Simpan Penilaian Jurnal Sekolah</button>
+                    <button class="btn btn-success mt-3 w-100 w-md-auto" id="btn-save-school" onclick="saveSchoolChecklist()">Simpan Penilaian Jurnal Sekolah</button>
                 </div>
             </div>
 
@@ -375,7 +410,7 @@
                 </div>
             </div>
         </div>
-        <div id="footer-credit" class="footer-embossed no-print mt-4">Design Oleh "Badiang"</div>
+        <div id="footer-credit" class="footer-embossed no-print mt-4">Design Oleh "Yefri Haryanto - www.yefriharyanto.id"</div>
     </div>
 </div>
 
@@ -444,7 +479,7 @@
     // ==========================================
     // 🔴 MASUKKAN URL WEB APP APPS SCRIPT ANDA DI SINI
     // ==========================================
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwhcFAAuxnQONCbVECDYVcqCBaigMNRKrzGYT4MdhGD1boyIQBprp23V9Gbh1Wwt5Sd/exec"; 
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbysbp6veu3HFIQi41ZL_m9TWFg-lbYUoLXEqdC06zhAAogSPU8PvrOAsG5WXysXa_07CQ/exec"; 
 
     async function callAPI(action, params = {}) {
         try {
@@ -471,12 +506,7 @@
 
     document.addEventListener("DOMContentLoaded", function() {
         try {
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-                document.getElementById('icon-award-login').innerHTML = '<i data-lucide="award" size="40"></i>';
-                document.getElementById('icon-award-sidebar').innerHTML = '<i data-lucide="award"></i>';
-                lucide.createIcons(); 
-            }
+            if (typeof lucide !== 'undefined') { lucide.createIcons(); }
             const today = new Date();
             document.getElementById('admin-report-year').value = today.getFullYear();
             document.getElementById('admin-report-month').value = today.getMonth() + 1;
@@ -689,9 +719,7 @@
     };
 
     window.setAllEvaluations = function(val) {
-        document.querySelectorAll('.school-eval-select').forEach(sel => {
-            sel.value = val;
-        });
+        document.querySelectorAll('.school-eval-select').forEach(sel => { sel.value = val; });
     };
 
     window.saveSchoolChecklist = function() {
