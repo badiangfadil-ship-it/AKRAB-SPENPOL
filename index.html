@@ -94,7 +94,7 @@
             <div class="tab-pane fade" id="login-admin">
                 <form id="form-login-admin">
                     <div class="mb-3 text-start">
-                        <label class="form-label small fw-bold">Username Admin</label>
+                        <label class="form-label small fw-bold">Username Guru Wali</label>
                         <input type="text" class="form-control" id="user-admin" required>
                     </div>
                     <div class="mb-4 text-start">
@@ -133,10 +133,11 @@
                 <button class="nav-link" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('tidur', 'Tidur Cepat', 'Jam Tidur', 'time')"><span id="ic-moon">🌙</span> Tidur Cepat</button>
             </div>
             <div id="menu-admin-container" class="d-none">
-                <button class="nav-link active" onclick="switchTab('tab-admin-dash', this)">📊 Dashboard</button>
+                <div class="alert alert-success mx-2 small py-2 px-3"><span id="admin-welcome-name" class="fw-bold"></span></div>
+                <button class="nav-link active" onclick="switchTab('tab-admin-dash', this)">📊 Dashboard Bimbingan</button>
                 <button class="nav-link" onclick="switchTab('tab-admin-tracker', this)">🎯 Pantau Harian (GPS)</button>
-                <button class="nav-link" onclick="switchTab('tab-admin-students', this)">👥 Kelola Siswa</button>
-                <button class="nav-link" onclick="switchTab('tab-admin-settings', this)">⚙️ Info Sekolah</button>
+                <button class="nav-link" onclick="switchTab('tab-admin-students', this)">👥 Kelola Siswa Bimbingan</button>
+                <button class="nav-link" onclick="switchTab('tab-admin-settings', this)">⚙️ Info Laporan Umum</button>
                 <button class="nav-link" onclick="switchTab('tab-admin-reports', this)">🖨️ Cetak Laporan</button>
             </div>
             <hr class="my-4 w-100">
@@ -181,11 +182,11 @@
             </div>
 
             <div id="tab-admin-dash" class="tab-pane d-none fade-in">
-                <h3 class="fw-bold mb-4">Dashboard Administrator</h3>
+                <h3 class="fw-bold mb-4">Dashboard Bimbingan Guru Wali</h3>
                 <div class="row g-4">
                     <div class="col-md-4">
                         <div class="card p-4 text-center bg-white border">
-                            <h6 class="text-muted">Total Siswa Terdaftar</h6>
+                            <h6 class="text-muted">Total Siswa Bimbingan</h6>
                             <h2 class="fw-bold text-primary" id="admin-total-siswa">0</h2>
                         </div>
                     </div>
@@ -194,7 +195,7 @@
 
             <div id="tab-admin-tracker" class="tab-pane d-none fade-in">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3 class="fw-bold mb-0">Pantau Harian Laporan GPS & IP</h3>
+                    <h3 class="fw-bold mb-0">Pantau Harian Siswa Bimbingan (GPS & IP)</h3>
                 </div>
                 <div class="card p-4 mb-4 shadow-sm border-0">
                     <div class="row align-items-end g-3">
@@ -208,7 +209,6 @@
                     </div>
                 </div>
                 <div class="card p-4 shadow-sm border-0">
-                    <p class="small text-muted mb-3">Fitur ini membantu mengecek apakah satu HP digunakan untuk mengisi jurnal banyak siswa secara bersamaan.</p>
                     <div class="table-responsive" style="overflow-x: auto;">
                         <table class="table table-hover align-middle">
                             <thead class="table-light"><tr><th>Waktu Submit</th><th>Nama Siswa</th><th>Kebiasaan</th><th>IP Address</th><th>Lokasi Input</th></tr></thead>
@@ -220,8 +220,8 @@
 
             <div id="tab-admin-students" class="tab-pane d-none fade-in">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3 class="fw-bold mb-0">Kelola Siswa</h3>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddSiswa">Tambah Siswa</button>
+                    <h3 class="fw-bold mb-0">Siswa Bimbingan Saya</h3>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddSiswa">Tambah Siswa Bimbingan</button>
                 </div>
                 <div class="card p-4" style="overflow-x: auto;">
                     <table class="table table-hover" style="min-width: 500px;">
@@ -232,7 +232,7 @@
             </div>
 
             <div id="tab-admin-settings" class="tab-pane d-none fade-in">
-                <h3 class="fw-bold mb-4">Pengaturan Info Sekolah & Laporan</h3>
+                <h3 class="fw-bold mb-4">Pengaturan Info Umum (Kepsek & Logo)</h3>
                 <div class="card p-4">
                     <form id="form-settings-sekolah">
                         <div class="row g-3">
@@ -246,13 +246,11 @@
                                     <div class="col-12"><label class="form-label fw-bold small">Alamat Lengkap</label><input type="text" class="form-control" name="alamat"></div>
                                 </div>
                             </div></div>
-                            <div class="col-md-12 mt-4"><div class="bg-light p-3 rounded"><h6 class="fw-bold text-primary mb-2">Pengesahan (Tanda Tangan)</h6>
+                            <div class="col-md-12 mt-4"><div class="bg-light p-3 rounded"><h6 class="fw-bold text-primary mb-2">Pengesahan (Kepala Sekolah)</h6>
                                 <div class="row g-3">
-                                    <div class="col-md-6"><label class="form-label fw-bold small">Nama Wali/Guru Kelas</label><input type="text" class="form-control" name="nama_guru"></div>
-                                    <div class="col-md-6"><label class="form-label fw-bold small">NIP Guru</label><input type="text" class="form-control" name="nip_guru"></div>
                                     <div class="col-md-6"><label class="form-label fw-bold small">Nama Kepala Sekolah</label><input type="text" class="form-control" name="nama_kepsek"></div>
                                     <div class="col-md-6"><label class="form-label fw-bold small">NIP Kepala Sekolah</label><input type="text" class="form-control" name="nip_kepsek"></div>
-                                    <div class="col-md-6"><label class="form-label fw-bold small">Tempat Tanda Tangan</label><input type="text" class="form-control" name="tempat_ttd" placeholder="Contoh: Jakarta"></div>
+                                    <div class="col-md-12"><label class="form-label fw-bold small">Tempat Tanda Tangan</label><input type="text" class="form-control" name="tempat_ttd" placeholder="Contoh: Kolaka Timur"></div>
                                 </div>
                             </div></div>
                         </div>
@@ -262,7 +260,7 @@
             </div>
 
             <div id="tab-admin-reports" class="tab-pane d-none fade-in">
-                <h3 class="fw-bold mb-4 no-print">Cetak Laporan Siswa</h3>
+                <h3 class="fw-bold mb-4 no-print">Cetak Laporan Siswa Bimbingan</h3>
                 <div class="card p-4 mb-4 no-print shadow-sm border-0">
                     <div class="row align-items-end g-3">
                         <div class="col-md-5">
@@ -339,19 +337,15 @@
                             </thead>
                             <tbody id="table-body-umum"></tbody>
                         </table>
-                        
                         <div class="mt-2 border border-dark p-2" style="min-height: 70px;">
                             <p class="fw-bold mb-1" style="font-size: 13px;">Kesimpulan / Tanggapan Orangtua:</p>
-                            <p class="small text-muted mb-0" style="font-size: 11px;">Tanggapan tentang Tujuh Kebiasaan Anak Indonesia Hebat yang dilakukan peserta didik di rumah:</p>
                         </div>
-
                         <div id="signature-area-umum"></div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div id="footer-credit" class="footer-embossed no-print mt-4">Design Oleh "Badiang"</div>
+        <div id="footer-credit" class="footer-embossed no-print mt-4">Design Oleh "Yefri Haryanto - www.yefriharyanto.id"</div>
     </div>
 </div>
 
@@ -420,9 +414,8 @@
     // ==========================================
     // 🔴 PENTING: MASUKKAN URL WEB APP ANDA DI SINI
     // ==========================================
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6csiyyAPKM1SVxQ9DgcNCQEeOHAOto1aehG8tKuEPMSjSYlUpD3e-I-okmu2FpQ6A8w/exec"; 
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxRoKVqZlZ5-YyZoJL-QiItVcNVrKIcQ1LObb-5NvhQX6fCs17K_1o-ynGQuCsfB_PX3g/exec"; 
 
-    // Helper untuk memanggil API
     async function callAPI(action, params = {}) {
         try {
             const response = await fetch(SCRIPT_URL, {
@@ -432,7 +425,6 @@
             });
             return await response.json();
         } catch (error) {
-            console.error("API Error:", error);
             throw new Error("Gagal terhubung ke server Google.");
         }
     }
@@ -463,18 +455,13 @@
             document.querySelectorAll('input[type="date"]').forEach(inp => inp.value = localISODate);
         } catch(e) { }
 
-        // Memanggil API saat pertama kali dibuka
-        callAPI('getInitialData')
-            .then(data => {
-                if (data.error) throw new Error(data.message);
-                document.getElementById('loader').classList.add('d-none');
-                document.getElementById('section-login').classList.remove('d-none');
-                schoolSettings = data.settings || {};
-                populateDropdownSiswa(data.students || []);
-            })
-            .catch(err => {
-                document.getElementById('loader-text').innerHTML = `<div class="alert alert-danger mt-3 text-start"><strong>Gagal Terhubung:</strong><br>${err.message}</div>`;
-            });
+        callAPI('getInitialData').then(data => {
+            if (data.error) throw new Error(data.message);
+            document.getElementById('loader').classList.add('d-none');
+            document.getElementById('section-login').classList.remove('d-none');
+            schoolSettings = data.settings || {};
+            populateDropdownSiswa(data.students || []);
+        }).catch(err => { document.getElementById('loader-text').innerHTML = `<div class="alert alert-danger mt-3 text-start"><strong>Gagal Terhubung:</strong><br>${err.message}</div>`; });
     });
 
     function populateDropdownSiswa(studentsData) {
@@ -495,10 +482,7 @@
                 btn.innerText = "Masuk Sebagai Siswa"; btn.disabled = false;
                 if(res.success) { currentUser = res.user; currentHabits = res.habits; showApp('siswa'); } 
                 else { showToast(res.message, "danger"); }
-            })
-            .catch(err => {
-                btn.innerText = "Masuk Sebagai Siswa"; btn.disabled = false; showToast("Koneksi gagal", "danger");
-            });
+            }).catch(err => { btn.innerText = "Masuk Sebagai Siswa"; btn.disabled = false; showToast("Koneksi gagal", "danger"); });
     };
 
     document.getElementById('form-login-admin').onsubmit = function(e) {
@@ -511,11 +495,9 @@
         callAPI('loginAdmin', { user: user, pass: pass })
             .then(res => {
                 btn.innerText = "Masuk Sebagai Guru"; btn.disabled = false;
-                if(res.success) { showApp('admin'); } else { showToast(res.message, "danger"); }
-            })
-            .catch(err => {
-                btn.innerText = "Masuk Sebagai Guru"; btn.disabled = false; showToast("Koneksi gagal", "danger");
-            });
+                if(res.success) { currentUser = { username: user, nama: res.nama, role: 'admin' }; document.getElementById('admin-welcome-name').innerText = "Wali Kelas: " + res.nama; showApp('admin'); } 
+                else { showToast(res.message, "danger"); }
+            }).catch(err => { btn.innerText = "Masuk Sebagai Guru"; btn.disabled = false; showToast("Koneksi gagal", "danger"); });
     };
 
     function showApp(role) {
@@ -609,12 +591,12 @@
             .catch(() => { btn.innerText = "Simpan Perubahan"; showToast("Gagal menyimpan", "danger"); });
     };
 
-    function fetchAdminDashboard() { callAPI('getAdminStudents').then(res => { document.getElementById('admin-total-siswa').innerText = res.length; }); }
+    function fetchAdminDashboard() { callAPI('getAdminStudents', { namaGuru: currentUser.nama }).then(res => { document.getElementById('admin-total-siswa').innerText = res.length; }); }
 
     window.loadTrackingAdmin = function() {
         const dateStr = document.getElementById('tracker-date').value; const tbody = document.getElementById('tracker-list');
         tbody.innerHTML = `<tr><td colspan="5" class="text-center">Mengambil data GPS...</td></tr>`;
-        callAPI('getDailyTrackingAdmin', { dateStr: dateStr }).then(res => {
+        callAPI('getDailyTrackingAdmin', { dateStr: dateStr, namaGuru: currentUser.nama }).then(res => {
             if(res.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">Belum ada yang mengisi jurnal hari ini.</td></tr>`; return; }
             tbody.innerHTML = res.map(t => {
                 let mapBtn = (t.lat !== "-" && t.lat !== "") ? `<a href="https://www.google.com/maps?q=${t.lat},${t.lng}" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2">Cek Lokasi</a>` : '<span class="text-muted small">Tidak ada</span>';
@@ -625,7 +607,7 @@
 
     function loadAdminStudents() {
         document.getElementById('admin-siswa-list').innerHTML = `<tr><td colspan="5" class="text-center">Memuat...</td></tr>`;
-        callAPI('getAdminStudents').then(res => {
+        callAPI('getAdminStudents', { namaGuru: currentUser.nama }).then(res => {
             document.getElementById('admin-siswa-list').innerHTML = res.map((s, i) => `<tr><td>${i+1}</td><td><span class="fw-bold">${s.nama}</span></td><td><code>${s.username}</code></td><td>${s.kelas || '-'}</td><td class="text-center"><button class="btn btn-sm btn-outline-danger" onclick="hapusSiswa('${s.username}')">Hapus</button></td></tr>`).join('');
             populateDropdownSiswa(res);
         });
@@ -635,7 +617,7 @@
 
     document.getElementById('form-admin-add-siswa').onsubmit = function(e) {
         e.preventDefault(); const btn = document.getElementById('btn-add-siswa'); btn.innerText = "Memproses..."; btn.disabled = true; const fd = new FormData(this);
-        callAPI('addStudent', { nama: fd.get('nama'), username: fd.get('username'), pass: fd.get('password'), kelas: fd.get('kelas') })
+        callAPI('addStudent', { nama: fd.get('nama'), username: fd.get('username'), pass: fd.get('password'), kelas: fd.get('kelas'), namaGuru: currentUser.nama })
             .then(res => {
                 btn.innerText = "Buat Akun"; btn.disabled = false;
                 if(res.success) { bootstrap.Modal.getInstance(document.getElementById('modalAddSiswa')).hide(); showToast("Berhasil ditambahkan!"); this.reset(); loadAdminStudents(); } 
@@ -653,7 +635,7 @@
     document.getElementById('btn-admin-view-report').onclick = function() {
         const uname = document.getElementById('admin-report-select-siswa').value; if(!uname) return showToast("Pilih siswa terlebih dahulu!", "warning");
         this.innerHTML = "Menarik Data..."; this.disabled = true;
-        callAPI('getReportForAdmin', { username: uname })
+        callAPI('getReportForAdmin', { username: uname, namaGuru: currentUser.nama })
             .then(res => {
                 this.innerHTML = 'Tarik Data'; this.disabled = false;
                 if(res && res.user) { adminViewingUser = res.user; adminViewingHabits = res.habits; document.getElementById('report-action-area').classList.remove('d-none'); setupPrintKop(); showToast("Data siap dicetak!"); } 
@@ -686,13 +668,13 @@
 
         const daysInMonth = new Date(yInput, monthNum, 0).getDate();
         const qrKepsek = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(schoolSettings.nama_kepsek || 'Kepsek')}`;
-        const qrGuru = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(schoolSettings.nama_guru || 'Guru')}`;
+        const qrGuru = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(currentUser.nama || 'Guru')}`;
 
         const signatureHtml = `
         <table style="width: 100%; text-align: center; border: none !important; page-break-inside: avoid; margin-top: 30px; font-size:14px;">
             <tr>
                 <td style="width: 50%; vertical-align: top; border: none !important;"><p class="mb-2">Mengetahui,<br>Kepala Sekolah</p><img src="${qrKepsek}" style="height:60px; object-fit:contain; margin-bottom: 5px;" alt="QR"><p class="fw-bold mb-0 text-decoration-underline">${schoolSettings.nama_kepsek || '____________________'}</p><p class="small">NIP. ${schoolSettings.nip_kepsek || '...................'}</p></td>
-                <td style="width: 50%; vertical-align: top; border: none !important;"><p class="mb-2">${schoolSettings.tempat_ttd || ''}, ${today}<br>Wali Kelas / Guru Kelas</p><img src="${qrGuru}" style="height:60px; object-fit:contain; margin-bottom: 5px;" alt="QR"><p class="fw-bold mb-0 text-decoration-underline">${schoolSettings.nama_guru || '____________________'}</p><p class="small">NIP. ${schoolSettings.nip_guru || '...................'}</p></td>
+                <td style="width: 50%; vertical-align: top; border: none !important;"><p class="mb-2">${schoolSettings.tempat_ttd || ''}, ${today}<br>Wali Kelas / Guru Kelas</p><img src="${qrGuru}" style="height:60px; object-fit:contain; margin-bottom: 5px;" alt="QR"><p class="fw-bold mb-0 text-decoration-underline">${currentUser.nama || '____________________'}</p></td>
             </tr>
         </table>
         <div class="text-center mt-3" style="page-break-inside: avoid; font-size: 14px;"><p class="mb-5">Mengetahui,<br>Orang Tua/Wali</p><p class="fw-bold mb-0">...................................</p></div>`;
