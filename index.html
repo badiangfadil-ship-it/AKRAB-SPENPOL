@@ -800,10 +800,17 @@
     };
 
     function setupPrintKop() {
-        document.getElementById('print-pemerintah').innerText = schoolSettings.pemerintah || ''; document.getElementById('print-sekolah').innerText = schoolSettings.nama_sekolah || ''; document.getElementById('print-alamat').innerText = schoolSettings.alamat || '';
-        document.getElementById('print-logo-daerah').src = schoolSettings.logo_daerah || ''; document.getElementById('print-logo-sekolah').src = schoolSettings.logo_sekolah || '';
-        const schoolName = schoolSettings.nama_sekolah || 'Jurnal_Hebat'; document.getElementById('print-barcode').src = `https://bwipjs-api.metafloor.com/?bcid=code128&text=${encodeURIComponent(schoolName)}&scale=2&includetext=true`;
-    }
+    document.getElementById('print-pemerintah').innerText = schoolSettings.pemerintah || ''; 
+    document.getElementById('print-sekolah').innerText = schoolSettings.nama_sekolah || ''; 
+    document.getElementById('print-alamat').innerText = schoolSettings.alamat || '';
+    
+    // 🔴 MASUKKAN LINK LOGO ANDA SECARA LANGSUNG DI SINI
+    document.getElementById('print-logo-daerah').src = 'https://cdn.phototourl.com/member/2026-07-24-7da31f21-29e7-4dac-8841-dace531ebe04.png'; 
+    document.getElementById('print-logo-sekolah').src = 'https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png';
+    
+    const schoolName = schoolSettings.nama_sekolah || 'Jurnal_Hebat'; 
+    document.getElementById('print-barcode').src = `https://bwipjs-api.metafloor.com/?bcid=code128&text=${encodeURIComponent(schoolName)}&scale=2&includetext=true`;
+}
 
     window.showPrintArea = function(tipe) {
         if(!adminViewingUser) return;
