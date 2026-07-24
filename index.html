@@ -12,13 +12,18 @@
     <style>
         :root { --primary-color: #00A896; --secondary-color: #02C39A; --bg-light: #F8FBFB; --sidebar-width: 280px; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); color: #2D3436; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none;}
+        
         .login-container { height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); flex: 1;}
         .login-card { width: 100%; max-width: 500px; background: white; padding: 2.5rem; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-        .sidebar { width: var(--sidebar-width); height: 100vh; background: white; border-right: 1px solid #e0e0e0; position: fixed; left: 0; top: 0; z-index: 1000; padding: 1.5rem; overflow-y: auto; transition: left 0.3s ease;}
+        
+        /* Z-INDEX DIPERBAIKI DI SINI: Sidebar = 1040 */
+        .sidebar { width: var(--sidebar-width); height: 100vh; background: white; border-right: 1px solid #e0e0e0; position: fixed; left: 0; top: 0; z-index: 1040; padding: 1.5rem; overflow-y: auto; transition: left 0.3s ease;}
         .main-content { margin-left: var(--sidebar-width); padding: 2rem; flex: 1; display: flex; flex-direction: column; transition: margin-left 0.3s ease;}
+        
         .nav-link { color: #636e72; padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 12px; border: none; background: transparent; width: 100%; text-align: left; transition: all 0.2s ease; font-weight: 500; cursor:pointer;}
         .nav-link:hover { background-color: #f1f3f5; color: var(--primary-color); }
         .nav-link.active { background-color: var(--primary-color) !important; color: white !important; box-shadow: 0 4px 12px rgba(0, 168, 150, 0.2); }
+        
         .card { border: none; border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.04); transition: transform 0.2s ease; }
         .modal-content { border: none; border-radius: 24px; overflow: hidden; }
         .modal-header { background: var(--primary-color); color: white; padding: 1.2rem 2rem; }
@@ -26,11 +31,15 @@
         .status-badge { padding: 6px 14px; border-radius: 30px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
         .status-yes { background: #d1fae5; color: #065f46; }
         .status-no { background: #fee2e2; color: #991b1b; }
+        
         .header-banner { background: linear-gradient(135deg, #00A896 0%, #b0c4de 100%); color: white; padding: 2.5rem 2rem; border-radius: 24px; margin-bottom: 2rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
         .bg-platinum-gradient { background: linear-gradient(135deg, #e5e4e2 0%, #b0c4de 100%); border: 1px solid #d4d4d4; }
         .icon-gradient-bg { background: linear-gradient(135deg, #00A896 0%, #b0c4de 100%); display: inline-flex; align-items: center; justify-content: center; width: 55px; height: 55px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .footer-embossed { color: #E5E4E2; background-color: #2D3436; text-shadow: -1px -1px 1px rgba(255,255,255,0.2), 1px 1px 1px rgba(0,0,0,0.8); font-weight: 700; text-align: center; padding: 15px; border-radius: 12px; margin-top: auto; width: 100%; font-size: 0.9rem; letter-spacing: 0.5px; box-shadow: inset 0px 2px 5px rgba(0,0,0,0.5); }
-        .sidebar-overlay { display: none; position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); z-index: 1040; }
+        
+        /* Z-INDEX DIPERBAIKI DI SINI: Overlay = 1030 (Selalu di bawah Sidebar yang 1040) */
+        .sidebar-overlay { display: none; position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); z-index: 1030; }
+        
         .fade-in { animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .loader-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center;}
@@ -40,12 +49,13 @@
         .form-check-input { width: 1.5em !important; height: 1.5em !important; cursor: pointer; }
 
         @media (max-width: 992px) {
-            .sidebar { left: -300px; border-right: none; box-shadow: 2px 0 15px rgba(0,0,0,0.1); }
+            /* Z-Index Mobile disesuaikan ke 1040 */
+            .sidebar { left: -300px; border-right: none; box-shadow: 2px 0 15px rgba(0,0,0,0.1); z-index: 1040; }
             .sidebar.show { left: 0; }
-            .sidebar-overlay.show { display: block; }
+            .sidebar-overlay.show { display: block; z-index: 1030; }
             .main-content { margin-left: 0; padding: 1rem 0.5rem !important; }
             
-            /* Sticky Header Khusus HP */
+            /* Sticky Header Khusus HP disesuaikan ke 1020 */
             .mobile-header { position: sticky; top: 0; z-index: 1020; margin-bottom: 0 !important; border-radius: 0 0 16px 16px !important; box-shadow: 0 4px 15px rgba(0, 168, 150, 0.2) !important; }
             
             .card { padding: 1.25rem !important; border-radius: 16px; }
@@ -93,7 +103,7 @@
         <!-- LOGO HALAMAN LOGIN -->
         <img src="https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png" alt="Logo Sekolah" style="width: 100px; height: 100px; object-fit: contain; margin-bottom: 15px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
         
-        <h4 class="fw-bold mb-1 text-primary">Jurnal 7 Kebiasaan</h4>
+        <h4 class="fw-bold mb-1 text-primary">JURNAL 7 KAIH</h4>
         <p class="text-muted mb-4 small">Silakan pilih akses masuk Anda</p>
         
         <ul class="nav nav-pills nav-fill mb-4 bg-light p-1 rounded-pill" role="tablist">
@@ -141,7 +151,7 @@
             
             <div class="lh-1">
                 <div class="small fw-bold text-muted mb-1" style="font-size: 0.6rem;">JURNAL 7 KAIH</div>
-                <h6 class="mb-0 fw-bold text-primary" id="sidebar-role-title" style="font-size: 0.8rem;">MENU UTAMA</h6>
+                <h6 class="mb-0 fw-bold text-primary" id="sidebar-role-title" style="font-size: 0.8rem;">Menu Jurnal</h6>
             </div>
         </div>
         
@@ -227,7 +237,6 @@
                 </div>
             </div>
 
-            <!-- Tab Jurnal Sekolah dengan 5 Kategori Penilaian -->
             <div id="tab-admin-school" class="tab-pane d-none fade-in">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h3 class="fw-bold mb-0">Penilaian Jurnal & Program Sekolah</h3>
