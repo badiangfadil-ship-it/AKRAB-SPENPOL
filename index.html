@@ -16,8 +16,8 @@
             --sidebar-width: 280px; 
         }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); color: #2D3436; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
-        .login-container { height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); flex: 1; position: relative; overflow: hidden; }
-        .login-card { width: 100%; max-width: 480px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 3rem 2.5rem; border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.08); border: 1px solid rgba(255, 255, 255, 0.8); }
+        .login-container { height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); flex: 1; position: relative; overflow: hidden; padding: 20px; }
+        .login-card { width: 100%; max-width: 500px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 2.5rem 2rem; border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.08); border: 1px solid rgba(255, 255, 255, 0.8); }
         .sidebar { width: var(--sidebar-width); height: 100vh; background: white; border-right: 1px solid #eaeaea; position: fixed; left: 0; top: 0; z-index: 1040; padding: 1.5rem; overflow-y: auto; transition: left 0.3s ease; }
         .main-content { margin-left: var(--sidebar-width); padding: 2.5rem; flex: 1; display: flex; flex-direction: column; transition: margin-left 0.3s ease; }
         .nav-link-sidebar { color: #636e72; padding: 0.85rem 1.1rem; border-radius: 14px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 14px; border: none; background: transparent; width: 100%; text-align: left; transition: all 0.25s ease; font-weight: 500; cursor: pointer; font-size: 0.95rem; }
@@ -56,21 +56,24 @@
     <div id="loader-text" class="text-muted small mt-2">Menghubungkan ke Server...</div>
 </div>
 
-<!-- HALAMAN LOGIN -->
+<!-- HALAMAN LOGIN DENGAN 3 OPSI -->
 <div id="section-login" class="login-container d-none">
     <div class="login-card fade-in text-center">
-        <div style="background: white; width: 85px; height: 85px; margin: 0 auto 20px; border-radius: 50%; box-shadow: 0 10px 25px rgba(0, 168, 150, 0.2); display: flex; align-items: center; justify-content: center;">
-            <img src="https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png" alt="Logo" style="width: 55px; height: 55px; object-fit: contain;">
+        <div style="background: white; width: 75px; height: 75px; margin: 0 auto 15px; border-radius: 50%; box-shadow: 0 10px 25px rgba(0, 168, 150, 0.2); display: flex; align-items: center; justify-content: center;">
+            <img src="https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png" alt="Logo" style="width: 48px; height: 48px; object-fit: contain;">
         </div>
         <h4 class="fw-bolder mb-1 text-dark">JURNAL 7 KAIH</h4>
-        <p class="text-muted mb-4 small">Silakan pilih akses masuk Anda</p>
+        <p class="text-muted mb-3 small">Pilih jenis akun untuk masuk ke sistem</p>
         
-        <ul class="nav nav-pills nav-fill bg-light p-1 rounded-4 mb-4" role="tablist">
-            <li class="nav-item"><button class="nav-link active rounded-3 py-2 fw-bold" data-bs-toggle="pill" data-bs-target="#login-siswa">Siswa</button></li>
-            <li class="nav-item"><button class="nav-link rounded-3 py-2 fw-bold" data-bs-toggle="pill" data-bs-target="#login-admin">Guru Wali</button></li>
+        <!-- 3 Tab Login -->
+        <ul class="nav nav-pills nav-fill bg-light p-1 rounded-4 mb-4" role="tablist" style="font-size: 0.85rem;">
+            <li class="nav-item"><button class="nav-link active rounded-3 py-2 fw-bold px-1" data-bs-toggle="pill" data-bs-target="#login-siswa">Siswa</button></li>
+            <li class="nav-item"><button class="nav-link rounded-3 py-2 fw-bold px-1" data-bs-toggle="pill" data-bs-target="#login-admin">Guru Wali</button></li>
+            <li class="nav-item"><button class="nav-link rounded-3 py-2 fw-bold px-1" data-bs-toggle="pill" data-bs-target="#login-walikelas">Wali Kelas</button></li>
         </ul>
 
         <div class="tab-content">
+            <!-- 1. Login Siswa -->
             <div class="tab-pane fade show active" id="login-siswa">
                 <form id="form-login-siswa">
                     <div class="mb-3 text-start">
@@ -88,17 +91,34 @@
                     <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 shadow-sm" id="btn-login-siswa">Masuk Sebagai Siswa</button>
                 </form>
             </div>
+
+            <!-- 2. Login Guru Wali -->
             <div class="tab-pane fade" id="login-admin">
                 <form id="form-login-admin">
                     <div class="mb-3 text-start">
                         <label class="form-label small fw-bold text-secondary">Username Guru Wali</label>
-                        <input type="text" class="form-control rounded-3 py-2" id="user-admin" placeholder="Contoh: ary" required>
+                        <input type="text" class="form-control rounded-3 py-2" id="user-admin" placeholder="Contoh: niluh" required>
                     </div>
                     <div class="mb-4 text-start">
                         <label class="form-label small fw-bold text-secondary">Kata Sandi</label>
                         <input type="password" class="form-control rounded-3 py-2" id="pass-admin" required>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 shadow-sm" id="btn-login-admin">Masuk Sebagai Guru Wali</button>
+                    <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 shadow-sm" id="btn-login-admin">Masuk Guru Wali</button>
+                </form>
+            </div>
+
+            <!-- 3. Login Wali Kelas (Baru) -->
+            <div class="tab-pane fade" id="login-walikelas">
+                <form id="form-login-walikelas">
+                    <div class="mb-3 text-start">
+                        <label class="form-label small fw-bold text-secondary">Username / Nama Wali Kelas</label>
+                        <input type="text" class="form-control rounded-3 py-2" id="user-walikelas" placeholder="Contoh: andi, nyoman, ary, dll" required>
+                    </div>
+                    <div class="mb-4 text-start">
+                        <label class="form-label small fw-bold text-secondary">Kata Sandi</label>
+                        <input type="password" class="form-control rounded-3 py-2" id="pass-walikelas" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 py-2 rounded-3 shadow-sm" id="btn-login-walikelas">Masuk Wali Kelas</button>
                 </form>
             </div>
         </div>
@@ -132,16 +152,21 @@
                 <button class="nav-link-sidebar" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('tidur', 'Tidur Cepat', 'Jam Tidur', 'time')"><i data-lucide="moon" size="18"></i> Tidur Cepat</button>
             </div>
             
-            <!-- Menu Admin (Guru Wali) -->
+            <!-- Menu Guru Wali -->
             <div id="menu-admin-container" class="d-none">
                 <div class="alert alert-success mx-1 small py-2 px-3 rounded-3 border-0 bg-light text-success fw-bold"><i data-lucide="shield-check" size="16" class="me-1"></i> <span id="admin-welcome-name"></span></div>
-                <button class="nav-link-sidebar active" onclick="switchTab('tab-admin-dash', this)"><i data-lucide="layout-dashboard" size="18"></i> Dashboard Bimbingan</button>
+                <button class="nav-link-sidebar active" onclick="switchTab('tab-admin-dash', this)"><i data-lucide="layout-dashboard" size="18"></i> Dashboard</button>
                 <button class="nav-link-sidebar" onclick="switchTab('tab-admin-school', this)"><i data-lucide="school" size="18"></i> Jurnal Sekolah</button>
                 <button class="nav-link-sidebar" onclick="switchTab('tab-admin-tracker', this)"><i data-lucide="map-pin" size="18"></i> Pantau Harian (GPS)</button>
                 <button class="nav-link-sidebar" onclick="switchTab('tab-admin-students', this)"><i data-lucide="users" size="18"></i> Kelola Siswa</button>
-                <button class="nav-link-sidebar" onclick="switchTab('tab-admin-pendampingan', this)"><i data-lucide="file-heart" size="18"></i> Pendampingan Siswa</button>
                 <button class="nav-link-sidebar" onclick="switchTab('tab-admin-settings', this)"><i data-lucide="settings" size="18"></i> Pengaturan Laporan</button>
                 <button class="nav-link-sidebar" onclick="switchTab('tab-admin-reports', this)"><i data-lucide="printer" size="18"></i> Cetak Laporan</button>
+            </div>
+
+            <!-- Menu Khusus Wali Kelas (Terhubung dengan Pendampingan Siswa) -->
+            <div id="menu-walikelas-container" class="d-none">
+                <div class="alert alert-info mx-1 small py-2 px-3 rounded-3 border-0 bg-light text-info fw-bold"><i data-lucide="user-check" size="16" class="me-1"></i> <span id="walikelas-welcome-name"></span></div>
+                <button class="nav-link-sidebar active" onclick="switchTab('tab-walikelas-pendampingan', this)"><i data-lucide="file-heart" size="18"></i> Pendampingan Siswa</button>
             </div>
             
             <hr class="my-3 w-100 opacity-25">
@@ -192,73 +217,13 @@
 
             <!-- Dashboard Guru Wali -->
             <div id="tab-admin-dash" class="tab-pane d-none fade-in">
-                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-                    <div>
-                        <h3 class="fw-bold mb-1">Dashboard Bimbingan Guru Wali</h3>
-                        <p class="text-muted small mb-0">Ringkasan statistik dan aktivitas kelas bimbingan Anda.</p>
-                    </div>
-                    <span class="badge bg-primary px-3 py-2 rounded-pill fw-medium">Tahun Ajaran 2026</span>
-                </div>
-
-                <div class="row g-4 mb-4">
+                <h3 class="fw-bold mb-2">Dashboard Guru Wali</h3>
+                <p class="text-muted small mb-4">Ringkasan aktivitas dan penilaian siswa bimbingan Anda.</p>
+                <div class="row g-4">
                     <div class="col-md-4">
                         <div class="card p-4 stat-card rounded-4 shadow-sm">
-                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                <div class="p-3 rounded-4" style="background: rgba(0,168,150,0.1); color: var(--primary-color);">
-                                    <i data-lucide="users" size="28"></i>
-                                </div>
-                                <span class="badge bg-success-subtle text-success small fw-bold">Aktif</span>
-                            </div>
                             <h6 class="text-muted fw-semibold mb-1">Total Siswa Bimbingan</h6>
                             <h2 class="fw-bolder display-5 text-dark mb-0" id="admin-total-siswa">0</h2>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card p-4 stat-card rounded-4 shadow-sm" style="border-left-color: #02C39A;">
-                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                <div class="p-3 rounded-4 text-success" style="background: rgba(2,195,154,0.1)">
-                                    <i data-lucide="file-heart" size="28"></i>
-                                </div>
-                                <span class="badge bg-primary-subtle text-primary small fw-bold">Bimbingan</span>
-                            </div>
-                            <h6 class="text-muted fw-semibold mb-1">Kasus / Pendampingan Tercatat</h6>
-                            <h2 class="fw-bolder display-5 text-dark mb-0" id="admin-total-pendampingan">0</h2>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card p-4 stat-card rounded-4 shadow-sm" style="border-left-color: #f39c12;">
-                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                <div class="p-3 rounded-4 text-warning" style="background: rgba(243,156,18,0.1)">
-                                    <i data-lucide="shield-alert" size="28"></i>
-                                </div>
-                                <span class="badge bg-warning-subtle text-warning small fw-bold">Monitoring</span>
-                            </div>
-                            <h6 class="text-muted fw-semibold mb-1">Status Disiplin Siswa</h6>
-                            <h4 class="fw-bold text-dark mt-2 mb-0">Terkontrol Baik</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card p-4 shadow-sm border-0 rounded-4">
-                    <h5 class="fw-bold mb-3 text-dark">Panduan Cepat Wali Kelas</h5>
-                    <div class="row g-3">
-                        <div class="col-md-4">
-                            <div class="p-3 bg-light rounded-4 h-100">
-                                <h6 class="fw-bold text-primary mb-1">1. Jurnal Sekolah</h6>
-                                <p class="small text-muted mb-0">Gunakan menu Jurnal Sekolah untuk merekap kehadiran siswa pada kegiatan sekolah.</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="p-3 bg-light rounded-4 h-100">
-                                <h6 class="fw-bold text-primary mb-1">2. Pendampingan Kasus</h6>
-                                <p class="small text-muted mb-0">Gunakan menu <strong>Pendampingan Siswa</strong> untuk mencatat rekap pembinaan disiplin maupun masalah siswa di kelas.</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="p-3 bg-light rounded-4 h-100">
-                                <h6 class="fw-bold text-primary mb-1">3. Cetak Laporan</h6>
-                                <p class="small text-muted mb-0">Cetak laporan bulanan atau rekap umum kebiasaan siswa dengan tanda tangan QR code.</p>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -325,14 +290,14 @@
                 </div>
             </div>
 
-            <!-- MENU PENDAMPINGAN SISWA -->
-            <div id="tab-admin-pendampingan" class="tab-pane d-none fade-in">
+            <!-- MENU PENDAMPINGAN SISWA (KHUSUS LOGIN WALI KELAS) -->
+            <div id="tab-walikelas-pendampingan" class="tab-pane d-none fade-in">
                 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
                     <div>
-                        <h3 class="fw-bold mb-1">Rekap Pendampingan & Kasus Siswa</h3>
-                        <p class="text-muted small mb-0">Catat pembinaan disiplin, konseling, atau penanganan masalah siswa bimbingan kelas Anda.</p>
+                        <h3 class="fw-bold mb-1">Rekap Pendampingan & Kasus Siswa Kelas Perwalian</h3>
+                        <p class="text-muted small mb-0">Catat pembinaan disiplin, konseling, atau penanganan masalah siswa kelas Anda.</p>
                     </div>
-                    <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#modalPendampingan"><i data-lucide="plus-circle" size="18" class="me-1"></i> Tambah Catatan Kasus</button>
+                    <button class="btn btn-success shadow-sm" data-bs-toggle="modal" data-bs-target="#modalPendampingan"><i data-lucide="plus-circle" size="18" class="me-1"></i> Tambah Catatan Kasus</button>
                 </div>
 
                 <div class="card p-4 shadow-sm border-0 rounded-4">
@@ -518,7 +483,7 @@
 <div class="modal fade" id="modalPendampingan" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <div class="modal-header"><h5 class="modal-title fw-bold">Form Catatan Pendampingan & Kasus Siswa</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+            <div class="modal-header bg-success"><h5 class="modal-title fw-bold">Form Catatan Pendampingan & Kasus Siswa</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
             <div class="modal-body p-4">
                 <form id="form-add-pendampingan">
                     <div class="row g-3">
@@ -527,7 +492,7 @@
                             <input type="date" class="form-control" name="tanggal" id="p-date" required>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label small fw-bold text-muted">Pilih Siswa Bimbingan</label>
+                            <label class="form-label small fw-bold text-muted">Pilih Siswa Perwalian</label>
                             <select class="form-select" name="usernameSiswa" id="p-dropdown-siswa" required><option value="">-- Pilih Siswa --</option></select>
                         </div>
                         <div class="col-md-12">
@@ -550,7 +515,7 @@
                             <textarea class="form-control" name="tindakLanjut" rows="2" placeholder="Kesepakatan siswa, teguran, atau pemanggilan orang tua..." required></textarea>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 mt-4 py-2" id="btn-save-pendampingan">Simpan Catatan Pendampingan</button>
+                    <button type="submit" class="btn btn-success w-100 mt-4 py-2" id="btn-save-pendampingan">Simpan Catatan Pendampingan</button>
                 </form>
             </div>
         </div>
@@ -559,10 +524,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // ----------------------------------------------------
-    // 🔴 MASUKKAN URL WEB APP APPS SCRIPT ANDA DI SINI
-    // ----------------------------------------------------
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJjmly_k-336JJC-OIeXPgY6FMMfRz7wzD9xcjxsOD-MBnEK0s7buW7uC3edMi4muv-Q/exec"; 
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuLNE4LXcKAYmLyiMH8xytUC7Ji1VqHbag-LegfTxJdGrAdu0TXwCIEppmPpodGzsQ/exec"; 
 
     async function callAPI(action, params = {}) {
         try {
@@ -633,6 +595,7 @@
         document.getElementById('dropdown-siswa').innerHTML = opts;
     }
 
+    // 1. Submit Login Siswa
     document.getElementById('form-login-siswa').onsubmit = function(e) {
         e.preventDefault();
         const user = document.getElementById('dropdown-siswa').value;
@@ -647,26 +610,43 @@
         }).catch(() => { btn.innerText = "Masuk Sebagai Siswa"; btn.disabled = false; showToast("Koneksi gagal", "danger"); });
     };
 
+    // 2. Submit Login Guru Wali
     document.getElementById('form-login-admin').onsubmit = function(e) {
         e.preventDefault();
         const user = document.getElementById('user-admin').value; const pass = document.getElementById('pass-admin').value;
         const btn = document.getElementById('btn-login-admin'); btn.innerText = "Memverifikasi..."; btn.disabled = true;
 
         callAPI('loginAdmin', { user: user, pass: pass }).then(res => {
-            btn.innerText = "Masuk Sebagai Guru Wali"; btn.disabled = false;
-            if(res.success) { currentUser = { username: user, nama: res.nama, role: 'admin' }; document.getElementById('admin-welcome-name').innerText = "Wali: " + res.nama; showApp('admin'); } 
+            btn.innerText = "Masuk Guru Wali"; btn.disabled = false;
+            if(res.success) { currentUser = { username: user, nama: res.nama, role: 'admin' }; document.getElementById('admin-welcome-name').innerText = "Guru Wali: " + res.nama; showApp('admin'); } 
             else { showToast(res.message, "danger"); }
-        }).catch(() => { btn.innerText = "Masuk Sebagai Guru Wali"; btn.disabled = false; showToast("Koneksi gagal", "danger"); });
+        }).catch(() => { btn.innerText = "Masuk Guru Wali"; btn.disabled = false; showToast("Koneksi gagal", "danger"); });
+    };
+
+    // 3. Submit Login Wali Kelas (Baru)
+    document.getElementById('form-login-walikelas').onsubmit = function(e) {
+        e.preventDefault();
+        const user = document.getElementById('user-walikelas').value; const pass = document.getElementById('pass-walikelas').value;
+        const btn = document.getElementById('btn-login-walikelas'); btn.innerText = "Memverifikasi..."; btn.disabled = true;
+
+        callAPI('loginWaliKelas', { user: user, pass: pass }).then(res => {
+            btn.innerText = "Masuk Wali Kelas"; btn.disabled = false;
+            if(res.success) { currentUser = { username: user, nama: res.nama, role: 'walikelas' }; document.getElementById('walikelas-welcome-name').innerText = "Wali Kelas: " + res.nama; showApp('walikelas'); } 
+            else { showToast(res.message, "danger"); }
+        }).catch(() => { btn.innerText = "Masuk Wali Kelas"; btn.disabled = false; showToast("Koneksi gagal", "danger"); });
     };
 
     function showApp(role) {
         document.getElementById('section-login').classList.add('d-none'); document.getElementById('section-app').classList.remove('d-none');
         if(role === 'siswa') {
-            document.getElementById('menu-siswa-container').classList.remove('d-none'); document.getElementById('menu-admin-container').classList.add('d-none');
+            document.getElementById('menu-siswa-container').classList.remove('d-none'); document.getElementById('menu-admin-container').classList.add('d-none'); document.getElementById('menu-walikelas-container').classList.add('d-none');
             switchTab('tab-home', document.querySelector('[onclick*="tab-home"]')); loadStudentDashboard();
-        } else {
-            document.getElementById('menu-siswa-container').classList.add('d-none'); document.getElementById('menu-admin-container').classList.remove('d-none');
+        } else if(role === 'admin') {
+            document.getElementById('menu-siswa-container').classList.add('d-none'); document.getElementById('menu-admin-container').classList.remove('d-none'); document.getElementById('menu-walikelas-container').classList.add('d-none');
             switchTab('tab-admin-dash', document.querySelector('[onclick*="tab-admin-dash"]')); fetchAdminDashboard();
+        } else if(role === 'walikelas') {
+            document.getElementById('menu-siswa-container').classList.add('d-none'); document.getElementById('menu-admin-container').classList.add('d-none'); document.getElementById('menu-walikelas-container').classList.remove('d-none');
+            switchTab('tab-walikelas-pendampingan', document.querySelector('[onclick*="tab-walikelas-pendampingan"]')); fetchWaliKelasDashboard();
         }
     }
 
@@ -682,7 +662,7 @@
         if(tabId === 'tab-admin-settings') fillSettingsForm();
         if(tabId === 'tab-admin-tracker') loadTrackingAdmin();
         if(tabId === 'tab-admin-school') updateSchoolActivities();
-        if(tabId === 'tab-admin-pendampingan') loadPendampinganData();
+        if(tabId === 'tab-walikelas-pendampingan') loadPendampinganData();
     };
 
     function loadStudentDashboard() {
@@ -751,22 +731,23 @@
         callAPI('getAdminStudents', { namaGuru: currentUser.nama }).then(res => {
             document.getElementById('admin-total-siswa').innerText = res.length;
         });
+    }
+
+    function fetchWaliKelasDashboard() {
         callAPI('getPendampinganStudents', { namaGuru: currentUser.nama }).then(res => {
-            const pOpts = '<option value="">-- Pilih Siswa --</option>' + res.map(s => `<option value="${s.username}">${s.nama} (${s.kelas || '-'})</option>`).join('');
+            const pOpts = '<option value="">-- Pilih Siswa Kelas Anda --</option>' + res.map(s => `<option value="${s.username}">${s.nama} (${s.kelas || '-'})</option>`).join('');
             document.getElementById('p-dropdown-siswa').innerHTML = pOpts;
-        });
-        callAPI('getPendampinganSiswa', { namaGuru: currentUser.nama }).then(res => {
-            document.getElementById('admin-total-pendampingan').innerText = res.length;
         });
     }
 
     function loadPendampinganData() {
+        fetchWaliKelasDashboard();
         const tbody = document.getElementById('pendampingan-list');
         tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">Memuat data pendampingan...</td></tr>`;
         
         callAPI('getPendampinganSiswa', { namaGuru: currentUser.nama }).then(res => {
             if(res.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">Belum ada catatan pendampingan atau kasus siswa di kelas Anda.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">Belum ada catatan pendampingan atau kasus siswa di kelas perwalian Anda.</td></tr>`;
                 return;
             }
             tbody.innerHTML = res.map(p => `
@@ -809,7 +790,6 @@
                 showToast("Catatan pendampingan berhasil disimpan!");
                 this.reset();
                 loadPendampinganData();
-                fetchAdminDashboard();
             } else { showToast("Gagal menyimpan data", "danger"); }
         }).catch(() => { btn.innerText = "Simpan Catatan Pendampingan"; btn.disabled = false; showToast("Koneksi gagal", "danger"); });
     };
@@ -817,7 +797,7 @@
     window.hapusPendampingan = function(id) {
         if(confirm("Hapus catatan pendampingan ini?")) {
             callAPI('deletePendampingan', { id: id }).then(res => {
-                if(res.success) { showToast("Data dihapus!", "danger"); loadPendampinganData(); fetchAdminDashboard(); }
+                if(res.success) { showToast("Data dihapus!", "danger"); loadPendampinganData(); }
             });
         }
     };
