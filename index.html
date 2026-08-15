@@ -3,45 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#00A896">
-    <title>Jurnal 7 Kebiasaan Anak Indonesia Hebat - SMPN 1 Poli-Polia</title>
+    <meta name="theme-color" content="#0d9488">
+    <title>JURNAL 7 KEBIASAAN ANAK INDONESIA HEBAT - SMPN 1 POLI-POLIA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root { 
-            --primary-color: #00A896; 
-            --secondary-color: #02C39A; 
-            --bg-light: #F4F7F6; 
+            --primary-color: #0d9488; 
+            --primary-dark: #0f766e;
+            --accent-color: #f59e0b;
+            --bg-app: #f8fafc; 
             --sidebar-width: 280px; 
         }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); color: #2D3436; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
-        .login-container { height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); flex: 1; position: relative; overflow: hidden; padding: 20px; }
-        .login-card { width: 100%; max-width: 500px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 2.5rem 2rem; border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.08); border: 1px solid rgba(255, 255, 255, 0.8); }
-        .sidebar { width: var(--sidebar-width); height: 100vh; background: white; border-right: 1px solid #eaeaea; position: fixed; left: 0; top: 0; z-index: 1040; padding: 1.5rem; overflow-y: auto; transition: left 0.3s ease; }
-        .main-content { margin-left: var(--sidebar-width); padding: 2.5rem; flex: 1; display: flex; flex-direction: column; transition: margin-left 0.3s ease; }
-        .nav-link-sidebar { color: #636e72; padding: 0.85rem 1.1rem; border-radius: 14px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 14px; border: none; background: transparent; width: 100%; text-align: left; transition: all 0.25s ease; font-weight: 500; cursor: pointer; font-size: 0.95rem; }
-        .nav-link-sidebar:hover { background-color: #f1f9f8; color: var(--primary-color); }
-        .nav-link-sidebar.active { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important; color: white !important; box-shadow: 0 6px 20px rgba(0, 168, 150, 0.25); font-weight: 600; }
-        .card { border: none; border-radius: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); background: white; }
-        .modal-content { border: none; border-radius: 26px; overflow: hidden; }
-        .modal-header { background: var(--primary-color); color: white; padding: 1.25rem 2rem; }
-        .stat-card { background: linear-gradient(135deg, #ffffff 0%, #fcfdfd 100%); border-left: 5px solid var(--primary-color); transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .stat-card:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.06); }
-        .status-badge { padding: 6px 14px; border-radius: 30px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
-        .status-yes { background: #d1fae5; color: #065f46; }
-        .status-no { background: #fee2e2; color: #991b1b; }
-        .header-banner { background: linear-gradient(135deg, #00A896 0%, #02C39A 100%); color: white; padding: 2.5rem 2rem; border-radius: 24px; margin-bottom: 2rem; box-shadow: 0 10px 25px rgba(0,168,150,0.15); }
-        .footer-embossed { color: #888; background-color: #fff; font-weight: 600; text-align: center; padding: 15px; border-radius: 14px; margin-top: auto; width: 100%; font-size: 0.85rem; border: 1px solid #eaeaea; }
-        .sidebar-overlay { display: none; position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.4); z-index: 1030; backdrop-filter: blur(2px); }
-        .fade-in { animation: fadeIn 0.35s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        .loader-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center;}
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-app); color: #1e293b; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; -webkit-tap-highlight-color: transparent; }
+        
+        /* Layout Login Mobile Friendly */
+        .login-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 50%, #5eead4 100%); flex: 1; padding: 16px; }
+        .login-card { width: 100%; max-width: 440px; background: #ffffff; padding: 2rem 1.5rem; border-radius: 24px; box-shadow: 0 20px 40px rgba(13, 148, 136, 0.15); border: 1px solid rgba(255,255,255,0.8); }
+        
+        /* Sidebar & Navigation */
+        .sidebar { width: var(--sidebar-width); height: 100vh; background: #ffffff; border-right: 1px solid #e2e8f0; position: fixed; left: 0; top: 0; z-index: 1040; padding: 1.25rem; overflow-y: auto; transition: left 0.3s ease; box-shadow: 4px 0 25px rgba(0,0,0,0.05); }
+        .main-content { margin-left: var(--sidebar-width); padding: 2rem; flex: 1; display: flex; flex-direction: column; transition: margin-left 0.3s ease; }
+        
+        .nav-link-sidebar { color: #475569; padding: 0.9rem 1rem; border-radius: 12px; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 12px; border: none; background: transparent; width: 100%; text-align: left; transition: all 0.2s ease; font-weight: 600; cursor: pointer; font-size: 0.95rem; }
+        .nav-link-sidebar:hover { background-color: #f1f5f9; color: var(--primary-color); }
+        .nav-link-sidebar.active { background: var(--primary-color) !important; color: white !important; box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3); }
+
+        /* Card Styles dengan Kontras Jelas */
+        .card { border: none; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); background: #ffffff; border: 1px solid #f1f5f9; }
+        .habit-card { transition: transform 0.2s ease, box-shadow 0.2s ease; cursor: pointer; border-radius: 18px; border: 2px solid #e2e8f0; background: #ffffff; }
+        .habit-card:active { transform: scale(0.97); }
+        .habit-icon-box { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 24px; }
+        
+        /* Status Badges */
+        .status-badge { padding: 6px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; }
+        .status-yes { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .status-no { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+        /* Banner & Header */
+        .header-banner { background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: white; padding: 2rem 1.5rem; border-radius: 20px; margin-bottom: 1.5rem; box-shadow: 0 10px 25px rgba(13, 148, 136, 0.2); }
+        .mobile-header { background: var(--primary-color); color: white; border-radius: 16px; padding: 12px 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+
+        /* Form Controls */
+        .form-control, .form-select { border-radius: 12px; padding: 0.75rem 1rem; border: 1.5px solid #cbd5e1; font-size: 0.95rem; font-weight: 500; }
+        .form-control:focus, .form-select:focus { border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.15); }
+
+        .btn-primary { background-color: var(--primary-color); border: none; border-radius: 12px; padding: 0.75rem 1.25rem; font-weight: 700; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25); }
+        .btn-primary:hover, .btn-primary:active { background-color: var(--primary-dark); }
+        
+        .footer-embossed { color: #64748b; background-color: #ffffff; font-weight: 600; text-align: center; padding: 14px; border-radius: 12px; margin-top: auto; width: 100%; font-size: 0.8rem; border: 1px solid #e2e8f0; }
+        
+        .sidebar-overlay { display: none; position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(15, 23, 42, 0.5); z-index: 1030; backdrop-filter: blur(3px); }
+        .fade-in { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        .loader-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 20px;}
+
         @media (max-width: 992px) {
-            .sidebar { left: -300px; box-shadow: 5px 0 25px rgba(0,0,0,0.1); }
+            .sidebar { left: -300px; }
             .sidebar.show { left: 0; }
             .sidebar-overlay.show { display: block; }
-            .main-content { margin-left: 0; padding: 1.25rem 1rem !important; }
+            .main-content { margin-left: 0; padding: 1rem !important; }
         }
         .print-only { display: none; }
         @media print {
@@ -61,68 +84,68 @@
 <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 2000"></div>
 
 <div id="loader" class="loader-overlay">
-    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;"></div>
-    <h5 class="text-primary fw-bold">Memuat Sistem Jurnal...</h5>
-    <div id="loader-text" class="text-muted small mt-2">Menghubungkan ke Server...</div>
+    <div class="spinner-border text-teal mb-3" role="status" style="width: 3.5rem; height: 3.5rem; color: var(--primary-color);"></div>
+    <h5 class="fw-bold" style="color: var(--primary-color);">Memuat Aplikasi...</h5>
+    <div id="loader-text" class="text-muted small mt-2">Menghubungkan ke Server SMPN 1 Poli-Polia...</div>
 </div>
 
 <!-- HALAMAN LOGIN -->
 <div id="section-login" class="login-container d-none">
     <div class="login-card fade-in text-center">
-        <div style="background: white; width: 75px; height: 75px; margin: 0 auto 15px; border-radius: 50%; box-shadow: 0 10px 25px rgba(0, 168, 150, 0.2); display: flex; align-items: center; justify-content: center;">
-            <img src="https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png" alt="Logo" style="width: 48px; height: 48px; object-fit: contain;">
+        <div style="background: #f0fdf4; width: 80px; height: 80px; margin: 0 auto 16px; border-radius: 50%; box-shadow: 0 8px 20px rgba(13, 148, 136, 0.15); display: flex; align-items: center; justify-content: center; border: 2px solid #5eead4;">
+            <img src="https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png" alt="Logo" style="width: 50px; height: 50px; object-fit: contain;">
         </div>
-        <h4 class="fw-bolder mb-1 text-dark">SMPN 1 POLI-POLIA</h4>
-        <p class="text-muted mb-3 small">Jurnal 7 Kebiasaan Anak Indonesia Hebat</p>
+        <h4 class="fw-extrabold mb-1 text-dark" style="letter-spacing: -0.5px;">SMP NEGERI 1 POLI-POLIA</h4>
+        <p class="text-muted mb-4 small fw-medium">JURNAL 7KAIH & PENDAMPINGAN MURID</p>
         
-        <ul class="nav nav-pills nav-fill bg-light p-1 rounded-4 mb-4" role="tablist" style="font-size: 0.85rem;">
-            <li class="nav-item"><button class="nav-link active rounded-3 py-2 fw-bold px-1" data-bs-toggle="pill" data-bs-target="#login-siswa">Siswa</button></li>
-            <li class="nav-item"><button class="nav-link rounded-3 py-2 fw-bold px-1" data-bs-toggle="pill" data-bs-target="#login-admin">Guru Wali</button></li>
-            <li class="nav-item"><button class="nav-link rounded-3 py-2 fw-bold px-1" data-bs-toggle="pill" data-bs-target="#login-walikelas">Wali Kelas</button></li>
+        <ul class="nav nav-pills nav-fill bg-light p-1.5 rounded-4 mb-4 border" role="tablist" style="font-size: 0.85rem;">
+            <li class="nav-item"><button class="nav-link active rounded-3 py-2.5 fw-bold" data-bs-toggle="pill" data-bs-target="#login-siswa">Siswa</button></li>
+            <li class="nav-item"><button class="nav-link rounded-3 py-2.5 fw-bold" data-bs-toggle="pill" data-bs-target="#login-admin">Guru Wali</button></li>
+            <li class="nav-item"><button class="nav-link rounded-3 py-2.5 fw-bold" data-bs-toggle="pill" data-bs-target="#login-walikelas">Wali Kelas</button></li>
         </ul>
 
-        <div class="tab-content">
+        <div class="tab-content text-start">
             <div class="tab-pane fade show active" id="login-siswa">
                 <form id="form-login-siswa">
-                    <div class="mb-3 text-start">
+                    <div class="mb-3">
                         <label class="form-label small fw-bold text-secondary">Pilih Kelas</label>
-                        <select class="form-select rounded-3 py-2" id="dropdown-kelas" onchange="filterSiswaByKelas()"><option value="">-- Pilih Kelas --</option></select>
+                        <select class="form-select py-2.5" id="dropdown-kelas" onchange="filterSiswaByKelas()"><option value="">-- Pilih Kelas --</option></select>
                     </div>
-                    <div class="mb-3 text-start">
+                    <div class="mb-3">
                         <label class="form-label small fw-bold text-secondary">Pilih Nama Siswa</label>
-                        <select class="form-select rounded-3 py-2" id="dropdown-siswa" required><option value="">-- Pilih Kelas di Atas --</option></select>
+                        <select class="form-select py-2.5" id="dropdown-siswa" required><option value="">-- Pilih Kelas di Atas --</option></select>
                     </div>
-                    <div class="mb-4 text-start">
+                    <div class="mb-4">
                         <label class="form-label small fw-bold text-secondary">Kata Sandi</label>
-                        <input type="password" class="form-control rounded-3 py-2" id="pass-siswa" required>
+                        <input type="password" class="form-control py-2.5" id="pass-siswa" placeholder="Masukkan sandi..." required>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 shadow-sm" id="btn-login-siswa">Masuk Sebagai Siswa</button>
+                    <button type="submit" class="btn btn-primary w-100 py-3 shadow-sm" id="btn-login-siswa">Masuk Sebagai Siswa</button>
                 </form>
             </div>
             <div class="tab-pane fade" id="login-admin">
                 <form id="form-login-admin">
-                    <div class="mb-3 text-start">
+                    <div class="mb-3">
                         <label class="form-label small fw-bold text-secondary">Username Guru Wali</label>
-                        <input type="text" class="form-control rounded-3 py-2" id="user-admin" placeholder="Contoh: aryarfa" required>
+                        <input type="text" class="form-control py-2.5" id="user-admin" placeholder="Contoh: aryarfa" required>
                     </div>
-                    <div class="mb-4 text-start">
+                    <div class="mb-4">
                         <label class="form-label small fw-bold text-secondary">Kata Sandi</label>
-                        <input type="password" class="form-control rounded-3 py-2" id="pass-admin" required>
+                        <input type="password" class="form-control py-2.5" id="pass-admin" placeholder="Masukkan sandi..." required>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 shadow-sm" id="btn-login-admin">Masuk Guru Wali</button>
+                    <button type="submit" class="btn btn-primary w-100 py-3 shadow-sm" id="btn-login-admin">Masuk Guru Wali</button>
                 </form>
             </div>
             <div class="tab-pane fade" id="login-walikelas">
                 <form id="form-login-walikelas">
-                    <div class="mb-3 text-start">
+                    <div class="mb-3">
                         <label class="form-label small fw-bold text-secondary">Username Wali Kelas</label>
-                        <input type="text" class="form-control rounded-3 py-2" id="user-walikelas" placeholder="Contoh: andi, nyoman, ary, dll" required>
+                        <input type="text" class="form-control py-2.5" id="user-walikelas" placeholder="Contoh: andi, nyoman, dll" required>
                     </div>
-                    <div class="mb-4 text-start">
+                    <div class="mb-4">
                         <label class="form-label small fw-bold text-secondary">Kata Sandi</label>
-                        <input type="password" class="form-control rounded-3 py-2" id="pass-walikelas" required>
+                        <input type="password" class="form-control py-2.5" id="pass-walikelas" placeholder="Masukkan sandi..." required>
                     </div>
-                    <button type="submit" class="btn btn-success w-100 py-2 rounded-3 shadow-sm" id="btn-login-walikelas">Masuk Wali Kelas</button>
+                    <button type="submit" class="btn btn-success w-100 py-3 shadow-sm bg-teal text-white fw-bold" style="background-color: #059669; border:none;" id="btn-login-walikelas">Masuk Wali Kelas</button>
                 </form>
             </div>
         </div>
@@ -137,28 +160,28 @@
             <img src="https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png" alt="Logo" style="width: 42px; height: 42px; object-fit: contain;" class="me-2">
             <div class="lh-1">
                 <div class="small fw-bold text-muted mb-1" style="font-size: 0.6rem;">SMPN 1 POLI-POLIA</div>
-                <h6 class="mb-0 fw-bold text-primary" id="sidebar-role-title" style="font-size: 0.8rem;">Menu Jurnal</h6>
+                <h6 class="mb-0 fw-bold" style="color: var(--primary-color); font-size: 0.85rem;">Menu Aplikasi</h6>
             </div>
         </div>
         
         <div class="nav flex-column">
             <!-- Menu Siswa -->
             <div id="menu-siswa-container" class="d-none">
-                <button class="nav-link-sidebar active" onclick="switchTab('tab-home', this)"><i data-lucide="home" size="18"></i> Beranda</button>
+                <button class="nav-link-sidebar active" onclick="switchTab('tab-home', this)"><i data-lucide="home" size="18"></i> Beranda Utama</button>
                 <button class="nav-link-sidebar" onclick="switchTab('tab-profile', this)"><i data-lucide="user" size="18"></i> Profil Saya</button>
-                <div class="text-muted mt-4 mb-2 px-2 text-uppercase fw-bold" style="font-size: 0.65rem; letter-spacing: 0.8px;">Input Harian</div>
-                <button class="nav-link-sidebar" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('bangun', 'Bangun Pagi', 'Pukul Bangun', 'time')"><i data-lucide="sun" size="18"></i> Bangun Pagi</button>
-                <button class="nav-link-sidebar" data-bs-toggle="modal" data-bs-target="#modalIbadah"><i data-lucide="heart" size="18"></i> Beribadah</button>
-                <button class="nav-link-sidebar" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('olahraga', 'Berolahraga', 'Jenis Olahraga', 'text')"><i data-lucide="bike" size="18"></i> Berolahraga</button>
-                <button class="nav-link-sidebar" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('makan', 'Makan Sehat & Bergizi', 'Menu Makanan', 'text')"><i data-lucide="utensils" size="18"></i> Makan Sehat</button>
-                <button class="nav-link-sidebar" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('belajar', 'Gemar Belajar', 'Materi Pelajaran', 'text')"><i data-lucide="book-open" size="18"></i> Gemar Belajar</button>
-                <button class="nav-link-sidebar" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('masyarakat', 'Bermasyarakat', 'Kegiatan Sosial', 'text')"><i data-lucide="users" size="18"></i> Bermasyarakat</button>
-                <button class="nav-link-sidebar" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('tidur', 'Tidur Cepat', 'Jam Tidur', 'time')"><i data-lucide="moon" size="18"></i> Tidur Cepat</button>
+                <div class="text-muted mt-4 mb-2 px-2 text-uppercase fw-bold" style="font-size: 0.65rem; letter-spacing: 0.8px;">Input Harian Jurnal</div>
+                <button class="nav-link-sidebar" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('bangun', 'Bangun Pagi', 'Pukul Bangun', 'time')"><i data-lucide="sun" size="18"></i> 1. Bangun Pagi</button>
+                <button class="nav-link-sidebar" data-bs-toggle="modal" data-bs-target="#modalIbadah"><i data-lucide="heart" size="18"></i> 2. Beribadah</button>
+                <button class="nav-link-sidebar" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('olahraga', 'Berolahraga', 'Jenis Olahraga', 'text')"><i data-lucide="bike" size="18"></i> 3. Berolahraga</button>
+                <button class="nav-link-sidebar" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('makan', 'Makan Sehat & Bergizi', 'Menu Makanan', 'text')"><i data-lucide="utensils" size="18"></i> 4. Makan Sehat</button>
+                <button class="nav-link-sidebar" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('belajar', 'Gemar Belajar', 'Materi Pelajaran', 'text')"><i data-lucide="book-open" size="18"></i> 5. Gemar Belajar</button>
+                <button class="nav-link-sidebar" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('masyarakat', 'Bermasyarakat', 'Kegiatan Sosial', 'text')"><i data-lucide="users" size="18"></i> 6. Bermasyarakat</button>
+                <button class="nav-link-sidebar" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('tidur', 'Tidur Cepat', 'Jam Tidur', 'time')"><i data-lucide="moon" size="18"></i> 7. Tidur Cepat</button>
             </div>
             
-            <!-- Menu Guru Wali (Tanpa Pengaturan Laporan) -->
+            <!-- Menu Guru Wali -->
             <div id="menu-admin-container" class="d-none">
-                <div class="alert alert-success mx-1 small py-2 px-3 rounded-3 border-0 bg-light text-success fw-bold"><i data-lucide="shield-check" size="16" class="me-1"></i> <span id="admin-welcome-name"></span></div>
+                <div class="alert mx-1 small py-2 px-3 rounded-3 border-0 bg-light fw-bold mb-3" style="color: #047857; background-color: #ecfdf5 !important;"><i data-lucide="shield-check" size="16" class="me-1"></i> <span id="admin-welcome-name"></span></div>
                 <button class="nav-link-sidebar active" onclick="switchTab('tab-admin-dash', this)"><i data-lucide="layout-dashboard" size="18"></i> Dashboard</button>
                 <button class="nav-link-sidebar" onclick="switchTab('tab-admin-school', this)"><i data-lucide="school" size="18"></i> Jurnal Sekolah</button>
                 <button class="nav-link-sidebar" onclick="switchTab('tab-admin-tracker', this)"><i data-lucide="map-pin" size="18"></i> Pantau Harian (GPS)</button>
@@ -168,44 +191,44 @@
 
             <!-- Menu Wali Kelas -->
             <div id="menu-walikelas-container" class="d-none">
-                <div class="alert alert-info mx-1 small py-2 px-3 rounded-3 border-0 bg-light text-info fw-bold"><i data-lucide="user-check" size="16" class="me-1"></i> <span id="walikelas-welcome-name"></span></div>
+                <div class="alert mx-1 small py-2 px-3 rounded-3 border-0 fw-bold mb-3" style="color: #0369a1; background-color: #e0f2fe !important;"><i data-lucide="user-check" size="16" class="me-1"></i> <span id="walikelas-welcome-name"></span></div>
                 <button class="nav-link-sidebar active" onclick="switchTab('tab-walikelas-pendampingan', this)"><i data-lucide="file-heart" size="18"></i> Pendampingan Siswa</button>
             </div>
             
             <hr class="my-3 w-100 opacity-25">
-            <button class="nav-link-sidebar text-danger w-100" onclick="logout()"><i data-lucide="log-out" size="18"></i> Keluar</button>
+            <button class="nav-link-sidebar text-danger w-100" onclick="logout()"><i data-lucide="log-out" size="18"></i> Keluar Aplikasi</button>
         </div>
     </div>
 
     <div class="main-content d-flex flex-column min-vh-100">
         <!-- HEADER MOBILE -->
-        <div class="mobile-header d-flex d-lg-none justify-content-between align-items-center p-3 text-white no-print shadow-sm rounded-4 mb-3" style="background: var(--primary-color);">
-            <button class="btn btn-sm text-white border-0" onclick="toggleSidebar()"><i data-lucide="menu"></i></button>
+        <div class="mobile-header d-flex d-lg-none justify-content-between align-items-center mb-3 no-print">
+            <button class="btn btn-sm text-white border-0 py-1 px-2" onclick="toggleSidebar()"><i data-lucide="menu" size="24"></i></button>
             <div class="d-flex align-items-center">
-                <img src="https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png" alt="Logo" style="width: 26px; height: 26px; object-fit: contain; background: white; border-radius: 50%; padding: 2px; margin-right: 8px;">
-                <h6 class="mb-0 fw-bold m-0">SMPN 1 Poli-Polia</h6>
+                <img src="https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png" alt="Logo" style="width: 28px; height: 28px; object-fit: contain; background: white; border-radius: 50%; padding: 2px; margin-right: 8px;">
+                <h6 class="mb-0 fw-bold text-white fs-6">SMPN 1 Poli-Polia</h6>
             </div>
-            <div style="width: 26px;"></div>
+            <div style="width: 30px;"></div>
         </div>
 
         <div class="flex-grow-1">
             <!-- Beranda Siswa -->
             <div id="tab-home" class="tab-pane d-none fade-in">
                 <div class="header-banner">
-                    <h2 class="fw-bold mb-2">Semangat Pagi, <span class="current-user-name text-warning">Anak Hebat</span>!</h2>
-                    <p class="lead mb-0 opacity-75 small">Mari budayakan 7 kebiasaan positif setiap hari menuju Indonesia Emas 2045.</p>
+                    <h3 class="fw-extrabold mb-1">Semangat Pagi, <span class="current-user-name text-warning">Anak Hebat</span>!</h3>
+                    <p class="mb-0 opacity-95 small">Mari budayakan 7 kebiasaan positif setiap hari menuju Indonesia Emas 2045.</p>
                 </div>
-                <div class="alert alert-info border-0 rounded-4 shadow-sm d-flex align-items-center bg-white text-dark py-3">
-                    <i data-lucide="info" class="text-primary me-3" size="24"></i>
-                    <div class="small"><strong>Penting:</strong> Status "SELESAI" hanya akan muncul jika Anda telah mengisi jurnal pada tanggal hari ini.</div>
+                <div class="alert border-0 rounded-4 shadow-sm d-flex align-items-center bg-white text-dark py-3 mb-4" style="border-left: 4px solid var(--primary-color) !important;">
+                    <i data-lucide="info" class="text-teal me-3 flex-shrink-0" style="color: var(--primary-color);" size="24"></i>
+                    <div class="small">Status <strong>SELESAI</strong> akan otomatis muncul jika Anda telah mengisi jurnal pada tanggal hari ini.</div>
                 </div>
-                <div class="row g-4 mt-1" id="dashboard-habit-cards"></div>
+                <div class="row g-3" id="dashboard-habit-cards"></div>
             </div>
 
             <!-- Profil Siswa -->
             <div id="tab-profile" class="tab-pane d-none fade-in">
                 <h3 class="fw-bold mb-4">Data Diri Saya</h3>
-                <div class="card p-4 rounded-4 shadow-sm">
+                <div class="card p-4 shadow-sm">
                     <form id="form-profile-siswa">
                         <div class="row g-3">
                             <div class="col-md-6"><label class="form-label small fw-bold text-muted">Nama Lengkap</label><input type="text" class="form-control bg-light" name="nama" disabled></div>
@@ -213,20 +236,20 @@
                             <div class="col-md-6"><label class="form-label small fw-bold text-muted">Kelas</label><input type="text" class="form-control" name="kelas"></div>
                             <div class="col-md-6"><label class="form-label small fw-bold text-muted">Cita-cita</label><input type="text" class="form-control" name="cita_cita"></div>
                         </div>
-                        <button type="submit" class="btn btn-primary mt-4 px-4 py-2" id="btn-save-profile">Simpan Perubahan</button>
+                        <button type="submit" class="btn btn-primary mt-4 w-100 py-3" id="btn-save-profile">Simpan Perubahan Profil</button>
                     </form>
                 </div>
             </div>
 
             <!-- Dashboard Guru Wali -->
             <div id="tab-admin-dash" class="tab-pane d-none fade-in">
-                <h3 class="fw-bold mb-2">Dashboard Guru Wali</h3>
-                <p class="text-muted small mb-4">Ringkasan aktivitas dan penilaian siswa bimbingan Anda.</p>
-                <div class="row g-4">
+                <h3 class="fw-bold mb-1">Dashboard Guru Wali</h3>
+                <p class="text-muted small mb-4">Ringkasan aktivitas dan pemantauan siswa bimbingan.</p>
+                <div class="row g-3">
                     <div class="col-md-4">
-                        <div class="card p-4 stat-card rounded-4 shadow-sm">
+                        <div class="card p-4 stat-card shadow-sm">
                             <h6 class="text-muted fw-semibold mb-1">Total Siswa Bimbingan</h6>
-                            <h2 class="fw-bolder display-5 text-dark mb-0" id="admin-total-siswa">0</h2>
+                            <h2 class="fw-extrabold display-5 text-teal mb-0" style="color: var(--primary-color);" id="admin-total-siswa">0</h2>
                         </div>
                     </div>
                 </div>
@@ -235,44 +258,44 @@
             <!-- Jurnal Sekolah -->
             <div id="tab-admin-school" class="tab-pane d-none fade-in">
                 <h3 class="fw-bold mb-4">Penilaian Jurnal & Program Sekolah</h3>
-                <div class="card p-4 mb-4 shadow-sm border-0 rounded-4">
+                <div class="card p-4 mb-4 shadow-sm">
                     <div class="row align-items-end g-3">
                         <div class="col-md-3"><label class="form-label small fw-bold text-muted">Pilih Tanggal</label><input type="date" class="form-control" id="school-date" onchange="updateSchoolActivities()"></div>
                         <div class="col-md-6"><label class="form-label small fw-bold text-muted">Pilih Kegiatan</label><select class="form-select" id="school-activity"></select></div>
-                        <div class="col-md-3"><button class="btn btn-primary w-100" onclick="loadSchoolStudents()">Tampilkan Siswa</button></div>
+                        <div class="col-md-3"><button class="btn btn-primary w-100 py-2.5" onclick="loadSchoolStudents()">Tampilkan Siswa</button></div>
                     </div>
                 </div>
-                <div class="card p-4 shadow-sm border-0 rounded-4 d-none" id="school-student-area">
+                <div class="card p-4 shadow-sm d-none" id="school-student-area">
                     <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-                        <h6 class="fw-bold mb-0 text-primary" id="school-activity-title">Penilaian Siswa</h6>
+                        <h6 class="fw-bold mb-0 text-teal" style="color: var(--primary-color);" id="school-activity-title">Penilaian Siswa</h6>
                         <div>
-                            <button class="btn btn-sm btn-outline-success me-2" onclick="setAllEvaluations('Melaksanakan Dengan Baik')">Set Semua: Baik</button>
-                            <button class="btn btn-sm btn-outline-secondary" onclick="setAllEvaluations('Tidak Hadir')">Set Semua: Tidak Hadir</button>
+                            <button class="btn btn-sm btn-outline-success me-2 fw-bold" onclick="setAllEvaluations('Melaksanakan Dengan Baik')">Set Semua: Baik</button>
+                            <button class="btn btn-sm btn-outline-secondary fw-bold" onclick="setAllEvaluations('Tidak Hadir')">Set Semua: Tidak Hadir</button>
                         </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
-                            <thead class="table-light"><tr><th>Nama Lengkap</th><th>Username</th><th width="300">Penilaian Pelaksanaan</th></tr></thead>
+                            <thead class="table-light"><tr><th>Nama Lengkap</th><th>Username</th><th width="280">Penilaian</th></tr></thead>
                             <tbody id="school-student-list"></tbody>
                         </table>
                     </div>
-                    <button class="btn btn-success mt-3 w-100" id="btn-save-school" onclick="saveSchoolChecklist()">Simpan Penilaian Jurnal Sekolah</button>
+                    <button class="btn btn-success mt-3 w-100 py-3 fw-bold bg-teal border-0" style="background-color: var(--primary-color);" id="btn-save-school" onclick="saveSchoolChecklist()">Simpan Penilaian Jurnal Sekolah</button>
                 </div>
             </div>
 
             <!-- Pantau Harian GPS -->
             <div id="tab-admin-tracker" class="tab-pane d-none fade-in">
-                <h3 class="fw-bold mb-4">Pantau Harian Siswa Bimbingan (GPS)</h3>
-                <div class="card p-4 mb-4 shadow-sm border-0 rounded-4">
+                <h3 class="fw-bold mb-4">Pantau Harian Siswa (GPS)</h3>
+                <div class="card p-4 mb-4 shadow-sm">
                     <div class="row align-items-end g-3">
                         <div class="col-md-4"><label class="form-label small fw-bold text-muted">Pilih Tanggal</label><input type="date" class="form-control" id="tracker-date"></div>
-                        <div class="col-md-3"><button class="btn btn-primary w-100" onclick="loadTrackingAdmin()">Tarik Data</button></div>
+                        <div class="col-md-3"><button class="btn btn-primary w-100 py-2.5" onclick="loadTrackingAdmin()">Tarik Data</button></div>
                     </div>
                 </div>
-                <div class="card p-4 shadow-sm border-0 rounded-4">
+                <div class="card p-4 shadow-sm">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
-                            <thead class="table-light"><tr><th>Waktu</th><th>Nama Siswa</th><th>Kebiasaan</th><th>IP Address</th><th>Lokasi Input</th></tr></thead>
+                            <thead class="table-light"><tr><th>Waktu</th><th>Nama Siswa</th><th>Kebiasaan</th><th>IP Address</th><th>Lokasi</th></tr></thead>
                             <tbody id="tracker-list"></tbody>
                         </table>
                     </div>
@@ -281,11 +304,11 @@
 
             <!-- Kelola Siswa -->
             <div id="tab-admin-students" class="tab-pane d-none fade-in">
-                <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
                     <h3 class="fw-bold mb-0">Siswa Bimbingan Saya</h3>
-                    <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#modalAddSiswa"><i data-lucide="plus" size="18" class="me-1"></i> Tambah Siswa</button>
+                    <button class="btn btn-primary shadow-sm py-2.5 px-4" data-bs-toggle="modal" data-bs-target="#modalAddSiswa"><i data-lucide="plus" size="18" class="me-1"></i> Tambah Siswa</button>
                 </div>
-                <div class="card p-4 rounded-4 shadow-sm border-0" style="overflow-x: auto;">
+                <div class="card p-4 shadow-sm" style="overflow-x: auto;">
                     <table class="table table-hover align-middle" style="min-width: 500px;">
                         <thead class="table-light"><tr><th>No</th><th>Nama Lengkap</th><th>Username</th><th>Kelas</th><th class="text-center">Aksi</th></tr></thead>
                         <tbody id="admin-siswa-list"></tbody>
@@ -293,29 +316,28 @@
                 </div>
             </div>
 
-            <!-- MENU PENDAMPINGAN SISWA & REKAPAN / CETAK (WALI KELAS) -->
+            <!-- Pendampingan Siswa (Wali Kelas) -->
             <div id="tab-walikelas-pendampingan" class="tab-pane d-none fade-in">
                 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
                     <div>
                         <h3 class="fw-bold mb-1">Rekap Pendampingan & Kasus Siswa</h3>
-                        <p class="text-muted small mb-0">Kelola dan cetak rekap pembinaan disiplin serta kasus siswa kelas perwalian Anda.</p>
+                        <p class="text-muted small mb-0">Kelola dan cetak rekap pembinaan disiplin kelas perwalian.</p>
                     </div>
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-outline-success shadow-sm" onclick="cetakLaporanPendampingan()"><i data-lucide="printer" size="18" class="me-1"></i> Cetak Laporan</button>
-                        <button class="btn btn-success shadow-sm" data-bs-toggle="modal" data-bs-target="#modalPendampingan"><i data-lucide="plus-circle" size="18" class="me-1"></i> Tambah Kasus</button>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <button class="btn btn-outline-success shadow-sm py-2 px-3 fw-bold" onclick="cetakLaporanPendampingan()"><i data-lucide="printer" size="18" class="me-1"></i> Cetak Laporan</button>
+                        <button class="btn btn-success shadow-sm py-2 px-3 fw-bold bg-teal border-0" style="background-color: var(--primary-color);" data-bs-toggle="modal" data-bs-target="#modalPendampingan"><i data-lucide="plus-circle" size="18" class="me-1"></i> Tambah Kasus</button>
                     </div>
                 </div>
 
-                <!-- KARTU REKAP STATISTIK KASUS -->
                 <div class="row g-3 mb-4">
                     <div class="col-md-4">
-                        <div class="card p-3 shadow-sm border-0 bg-white rounded-4">
+                        <div class="card p-3 shadow-sm bg-white rounded-4">
                             <span class="text-muted small fw-bold">Total Kasus Tercatat</span>
-                            <h3 class="fw-bold text-success mt-1 mb-0" id="rekap-total-kasus">0</h3>
+                            <h3 class="fw-extrabold text-teal mt-1 mb-0" style="color: var(--primary-color);" id="rekap-total-kasus">0</h3>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <div class="card p-3 shadow-sm border-0 bg-white rounded-4">
+                        <div class="card p-3 shadow-sm bg-white rounded-4">
                             <span class="text-muted small fw-bold mb-1 d-block">Distribusi Kategori Kasus</span>
                             <div id="rekap-kategori-list" class="d-flex flex-wrap gap-2 mt-1">
                                 <span class="badge bg-light text-muted">Belum ada data</span>
@@ -324,7 +346,7 @@
                     </div>
                 </div>
 
-                <div class="card p-4 shadow-sm border-0 rounded-4">
+                <div class="card p-4 shadow-sm">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
                             <thead class="table-light">
@@ -332,7 +354,7 @@
                                     <th>Tanggal</th>
                                     <th>Nama Siswa</th>
                                     <th>Kategori Kasus</th>
-                                    <th>Bentuk Pendampingan / Masalah</th>
+                                    <th>Bentuk Pendampingan</th>
                                     <th>Hasil / Tindak Lanjut</th>
                                     <th class="text-center no-print">Aksi</th>
                                 </tr>
@@ -350,9 +372,9 @@
                 <div class="print-header-wrapper">
                     <img id="print-p-logo-daerah" class="print-logo" src="" alt="Kiri">
                     <div class="print-header-text">
-                        <h5 class="mb-0 text-uppercase" id="print-p-pemerintah">PEMERINTAH</h5>
-                        <h4 class="mb-0 text-uppercase fw-bold" id="print-p-sekolah">NAMA SEKOLAH</h4>
-                        <p class="small mb-0" id="print-p-alamat">Alamat Sekolah</p>
+                        <h5 class="mb-0 text-uppercase" id="print-p-pemerintah">PEMERINTAH KABUPATEN KOLAKA TIMUR</h5>
+                        <h4 class="mb-0 text-uppercase fw-bold" id="print-p-sekolah">SMP NEGERI 1 POLI-POLIA</h4>
+                        <p class="small mb-0" id="print-p-alamat">Jl. Drs. H. Abdullah Silondae No. 1A Poli-Polia</p>
                     </div>
                     <img id="print-p-logo-sekolah" class="print-logo" src="" alt="Kanan">
                 </div>
@@ -379,7 +401,7 @@
             <!-- Cetak Laporan Jurnal Siswa -->
             <div id="tab-admin-reports" class="tab-pane d-none fade-in">
                 <h3 class="fw-bold mb-4 no-print">Cetak Laporan Siswa Bimbingan</h3>
-                <div class="card p-4 mb-4 no-print shadow-sm border-0 rounded-4">
+                <div class="card p-4 mb-4 no-print shadow-sm">
                     <div class="row align-items-end g-3">
                         <div class="col-md-5"><label class="form-label small fw-bold text-muted">Pilih Siswa</label><select class="form-select" id="admin-report-select-siswa"></select></div>
                         <div class="col-md-3">
@@ -392,16 +414,16 @@
                             </select>
                         </div>
                         <div class="col-md-2"><label class="form-label small fw-bold text-muted">Tahun</label><input type="number" class="form-control" id="admin-report-year" value="2026"></div>
-                        <div class="col-md-2 d-grid"><button class="btn btn-primary" id="btn-admin-view-report">Tarik Data</button></div>
+                        <div class="col-md-2 d-grid"><button class="btn btn-primary py-2.5" id="btn-admin-view-report">Tarik Data</button></div>
                     </div>
                 </div>
 
                 <div id="report-action-area" class="d-none no-print">
-                    <div class="alert alert-success d-flex flex-wrap justify-content-between align-items-center rounded-4 shadow-sm">
-                        <span class="mb-2 mb-md-0 fw-bold">Pilih format laporan cetak:</span>
+                    <div class="alert alert-success d-flex flex-wrap justify-content-between align-items-center shadow-sm" style="background-color: #f0fdf4; border: 1px solid #bbf7d0;">
+                        <span class="mb-2 mb-md-0 fw-bold text-success">Pilih format laporan cetak:</span>
                         <div class="d-flex flex-wrap gap-2">
-                            <button class="btn btn-success btn-sm" onclick="showPrintArea('bulanan')">Cetak Detail Bulanan</button>
-                            <button class="btn btn-warning btn-sm text-dark" onclick="showPrintArea('umum')">Cetak Rekap Umum</button>
+                            <button class="btn btn-success btn-sm px-3 fw-bold bg-teal border-0" style="background-color: var(--primary-color);" onclick="showPrintArea('bulanan')">Cetak Detail Bulanan</button>
+                            <button class="btn btn-warning btn-sm text-dark px-3 fw-bold" style="background-color: #f59e0b; color: white !important;" onclick="showPrintArea('umum')">Cetak Rekap Umum</button>
                         </div>
                     </div>
                 </div>
@@ -411,9 +433,9 @@
                     <div class="print-header-wrapper">
                         <img id="print-logo-daerah" class="print-logo" src="" alt="Kiri">
                         <div class="print-header-text">
-                            <h5 class="mb-0 text-uppercase" id="print-pemerintah">PEMERINTAH</h5>
-                            <h4 class="mb-0 text-uppercase fw-bold" id="print-sekolah">NAMA SEKOLAH</h4>
-                            <p class="small mb-0" id="print-alamat">Alamat</p>
+                            <h5 class="mb-0 text-uppercase" id="print-pemerintah">PEMERINTAH KABUPATEN KOLAKA TIMUR</h5>
+                            <h4 class="mb-0 text-uppercase fw-bold" id="print-sekolah">SMP NEGERI 1 POLI-POLIA</h4>
+                            <p class="small mb-0" id="print-alamat">Jl. Drs. H. Abdullah Silondae No. 1A Poli-Polia</p>
                         </div>
                         <img id="print-logo-sekolah" class="print-logo" src="" alt="Kanan">
                     </div>
@@ -457,9 +479,9 @@
             <div class="modal-body p-4">
                 <form id="form-dynamic-habit">
                     <input type="hidden" id="habit-type" name="type">
-                    <div class="mb-3"><label class="form-label small fw-bold text-muted">Tanggal Pelaksanaan</label><input type="date" class="form-control" name="tgl" id="habit-date" required></div>
-                    <div class="mb-4"><label class="form-label small fw-bold text-muted" id="habit-input-label">Detail</label><input type="text" class="form-control" name="detail1" id="habit-detail-input" required></div>
-                    <button type="submit" class="btn btn-primary w-100 py-2" id="btn-save-habit">Simpan Jurnal</button>
+                    <div class="mb-3"><label class="form-label small fw-bold text-muted">Tanggal Pelaksanaan</label><input type="date" class="form-control py-2.5" name="tgl" id="habit-date" required></div>
+                    <div class="mb-4"><label class="form-label small fw-bold text-muted" id="habit-input-label">Detail</label><input type="text" class="form-control py-2.5" name="detail1" id="habit-detail-input" required></div>
+                    <button type="submit" class="btn btn-primary w-100 py-3" id="btn-save-habit">Simpan Jurnal</button>
                 </form>
             </div>
         </div>
@@ -472,17 +494,17 @@
             <div class="modal-header"><h5 class="modal-title fw-bold">2. Beribadah</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
             <div class="modal-body p-4">
                 <form id="form-ibadah">
-                    <div class="mb-3"><label class="form-label small fw-bold text-muted">Tanggal Pelaksanaan</label><input type="date" class="form-control" name="tgl" id="ibadah-date" required></div>
+                    <div class="mb-3"><label class="form-label small fw-bold text-muted">Tanggal Pelaksanaan</label><input type="date" class="form-control py-2.5" name="tgl" id="ibadah-date" required></div>
                     <div class="mb-2"><label class="form-label small fw-bold text-muted">Ibadah Selesai:</label></div>
                     <div class="d-grid gap-2 mb-4">
-                        <input type="checkbox" class="btn-check" id="ib-1" name="sholat" value="Subuh"><label class="btn btn-outline-primary text-start fw-medium" for="ib-1">Sholat Subuh</label>
-                        <input type="checkbox" class="btn-check" id="ib-2" name="sholat" value="Dzuhur"><label class="btn btn-outline-primary text-start fw-medium" for="ib-2">Sholat Dzuhur</label>
-                        <input type="checkbox" class="btn-check" id="ib-3" name="sholat" value="Ashar"><label class="btn btn-outline-primary text-start fw-medium" for="ib-3">Sholat Ashar</label>
-                        <input type="checkbox" class="btn-check" id="ib-4" name="sholat" value="Magrib"><label class="btn btn-outline-primary text-start fw-medium" for="ib-4">Sholat Magrib</label>
-                        <input type="checkbox" class="btn-check" id="ib-5" name="sholat" value="Isya"><label class="btn btn-outline-primary text-start fw-medium" for="ib-5">Sholat Isya</label>
+                        <input type="checkbox" class="btn-check" id="ib-1" name="sholat" value="Subuh"><label class="btn btn-outline-primary text-start fw-medium py-2.5" for="ib-1">Sholat Subuh</label>
+                        <input type="checkbox" class="btn-check" id="ib-2" name="sholat" value="Dzuhur"><label class="btn btn-outline-primary text-start fw-medium py-2.5" for="ib-2">Sholat Dzuhur</label>
+                        <input type="checkbox" class="btn-check" id="ib-3" name="sholat" value="Ashar"><label class="btn btn-outline-primary text-start fw-medium py-2.5" for="ib-3">Sholat Ashar</label>
+                        <input type="checkbox" class="btn-check" id="ib-4" name="sholat" value="Magrib"><label class="btn btn-outline-primary text-start fw-medium py-2.5" for="ib-4">Sholat Magrib</label>
+                        <input type="checkbox" class="btn-check" id="ib-5" name="sholat" value="Isya"><label class="btn btn-outline-primary text-start fw-medium py-2.5" for="ib-5">Sholat Isya</label>
                     </div>
-                    <div class="mb-4"><label class="form-label small fw-bold text-muted">Keterangan / Alasan (Opsional):</label><input type="text" class="form-control" name="detail2" placeholder="Contoh: Sedang Halangan / Sakit"></div>
-                    <button type="submit" class="btn btn-primary w-100 py-2" id="btn-save-ibadah">Simpan Ibadah</button>
+                    <div class="mb-4"><label class="form-label small fw-bold text-muted">Keterangan / Alasan (Opsional):</label><input type="text" class="form-control py-2.5" name="detail2" placeholder="Contoh: Halangan / Sakit"></div>
+                    <button type="submit" class="btn btn-primary w-100 py-3" id="btn-save-ibadah">Simpan Ibadah</button>
                 </form>
             </div>
         </div>
@@ -495,36 +517,36 @@
             <div class="modal-header"><h5 class="modal-title fw-bold">Tambah Akun Siswa</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
             <div class="modal-body p-4">
                 <form id="form-admin-add-siswa">
-                    <div class="mb-3"><label class="form-label small fw-bold text-muted">Nama Lengkap</label><input type="text" class="form-control" name="nama" required></div>
-                    <div class="mb-3"><label class="form-label small fw-bold text-muted">Username</label><input type="text" class="form-control" name="username" required></div>
-                    <div class="mb-3"><label class="form-label small fw-bold text-muted">Password</label><input type="password" class="form-control" name="password" value="123" required></div>
-                    <div class="mb-4"><label class="form-label small fw-bold text-muted">Kelas</label><input type="text" class="form-control" name="kelas" placeholder="Contoh: 9.1" required></div>
-                    <button type="submit" class="btn btn-primary w-100 py-2" id="btn-add-siswa">Buat Akun</button>
+                    <div class="mb-3"><label class="form-label small fw-bold text-muted">Nama Lengkap</label><input type="text" class="form-control py-2.5" name="nama" required></div>
+                    <div class="mb-3"><label class="form-label small fw-bold text-muted">Username</label><input type="text" class="form-control py-2.5" name="username" required></div>
+                    <div class="mb-3"><label class="form-label small fw-bold text-muted">Password</label><input type="password" class="form-control py-2.5" name="password" value="123" required></div>
+                    <div class="mb-4"><label class="form-label small fw-bold text-muted">Kelas</label><input type="text" class="form-control py-2.5" name="kelas" placeholder="Contoh: VII.1" required></div>
+                    <button type="submit" class="btn btn-primary w-100 py-3" id="btn-add-siswa">Buat Akun Siswa</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-<!-- MODAL TAMBAH PENDAMPINGAN / KASUS SISWA -->
+<!-- MODAL PENDAMPINGAN -->
 <div class="modal fade" id="modalPendampingan" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <div class="modal-header bg-success"><h5 class="modal-title fw-bold">Form Catatan Pendampingan & Kasus Siswa</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+            <div class="modal-header bg-teal text-white" style="background-color: var(--primary-color);"><h5 class="modal-title fw-bold">Form Catatan Pendampingan & Kasus Siswa</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
             <div class="modal-body p-4">
                 <form id="form-add-pendampingan">
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="form-label small fw-bold text-muted">Tanggal Kejadian / Pendampingan</label>
-                            <input type="date" class="form-control" name="tanggal" id="p-date" required>
+                            <label class="form-label small fw-bold text-muted">Tanggal Kejadian</label>
+                            <input type="date" class="form-control py-2.5" name="tanggal" id="p-date" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label small fw-bold text-muted">Pilih Siswa Perwalian</label>
-                            <select class="form-select" name="usernameSiswa" id="p-dropdown-siswa" required><option value="">-- Pilih Siswa --</option></select>
+                            <select class="form-select py-2.5" name="usernameSiswa" id="p-dropdown-siswa" required><option value="">-- Pilih Siswa --</option></select>
                         </div>
                         <div class="col-md-12">
                             <label class="form-label small fw-bold text-muted">Kategori Kasus / Bimbingan</label>
-                            <select class="form-select" name="kategori" required>
+                            <select class="form-select py-2.5" name="kategori" required>
                                 <option value="Kedisiplinan / Keterlambatan">Kedisiplinan / Keterlambatan</option>
                                 <option value="Pelanggaran Aturan Sekolah">Pelanggaran Aturan Sekolah</option>
                                 <option value="Masalah Akademik / Belajar">Masalah Akademik / Belajar</option>
@@ -535,14 +557,14 @@
                         </div>
                         <div class="col-md-12">
                             <label class="form-label small fw-bold text-muted">Deskripsi Masalah / Bentuk Pendampingan</label>
-                            <textarea class="form-control" name="deskripsi" rows="3" placeholder="Jelaskan kronologi atau bentuk pembinaan yang diberikan..." required></textarea>
+                            <textarea class="form-control" name="deskripsi" rows="3" placeholder="Jelaskan kronologi atau pembinaan..." required></textarea>
                         </div>
                         <div class="col-md-12">
                             <label class="form-label small fw-bold text-muted">Hasil Pembinaan / Tindak Lanjut</label>
-                            <textarea class="form-control" name="tindakLanjut" rows="2" placeholder="Kesepakatan siswa, teguran, atau pemanggilan orang tua..." required></textarea>
+                            <textarea class="form-control" name="tindakLanjut" rows="2" placeholder="Kesepakatan siswa atau teguran..." required></textarea>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success w-100 mt-4 py-2" id="btn-save-pendampingan">Simpan Catatan Pendampingan</button>
+                    <button type="submit" class="btn btn-success w-100 mt-4 py-3 fw-bold bg-teal border-0" style="background-color: var(--primary-color);" id="btn-save-pendampingan">Simpan Catatan Pendampingan</button>
                 </form>
             </div>
         </div>
@@ -699,20 +721,21 @@
     function renderHabitCards() {
         const today = new Date(); const offset = today.getTimezoneOffset() * 60000; const localToday = (new Date(today - offset)).toISOString().split('T')[0];
         const hList = [
-            { k: 'bangun', l: 'Bangun Pagi', i: 'sun', m: '#modalHabit', f: "prepareModal('bangun','Bangun Pagi','Pukul Bangun','time')" },
-            { k: 'ibadah', l: 'Beribadah', i: 'heart', m: '#modalIbadah', f: "" },
-            { k: 'olahraga', l: 'Olahraga', i: 'bike', m: '#modalHabit', f: "prepareModal('olahraga','Olahraga','Jenis Olahraga','text')" },
-            { k: 'makan', l: 'Makan Sehat', i: 'utensils', m: '#modalHabit', f: "prepareModal('makan','Makan Sehat','Sebutkan Menu','text')" },
-            { k: 'belajar', l: 'Belajar', i: 'book-open', m: '#modalHabit', f: "prepareModal('belajar','Gemar Belajar','Materi Pelajaran','text')" },
-            { k: 'masyarakat', l: 'Bermasyarakat', i: 'users', m: '#modalHabit', f: "prepareModal('masyarakat','Bermasyarakat','Kegiatan Sosial','text')" },
-            { k: 'tidur', l: 'Tidur Cepat', i: 'moon', m: '#modalHabit', f: "prepareModal('tidur','Tidur Cepat','Jam Tidur','time')" }
+            { k: 'bangun', l: '1. Bangun Pagi', i: 'sun', bg: '#eff6ff', color: '#2563eb', m: '#modalHabit', f: "prepareModal('bangun','1. Bangun Pagi','Pukul Bangun','time')" },
+            { k: 'ibadah', l: '2. Beribadah', i: 'heart', bg: '#fdf2f8', color: '#db2777', m: '#modalIbadah', f: "" },
+            { k: 'olahraga', l: '3. Olahraga', i: 'bike', bg: '#fefce8', color: '#ca8a04', m: '#modalHabit', f: "prepareModal('olahraga','3. Olahraga','Jenis Olahraga','text')" },
+            { k: 'makan', l: '4. Makan Sehat', i: 'utensils', bg: '#f0fdf4', color: '#16a34a', m: '#modalHabit', f: "prepareModal('makan','4. Makan Sehat','Menu Makanan','text')" },
+            { k: 'belajar', l: '5. Belajar', i: 'book-open', bg: '#faf5ff', color: '#9333ea', m: '#modalHabit', f: "prepareModal('belajar','5. Gemar Belajar','Materi Pelajaran','text')" },
+            { k: 'masyarakat', l: '6. Bermasyarakat', i: 'users', bg: '#fff7ed', color: '#c2410c', m: '#modalHabit', f: "prepareModal('masyarakat','6. Bermasyarakat','Kegiatan Sosial','text')" },
+            { k: 'tidur', l: '7. Tidur Cepat', i: 'moon', bg: '#f1f5f9', color: '#475569', m: '#modalHabit', f: "prepareModal('tidur','7. Tidur Cepat','Jam Tidur','time')" }
         ];
 
         document.getElementById('dashboard-habit-cards').innerHTML = hList.map(h => {
             const doneToday = currentHabits[h.k] && currentHabits[h.k].some(entry => entry.tgl === localToday);
-            let iconHtml = typeof lucide !== 'undefined' ? `<i data-lucide="${h.i}" size="28" style="color: white;"></i>` : '⭐';
-            return `<div class="col-6 col-md-4 col-lg-3"><div class="card p-3 text-center border h-100 shadow-sm bg-platinum-gradient rounded-4" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="${h.m}" onclick="${h.f}">
-                    <div class="icon-gradient-bg mx-auto mb-3 mt-2">${iconHtml}</div><div class="fw-bold small mb-3 text-dark">${h.l}</div>
+            let iconHtml = typeof lucide !== 'undefined' ? `<i data-lucide="${h.i}" size="26" style="color: ${h.color};"></i>` : '⭐';
+            return `<div class="col-6 col-md-4 col-lg-3"><div class="card habit-card p-3 text-center h-100 shadow-sm" data-bs-toggle="modal" data-bs-target="${h.m}" onclick="${h.f}">
+                    <div class="habit-icon-box" style="background-color: ${h.bg};">${iconHtml}</div>
+                    <div class="fw-bold small mb-2 text-dark">${h.l}</div>
                     <span class="status-badge ${doneToday ? 'status-yes' : 'status-no'}">${doneToday ? 'SELESAI' : 'BELUM'}</span>
                 </div></div>`;
         }).join('');
@@ -746,8 +769,8 @@
     document.getElementById('form-profile-siswa').onsubmit = function(e) {
         e.preventDefault(); const btn = document.getElementById('btn-save-profile'); btn.innerText = "Menyimpan..."; const fd = new FormData(this);
         callAPI('updateProfileSiswa', { username: currentUser.username, kelas: fd.get('kelas'), citaCita: fd.get('cita_cita') })
-            .then(() => { currentUser.kelas = fd.get('kelas'); currentUser.cita_cita = fd.get('cita_cita'); btn.innerText = "Simpan Perubahan"; showToast("Profil tersimpan!"); })
-            .catch(() => { btn.innerText = "Simpan Perubahan"; showToast("Gagal menyimpan", "danger"); });
+            .then(() => { currentUser.kelas = fd.get('kelas'); currentUser.cita_cita = fd.get('cita_cita'); btn.innerText = "Simpan Perubahan Profil"; showToast("Profil berhasil diperbarui!"); })
+            .catch(() => { btn.innerText = "Simpan Perubahan Profil"; showToast("Gagal menyimpan", "danger"); });
     };
 
     function fetchAdminDashboard() {
@@ -778,11 +801,11 @@
             if(katKeys.length === 0) {
                 katContainer.innerHTML = `<span class="badge bg-light text-muted">Belum ada kasus tercatat</span>`;
             } else {
-                katContainer.innerHTML = katKeys.map(k => `<span class="badge bg-success-subtle text-success border px-3 py-2 rounded-pill fw-bold">${k}: ${res.kategoriCount[k]}</span>`).join('');
+                katContainer.innerHTML = katKeys.map(k => `<span class="badge bg-teal-subtle text-teal border px-3 py-2 rounded-pill fw-bold" style="background:#ccfbf1; color:#0f766e;">${k}: ${res.kategoriCount[k]}</span>`).join('');
             }
 
             if(res.data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">Belum ada catatan pendampingan atau kasus siswa di kelas perwalian Anda.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">Belum ada catatan pendampingan siswa.</td></tr>`;
                 return;
             }
             tbody.innerHTML = res.data.map(p => `
@@ -939,7 +962,7 @@
     document.getElementById('form-admin-add-siswa').onsubmit = function(e) {
         e.preventDefault(); const btn = document.getElementById('btn-add-siswa'); btn.innerText = "Memproses..."; btn.disabled = true; const fd = new FormData(this);
         callAPI('addStudent', { nama: fd.get('nama'), username: fd.get('username'), pass: fd.get('password'), kelas: fd.get('kelas'), namaGuru: currentUser.nama }).then(res => {
-            btn.innerText = "Buat Akun"; btn.disabled = false;
+            btn.innerText = "Buat Akun Siswa"; btn.disabled = false;
             if(res.success) { bootstrap.Modal.getInstance(document.getElementById('modalAddSiswa')).hide(); showToast("Berhasil ditambahkan!"); this.reset(); loadAdminStudents(); } 
             else { showToast(res.message, "danger"); }
         });
@@ -1025,7 +1048,8 @@
 
     function showToast(msg, type = 'success') {
         const container = document.getElementById('toast-container'); const t = document.createElement('div');
-        t.className = `toast show align-items-center text-white bg-${type} border-0 mb-2 fade-in`;
+        t.className = `toast show align-items-center text-white bg-${type === 'success' ? 'teal' : type} border-0 mb-2 fade-in`;
+        if(type === 'success') t.style.backgroundColor = 'var(--primary-color)';
         t.innerHTML = `<div class="d-flex"><div class="toast-body fw-medium">${msg}</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div>`;
         container.appendChild(t); setTimeout(() => t.remove(), 3500);
     }
