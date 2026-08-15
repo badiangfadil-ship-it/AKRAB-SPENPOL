@@ -655,44 +655,37 @@
         }).catch(err => { document.getElementById('loader-text').innerHTML = `<div class="alert alert-danger mt-3 text-start"><strong>Gagal Terhubung:</strong><br>${err.message}</div>`; });
     });
 
-   // FUNGSI MEMBUAT OPSI KELAS BERDASARKAN GURU WALI
-    function populateDropdownKelas(students) {
-        const kelasMap = new Map();
-        
-        students.forEach(s => {
-            if(s.kelas && s.guru_wali) {
-                // Membuat label unik gabungan kelas dan guru wali
-                let displayKelas = `${s.kelas} (${s.guru_wali})`;
-                kelasMap.set(displayKelas, { rawKelas: s.kelas, wali: s.guru_wali });
-            }
-        });
+  // FUNGSI MEMBUAT OPSI KELAS DI HALAMAN LOGIN
+function populateDropdownKelas(students) {
+    const kelasSet = new Set();
+    students.forEach(s => { if(s.kelas) kelasSet.add(s.kelas); });
 
-        // Urutkan berdasarkan nama kelas
-        const sortedKelas = Array.from(kelasMap.keys()).sort();
-        
-        const opts = '<option value="">-- Pilih Kelas & Guru Wali --</option>' + sortedKelas.map(k => `<option value="${k}">${k}</option>`).join('');
-        document.getElementById('dropdown-kelas').innerHTML = opts;
-        document.getElementById('dropdown-siswa').innerHTML = '<option value="">-- Pilih Kelas di Atas --</option>';
-    }
+    // Mengurutkan nama kelas agar tampil berurutan rapi
+    const arrKelas = Array.from(kelasSet).sort();
 
-    // FUNGSI FILTER SAAT KELAS & GURU WALI DIPILIH
-    window.filterSiswaByKelas = function() {
-        const selectedValue = document.getElementById('dropdown-kelas').value;
-        const siswaSelect = document.getElementById('dropdown-siswa');
-        
-        if (selectedValue === "") {
-            siswaSelect.innerHTML = '<option value="">-- Pilih Kelas di Atas --</option>';
+    const opts = '<option value="">-- Pilih Kelas --</option>' + arrKelas.map(k => `<option value="${k}">Kelas ${k}</option>`).join('');
+    document.getElementById('dropdown-kelas').innerHTML = opts;
+    document.getElementById('dropdown-siswa').innerHTML = '<option value="">-- Pilih Kelas di Atas --</option>';
+}
+
+// FUNGSI SAAT KELAS DIPILIH
+window.filterSiswaByKelas = function() {
+    const selectedKelas = document.getElementById('dropdown-kelas').value;
+    const siswaSelect = document.getElementById('dropdown-siswa');
+
+    if (selectedKelas === "") {
+        siswaSelect.innerHTML = '<option value="">-- Pilih Kelas di Atas --</option>';
+    } else {
+        // Menyaring siswa berdasarkan kode kelas (contoh: VII.1-a)
+        const filtered = allStudentsData.filter(s => s.kelas === selectedKelas);
+
+        if(filtered.length === 0) {
+            siswaSelect.innerHTML = '<option value="">-- Tidak ada siswa ditemukan --</option>';
         } else {
-            // Filter siswa berdasarkan kelas dan wali yang sama persis
-            const filtered = allStudentsData.filter(s => `${s.kelas} (${s.guru_wali})` === selectedValue);
-            
-            if(filtered.length === 0) {
-                siswaSelect.innerHTML = '<option value="">-- Tidak ada siswa ditemukan --</option>';
-            } else {
-                siswaSelect.innerHTML = '<option value="">-- Pilih Nama Siswa --</option>' + filtered.map(s => `<option value="${s.username}">${s.nama}</option>`).join('');
-            }
+            siswaSelect.innerHTML = '<option value="">-- Pilih Nama Siswa --</option>' + filtered.map(s => `<option value="${s.username}">${s.nama}</option>`).join('');
         }
-    };
+    }
+};
 
     window.filterSiswaByKelas = function() {
         const selectedKelas = document.getElementById('dropdown-kelas').value;
