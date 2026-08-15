@@ -655,14 +655,37 @@
         }).catch(err => { document.getElementById('loader-text').innerHTML = `<div class="alert alert-danger mt-3 text-start"><strong>Gagal Terhubung:</strong><br>${err.message}</div>`; });
     });
 
-    // FUNGSI FILTER KELAS
+   // FUNGSI MEMBUAT OPSI KELAS SECARA OTOMATIS
     function populateDropdownKelas(students) {
         const kelasSet = new Set();
         students.forEach(s => { if(s.kelas) kelasSet.add(s.kelas); });
+        // Mengurutkan nama kelas agar rapi (VII.1, VII.2, dst)
         const arrKelas = Array.from(kelasSet).sort();
-        const opts = '<option value="">-- Semua Kelas --</option>' + arrKelas.map(k => `<option value="${k}">Kelas ${k}</option>`).join('');
+        
+        const opts = '<option value="">-- Pilih Kelas Terlebih Dahulu --</option>' + arrKelas.map(k => `<option value="${k}">Kelas ${k}</option>`).join('');
         document.getElementById('dropdown-kelas').innerHTML = opts;
+        
+        // Kosongkan dropdown siswa di awal sebelum kelas dipilih
+        document.getElementById('dropdown-siswa').innerHTML = '<option value="">-- Pilih Kelas di Atas --</option>';
     }
+
+    // FUNGSI SAAT KELAS DIKLIK/DIPILIH
+    window.filterSiswaByKelas = function() {
+        const selectedKelas = document.getElementById('dropdown-kelas').value;
+        const siswaSelect = document.getElementById('dropdown-siswa');
+        
+        if (selectedKelas === "") {
+            siswaSelect.innerHTML = '<option value="">-- Pilih Kelas di Atas --</option>';
+        } else {
+            // Filter siswa berdasarkan kelas yang dipilih
+            const filtered = allStudentsData.filter(s => s.kelas === selectedKelas);
+            if(filtered.length === 0) {
+                siswaSelect.innerHTML = '<option value="">-- Tidak ada siswa di kelas ini --</option>';
+            } else {
+                siswaSelect.innerHTML = '<option value="">-- Pilih Nama Siswa --</option>' + filtered.map(s => `<option value="${s.username}">${s.nama}</option>`).join('');
+            }
+        }
+    };
 
     window.filterSiswaByKelas = function() {
         const selectedKelas = document.getElementById('dropdown-kelas').value;
