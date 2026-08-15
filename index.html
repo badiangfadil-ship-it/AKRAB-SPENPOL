@@ -156,14 +156,13 @@
                 <button class="nav-link-sidebar" data-bs-toggle="modal" data-bs-target="#modalHabit" onclick="prepareModal('tidur', 'Tidur Cepat', 'Jam Tidur', 'time')"><i data-lucide="moon" size="18"></i> Tidur Cepat</button>
             </div>
             
-            <!-- Menu Guru Wali -->
+            <!-- Menu Guru Wali (Tanpa Pengaturan Laporan) -->
             <div id="menu-admin-container" class="d-none">
                 <div class="alert alert-success mx-1 small py-2 px-3 rounded-3 border-0 bg-light text-success fw-bold"><i data-lucide="shield-check" size="16" class="me-1"></i> <span id="admin-welcome-name"></span></div>
                 <button class="nav-link-sidebar active" onclick="switchTab('tab-admin-dash', this)"><i data-lucide="layout-dashboard" size="18"></i> Dashboard</button>
                 <button class="nav-link-sidebar" onclick="switchTab('tab-admin-school', this)"><i data-lucide="school" size="18"></i> Jurnal Sekolah</button>
                 <button class="nav-link-sidebar" onclick="switchTab('tab-admin-tracker', this)"><i data-lucide="map-pin" size="18"></i> Pantau Harian (GPS)</button>
                 <button class="nav-link-sidebar" onclick="switchTab('tab-admin-students', this)"><i data-lucide="users" size="18"></i> Kelola Siswa</button>
-                <button class="nav-link-sidebar" onclick="switchTab('tab-admin-settings', this)"><i data-lucide="settings" size="18"></i> Pengaturan Laporan</button>
                 <button class="nav-link-sidebar" onclick="switchTab('tab-admin-reports', this)"><i data-lucide="printer" size="18"></i> Cetak Laporan</button>
             </div>
 
@@ -375,34 +374,6 @@
                     <tbody id="print-pendampingan-tbody"></tbody>
                 </table>
                 <div id="print-p-signature"></div>
-            </div>
-
-            <!-- Pengaturan Kop Surat -->
-            <div id="tab-admin-settings" class="tab-pane d-none fade-in">
-                <h3 class="fw-bold mb-4">Pengaturan Info & Kop Laporan</h3>
-                <div class="card p-4 rounded-4 shadow-sm border-0">
-                    <form id="form-settings-sekolah">
-                        <div class="row g-4">
-                            <div class="col-md-12"><div class="bg-light p-4 rounded-4"><h6 class="fw-bold text-primary mb-3">Kop Surat & Logo</h6>
-                                <div class="row g-3">
-                                    <div class="col-md-6"><label class="form-label small fw-bold text-muted">Link Logo Daerah (Kiri)</label><input type="url" class="form-control" name="logo_daerah"></div>
-                                    <div class="col-md-6"><label class="form-label small fw-bold text-muted">Link Logo Sekolah (Kanan)</label><input type="url" class="form-control" name="logo_sekolah"></div>
-                                    <div class="col-md-6"><label class="form-label small fw-bold text-muted">Pemerintah (Dinas)</label><input type="text" class="form-control" name="pemerintah"></div>
-                                    <div class="col-md-6"><label class="form-label small fw-bold text-muted">Nama Sekolah</label><input type="text" class="form-control" name="nama_sekolah"></div>
-                                    <div class="col-12"><label class="form-label small fw-bold text-muted">Alamat Lengkap</label><input type="text" class="form-control" name="alamat"></div>
-                                </div>
-                            </div></div>
-                            <div class="col-md-12"><div class="bg-light p-4 rounded-4"><h6 class="fw-bold text-primary mb-3">Pengesahan (Kepala Sekolah)</h6>
-                                <div class="row g-3">
-                                    <div class="col-md-6"><label class="form-label small fw-bold text-muted">Nama Kepala Sekolah</label><input type="text" class="form-control" name="nama_kepsek"></div>
-                                    <div class="col-md-6"><label class="form-label small fw-bold text-muted">NIP Kepala Sekolah</label><input type="text" class="form-control" name="nip_kepsek"></div>
-                                    <div class="col-md-12"><label class="form-label small fw-bold text-muted">Tempat Tanda Tangan</label><input type="text" class="form-control" name="tempat_ttd"></div>
-                                </div>
-                            </div></div>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 mt-4 py-2" id="btn-save-settings">Simpan Pengaturan</button>
-                    </form>
-                </div>
             </div>
 
             <!-- Cetak Laporan Jurnal Siswa -->
@@ -712,7 +683,6 @@
         if(btn) btn.classList.add('active');
         if(window.innerWidth <= 992) { const sb = document.querySelector('.sidebar'); const ov = document.querySelector('.sidebar-overlay'); if(sb) sb.classList.remove('show'); if(ov) ov.classList.remove('show'); }
         if(tabId === 'tab-admin-students') loadAdminStudents();
-        if(tabId === 'tab-admin-settings') fillSettingsForm();
         if(tabId === 'tab-admin-tracker') loadTrackingAdmin();
         if(tabId === 'tab-admin-school') updateSchoolActivities();
         if(tabId === 'tab-walikelas-pendampingan') loadPendampinganData();
@@ -837,7 +807,7 @@
         }
         document.getElementById('print-p-pemerintah').innerText = schoolSettings.pemerintah || 'PEMERINTAH KABUPATEN KOLAKA TIMUR\nDINAS PENDIDIKAN DAN KEBUDAYAAN';
         document.getElementById('print-p-sekolah').innerText = schoolSettings.nama_sekolah || 'SMP NEGERI 1 POLI-POLIA';
-        document.getElementById('print-p-alamat').innerText = schoolSettings.alamat || 'Jl. Drs. H. Abdullah Silondae No. 1A Poli-Polia';
+        document.getElementById('print-p-alamat').innerText = schoolSettings.alamat || 'Jl. Drs. H. Abdullah Silondae No. 1A Poli-Polia Kec. Poli-Polia Kab. Kolaka Timur, POS. 93573';
         document.getElementById('print-p-logo-daerah').src = schoolSettings.logo_daerah || 'https://cdn.phototourl.com/member/2026-07-24-7da31f21-29e7-4dac-8841-dace531ebe04.png';
         document.getElementById('print-p-logo-sekolah').src = schoolSettings.logo_sekolah || 'https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png';
 
@@ -975,13 +945,6 @@
         });
     };
 
-    function fillSettingsForm() { const form = document.getElementById('form-settings-sekolah'); for(let key in schoolSettings) { if(form.elements[key]) form.elements[key].value = schoolSettings[key]; } }
-
-    document.getElementById('form-settings-sekolah').onsubmit = function(e) {
-        e.preventDefault(); const btn = document.getElementById('btn-save-settings'); btn.innerText = "Menyimpan..."; const settingsObj = Object.fromEntries(new FormData(this));
-        callAPI('saveAdminSettings', { settingsObj: settingsObj }).then(() => { schoolSettings = settingsObj; btn.innerText = "Simpan Pengaturan"; showToast("Pengaturan disimpan!"); });
-    };
-
     document.getElementById('btn-admin-view-report').onclick = function() {
         const uname = document.getElementById('admin-report-select-siswa').value; if(!uname) return showToast("Pilih siswa terlebih dahulu!", "warning");
         this.innerHTML = "Menarik Data..."; this.disabled = true;
@@ -995,7 +958,7 @@
     function setupPrintKop() {
         document.getElementById('print-pemerintah').innerText = schoolSettings.pemerintah || 'PEMERINTAH KABUPATEN KOLAKA TIMUR\nDINAS PENDIDIKAN DAN KEBUDAYAAN'; 
         document.getElementById('print-sekolah').innerText = schoolSettings.nama_sekolah || 'SMP NEGERI 1 POLI-POLIA'; 
-        document.getElementById('print-alamat').innerText = schoolSettings.alamat || 'Jl. Drs. H. Abdullah Silondae No. 1A Poli-Polia';
+        document.getElementById('print-alamat').innerText = schoolSettings.alamat || 'Jl. Drs. H. Abdullah Silondae No. 1A Poli-Polia Kec. Poli-Polia Kab. Kolaka Timur, POS. 93573';
         document.getElementById('print-logo-daerah').src = schoolSettings.logo_daerah || 'https://cdn.phototourl.com/member/2026-07-24-7da31f21-29e7-4dac-8841-dace531ebe04.png'; 
         document.getElementById('print-logo-sekolah').src = schoolSettings.logo_sekolah || 'https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png';
     }
