@@ -45,9 +45,7 @@
         .badge-wait { background: #fef08a; color: #854d0e; border: 1px solid #fde047; }
         .badge-forward { background: #e0e7ff; color: #4338ca; border: 1px solid #c7d2fe; }
         .badge-done { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-        .status-yes { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-        .status-no { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
-
+        
         .header-banner { background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); color: white; padding: 1.5rem; border-radius: 20px; margin-bottom: 1.5rem; box-shadow: 0 10px 25px rgba(13, 148, 136, 0.2); }
         .mobile-header { background: var(--primary-color); color: white; border-radius: 16px; padding: 12px 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
 
@@ -558,6 +556,54 @@
     </div>
 </div>
 
+<!-- MODAL INTERAKTIF: TINDAK LANJUT WALI KELAS -->
+<div class="modal fade" id="modalWaliKelasAction" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header text-white" style="background-color: var(--walikelas-color);">
+                <h6 class="modal-title fw-bold">Tindak Lanjut & Penanganan Wali Kelas</h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="form-wk-action">
+                    <input type="hidden" id="wk-kasus-id">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Tindakan Awal / Penanganan Wali Kelas</label>
+                        <textarea class="form-control" id="wk-penanganan-input" rows="4" placeholder="Contoh: Memanggil siswa, pembinaan di kelas, atau koordinasi dengan orang tua..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn text-white w-100 py-3 fw-bold" style="background-color: var(--walikelas-color);">Simpan & Teruskan ke Guru BK</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL INTERAKTIF: TINDAK LANJUT GURU BK -->
+<div class="modal fade" id="modalBKAction" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header text-white" style="background-color: var(--bk-color);">
+                <h6 class="modal-title fw-bold">Tindak Lanjut & Penanganan Guru BK</h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="form-bk-action">
+                    <input type="hidden" id="bk-kasus-id">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Detail Tindak Lanjut</label>
+                        <input type="text" class="form-control mb-2" id="bk-tl-input" placeholder="Cth: Konseling Individual / Pemanggilan Orang Tua" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Tindakan Awal / Penanganan Guru BK</label>
+                        <textarea class="form-control" id="bk-penanganan-input" rows="3" placeholder="Contoh: Sesi konseling mendalam dan pembuatan surat perjanjian..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn text-white w-100 py-3 fw-bold" style="background-color: var(--bk-color);">Selesaikan Kasus</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzqYR4lwyEw5eSeTzRKteDFO25GtBR7EbU_Z0x_r380FcngOyCsi48GOs8-2u1Kflah/exec"; 
@@ -843,10 +889,10 @@
     };
 
     // -------------------------------------------------------------
-    // ALUR PENDAMPINGAN KASUS TERKONEKSI (GW -> WK -> BK) DENGAN PENANGANAN LENGKAP
+    // ALUR PENDAMPINGAN KASUS TERKONEKSI (GW -> WK -> BK)
     // -------------------------------------------------------------
     
-    // 1. Dashboard Catatan Kasus Siswa (Semua Guru Bisa Akses & Input)
+    // 1. Dashboard Catatan Kasus Siswa (Guru Wali)
     function loadPendampinganGuruWali() {
         const tbody = document.getElementById('gw-pendampingan-list'); 
         tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
@@ -861,8 +907,8 @@
                 let aksiBtn = `<span class="small text-muted">Terkunci</span>`;
                 if (p.Status === 'Menunggu Wali Kelas') {
                     aksiBtn = `
-                        <button class="btn btn-sm btn-success py-0 px-2 fw-bold" onclick="updateStatus('${p.ID}', 'Selesai')">Selesai</button>
-                        <button class="btn btn-sm text-white py-0 px-2 fw-bold" style="background-color: var(--walikelas-color);" onclick="updateStatus('${p.ID}', 'Teruskan ke Wali Kelas')">Teruskan ke WK</button>
+                        <button class="btn btn-sm btn-success py-0 px-2 fw-bold" onclick="updateStatusDirect('${p.ID}', 'Selesai')">Selesai</button>
+                        <button class="btn btn-sm text-white py-0 px-2 fw-bold" style="background-color: var(--walikelas-color);" onclick="openWkModal('${p.ID}')">Teruskan ke WK</button>
                     `;
                 }
                 return `
@@ -902,7 +948,7 @@
         });
     };
 
-    // 2. Dashboard Wali Kelas (Review Kasus & Input Penanganan)
+    // 2. Dashboard Wali Kelas (Review Kasus & Input Tindak Lanjut via Modal)
     function loadPendampinganWaliKelas() {
         const tbody = document.getElementById('wk-pendampingan-list'); 
         tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
@@ -916,8 +962,8 @@
             tbody.innerHTML = res.data.map(p => {
                 let badgeClass = p.Status === 'Selesai' ? 'badge-done' : (p.Status.includes('BK') ? 'badge-forward' : 'badge-wait');
                 let aksi = `
-                    <button class="btn btn-sm btn-success py-0 px-2 fw-bold" onclick="updateStatus('${p.ID}', 'Selesai')">Selesai</button>
-                    <button class="btn btn-sm text-white py-0 px-2 fw-bold" style="background-color: var(--bk-color);" onclick="updateStatus('${p.ID}', 'Teruskan ke Guru BK')">Teruskan ke BK</button>
+                    <button class="btn btn-sm btn-success py-0 px-2 fw-bold" onclick="updateStatusDirect('${p.ID}', 'Selesai')">Selesai</button>
+                    <button class="btn btn-sm text-white py-0 px-2 fw-bold" style="background-color: var(--bk-color);" onclick="openWkModal('${p.ID}')">Teruskan ke BK</button>
                 `;
                 return `
                     <tr>
@@ -932,7 +978,32 @@
         });
     }
 
-    // 3. Dashboard Guru BK (Penanganan Akhir & Tindak Lanjut)
+    window.openWkModal = function(id) {
+        document.getElementById('wk-kasus-id').value = id;
+        document.getElementById('wk-penanganan-input').value = "";
+        new bootstrap.Modal(document.getElementById('modalWaliKelasAction')).show();
+    };
+
+    document.getElementById('form-wk-action').onsubmit = function(e) {
+        e.preventDefault();
+        const id = document.getElementById('wk-kasus-id').value;
+        const penangananWK = document.getElementById('wk-penanganan-input').value;
+        
+        callAPI('updateStatusKasus', { 
+            id: id, 
+            status: 'Teruskan ke Guru BK', 
+            penangananWK: penangananWK 
+        }).then(res => {
+            if(res.success) {
+                bootstrap.Modal.getInstance(document.getElementById('modalWaliKelasAction')).hide();
+                showToast("Kasus berhasil ditindaklanjuti & diteruskan ke BK!");
+                if(currentUser.role === 'admin') loadPendampinganGuruWali();
+                if(currentUser.role === 'walikelas') loadPendampinganWaliKelas();
+            }
+        });
+    };
+
+    // 3. Dashboard Guru BK (Penanganan Akhir & Tindak Lanjut via Modal)
     function loadPendampinganBK() {
         const tbody = document.getElementById('bk-pendampingan-list'); 
         tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
@@ -946,8 +1017,8 @@
             tbody.innerHTML = res.data.map(p => {
                 let badgeClass = p.Status === 'Selesai' ? 'badge-done' : 'badge-forward';
                 let aksi = `
-                    <button class="btn btn-sm btn-success py-0 px-2 fw-bold" onclick="updateStatus('${p.ID}', 'Selesai')">Selesai</button>
-                    <button class="btn btn-sm btn-warning text-dark py-0 px-2 fw-bold" onclick="updateStatus('${p.ID}', 'Tindak Lanjut BK')">Tindak Lanjut</button>
+                    <button class="btn btn-sm btn-success py-0 px-2 fw-bold" onclick="updateStatusDirect('${p.ID}', 'Selesai')">Selesai</button>
+                    <button class="btn btn-sm btn-warning text-dark py-0 px-2 fw-bold" onclick="openBkModal('${p.ID}')">Tindak Lanjut</button>
                 `;
                 return `
                     <tr>
@@ -962,41 +1033,41 @@
         });
     }
 
-    // Fungsi Universal Update Status Antar Role dengan Input Catatan Penanganan Otomatis via Prompt
-    window.updateStatus = function(id, status) {
-        let catatan = "";
-        let penangananWK = "";
-        let tindakLanjut = "";
-        let penangananBK = "";
+    window.openBkModal = function(id) {
+        document.getElementById('bk-kasus-id').value = id;
+        document.getElementById('bk-tl-input').value = "";
+        document.getElementById('bk-penanganan-input').value = "";
+        new bootstrap.Modal(document.getElementById('modalBKAction')).show();
+    };
 
-        if (status === 'Teruskan ke Wali Kelas') {
-            catatan = prompt("Catatan pengantar untuk Wali Kelas:");
-            if (catatan === null) return;
-        } else if (status === 'Teruskan ke Guru BK') {
-            penangananWK = prompt("Masukkan Catatan / Penanganan Wali Kelas sebelum diteruskan ke BK:");
-            if (penangananWK === null) return;
-        } else if (status === 'Tindak Lanjut BK') {
-            tindakLanjut = prompt("Detail Tindak Lanjut:");
-            if (tindakLanjut === null) return;
-            penangananBK = prompt("Penanganan / Resolusi Akhir Guru BK:");
-            if (penangananBK === null) return;
-        }
+    document.getElementById('form-bk-action').onsubmit = function(e) {
+        e.preventDefault();
+        const id = document.getElementById('bk-kasus-id').value;
+        const tindakLanjut = document.getElementById('bk-tl-input').value;
+        const penangananBK = document.getElementById('bk-penanganan-input').value;
 
         callAPI('updateStatusKasus', { 
             id: id, 
-            status: status, 
-            catatan: catatan, 
-            penangananWK: penangananWK, 
+            status: 'Tindak Lanjut BK', 
             tindakLanjut: tindakLanjut, 
             penangananBK: penangananBK 
         }).then(res => {
             if(res.success) {
-                showToast("Kasus berhasil diperbarui!");
+                bootstrap.Modal.getInstance(document.getElementById('modalBKAction')).hide();
+                showToast("Tindak lanjut BK berhasil disimpan!");
+                loadPendampinganBK();
+            }
+        });
+    };
+
+    window.updateStatusDirect = function(id, status) {
+        if(!confirm("Ubah status kasus menjadi " + status + "?")) return;
+        callAPI('updateStatusKasus', { id: id, status: status }).then(res => {
+            if(res.success) {
+                showToast("Status berhasil diperbarui!");
                 if(currentUser.role === 'admin') loadPendampinganGuruWali();
                 if(currentUser.role === 'walikelas') loadPendampinganWaliKelas();
                 if(currentUser.role === 'gurubk') loadPendampinganBK();
-            } else {
-                showToast(res.message, "danger");
             }
         });
     };
