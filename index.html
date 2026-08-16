@@ -249,7 +249,7 @@
                 </div>
             </div>
 
-            <!-- TAB BERSAMA (GW/WK/BK): CATAT KASUS -->
+            <!-- TAB BERSAMA: CATAT KASUS SISWA -->
             <div id="tab-guruwali-pendampingan" class="tab-pane d-none fade-in">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="fw-bold mb-0">Pencatatan Kasus Siswa</h4>
@@ -390,7 +390,7 @@
                 <div class="card p-3 shadow-sm">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
-                            <thead class="table-light"><tr><th>Tgl</th><th>Siswa</th><th>Kategori</th><th>Status</th><th class="text-center no-print">Tindakan</th></tr></thead>
+                            <thead class="table-light"><tr><th>Tgl</th><th>Siswa</th><th>Kategori</th><th>Status</th><th class="text-center no-print">Tindakan (Selesai / Teruskan ke BK)</th></tr></thead>
                             <tbody id="wk-pendampingan-list"><tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr></tbody>
                         </table>
                     </div>
@@ -407,7 +407,7 @@
                 <div class="card p-3 shadow-sm border-0">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
-                            <thead class="table-light"><tr><th>Tgl</th><th>Siswa</th><th>Kategori</th><th>Status</th><th class="text-center no-print">Tindakan</th></tr></thead>
+                            <thead class="table-light"><tr><th>Tgl</th><th>Siswa</th><th>Kategori</th><th>Status</th><th class="text-center no-print">Tindakan (Selesai / Tindak Lanjut)</th></tr></thead>
                             <tbody id="bk-pendampingan-list"><tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr></tbody>
                         </table>
                     </div>
@@ -469,7 +469,6 @@
 </div>
 
 <!-- MODALS -->
-<!-- MODAL SISWA: ISI JURNAL -->
 <div class="modal fade" id="modalHabit" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -489,7 +488,6 @@
     </div>
 </div>
 
-<!-- MODAL SISWA: BERIBADAH -->
 <div class="modal fade" id="modalIbadah" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -515,7 +513,6 @@
     </div>
 </div>
 
-<!-- MODAL GURU WALI: TAMBAH AKUN SISWA -->
 <div class="modal fade" id="modalAddSiswa" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -536,7 +533,6 @@
     </div>
 </div>
 
-<!-- MODAL BERSAMA: TAMBAH KASUS BARU -->
 <div class="modal fade" id="modalPendampinganGw" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -562,55 +558,9 @@
     </div>
 </div>
 
-<!-- MODAL WALI KELAS: PROSES KASUS -->
-<div class="modal fade" id="modalWaliKelasProses" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header text-white" style="background-color: var(--walikelas-color);"><h6 class="modal-title fw-bold">Review Wali Kelas</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
-            <div class="modal-body p-4">
-                <form id="form-wk-proses">
-                    <input type="hidden" name="kasusId" id="wk-kasus-id">
-                    <div class="alert alert-info border-0 bg-light small mb-3">
-                        <strong>Kategori:</strong> <span id="wk-kasus-kategori"></span><br>
-                        <strong>Temuan Awal:</strong> <span id="wk-kasus-deskripsi"></span>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label small fw-bold">Catatan / Tindakan Wali Kelas</label>
-                        <textarea class="form-control" name="catatanWali" rows="3" placeholder="Masukkan catatan dan rekomendasi..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn text-white w-100 py-3 fw-bold shadow-sm" style="background-color: var(--walikelas-color);" id="btn-wk-teruskan">Simpan & Teruskan ke Guru BK</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- MODAL GURU BK: SELESAIKAN KASUS -->
-<div class="modal fade" id="modalBKProses" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header text-white" style="background-color: var(--bk-color);"><h6 class="modal-title fw-bold">Penanganan Akhir (Guru BK)</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
-            <div class="modal-body p-4">
-                <form id="form-bk-proses">
-                    <input type="hidden" name="kasusId" id="bk-kasus-id">
-                    <div class="alert border-0 bg-light small mb-3" style="color: var(--bk-color);">
-                        <strong>Siswa:</strong> <span id="bk-kasus-siswa"></span><br>
-                        <strong>Catatan Wali Kelas:</strong> <span id="bk-kasus-catatan"></span>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label small fw-bold">Tindak Lanjut Akhir (Resolusi BK)</label>
-                        <textarea class="form-control" name="tindakLanjutBK" rows="3" placeholder="Keputusan, pemanggilan ortu, atau sanksi..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn text-white w-100 py-3 fw-bold shadow-sm" style="background-color: var(--bk-color);" id="btn-bk-selesai">Selesaikan Kasus</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuLNE4LXcKAYmLyiMH8xytUC7Ji1VqHbag-LegfTxJdGrAdu0TXwCIEppmPpodGzsQ/exec"; 
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzqYR4lwyEw5eSeTzRKteDFO25GtBR7EbU_Z0x_r380FcngOyCsi48GOs8-2u1Kflah/exec"; 
 
     async function callAPI(action, params = {}) {
         try {
@@ -726,6 +676,8 @@
         if(window.innerWidth <= 992) { document.querySelector('.sidebar').classList.remove('show'); document.querySelector('.sidebar-overlay').classList.remove('show'); }
         
         if(tabId === 'tab-guruwali-pendampingan') loadPendampinganGuruWali();
+        if(tabId === 'tab-walikelas-review') loadPendampinganWaliKelas();
+        if(tabId === 'tab-bk-dashboard') loadPendampinganBK();
         if(tabId === 'tab-admin-students') loadAdminStudents();
         if(tabId === 'tab-admin-tracker') loadTrackingAdmin();
         if(tabId === 'tab-admin-school') updateSchoolActivities();
@@ -891,85 +843,166 @@
     };
 
     // -------------------------------------------------------------
-    // ALUR PENDAMPINGAN KASUS (BISA DIAKSES OLEH GW, WK, DAN BK)
+    // ALUR PENDAMPINGAN KASUS TERKONEKSI (GW -> WK -> BK)
     // -------------------------------------------------------------
     
-    // FUNGSI UNTUK MENU "CATAT KASUS SISWA" (BERLAKU UNTUK SEMUA GURU)
+    // 1. Dashboard Catat Kasus (Guru Wali / Semua Guru)
     function loadPendampinganGuruWali() {
-        const tbody = document.getElementById('gw-pendampingan-list'); tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
-        // Menarik data kasus yang di-input oleh akun yang sedang aktif (apapun jabatannya)
-        callAPI('getPendampinganGuruWali', { namaGuru: currentUser.nama }).then(res => {
-            if(!res.success || res.data.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted small">Belum ada kasus yang Anda catat.</td></tr>`; return; }
-            tbody.innerHTML = res.data.map(p => `<tr><td class="small">${p.Tanggal}</td><td class="fw-bold">${p.Nama_Siswa}</td><td><span class="badge bg-light text-dark border">${p.Kategori_Kasus}</span></td><td><span class="status-badge ${p.Status==='Selesai'?'badge-done':(p.Status.includes('BK')?'badge-forward':'badge-wait')}">${p.Status}</span></td><td class="text-center"><button class="btn btn-sm btn-outline-danger py-0 px-2" onclick="hapusPendampingan('${p.ID}')"><i data-lucide="trash-2" size="14"></i></button></td></tr>`).join('');
+        const tbody = document.getElementById('gw-pendampingan-list'); 
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
+        
+        callAPI('getPendampinganGuruWali', {}).then(res => {
+            if(!res.success || res.data.length === 0) { 
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted small">Belum ada kasus tercatat.</td></tr>`; 
+                return; 
+            }
+            // Guru Wali memiliki opsi aksi: Selesai atau Teruskan ke Wali Kelas jika status masih Menunggu Wali Kelas
+            tbody.innerHTML = res.data.map(p => {
+                let badgeClass = p.Status === 'Selesai' ? 'badge-done' : (p.Status.includes('BK') ? 'badge-forward' : 'badge-wait');
+                let aksiBtn = `<span class="small text-muted">Terkunci</span>`;
+                if (p.Status === 'Menunggu Wali Kelas') {
+                    aksiBtn = `
+                        <button class="btn btn-sm btn-success py-0 px-2 fw-bold" onclick="updateStatus('${p.ID}', 'Selesai')">Selesai</button>
+                        <button class="btn btn-sm text-white py-0 px-2 fw-bold" style="background-color: var(--walikelas-color);" onclick="updateStatus('${p.ID}', 'Teruskan ke Wali Kelas', 'Catatan Guru Wali: Kasus diteruskan ke Wali Kelas')">Teruskan ke WK</button>
+                    `;
+                }
+                return `
+                    <tr>
+                        <td class="small">${p.Tanggal}</td>
+                        <td class="fw-bold">${p.Nama_Siswa}<br><small class="text-muted fw-normal">Oleh: ${p.Guru_Wali}</small></td>
+                        <td><span class="badge bg-light text-dark border">${p.Kategori_Kasus}</span></td>
+                        <td><span class="status-badge ${badgeClass}">${p.Status}</span></td>
+                        <td class="text-center">${aksiBtn}</td>
+                    </tr>
+                `;
+            }).join('');
             if(typeof lucide !== 'undefined') lucide.createIcons();
         });
     }
-    document.getElementById('form-add-pendampingan').onsubmit = function(e) { e.preventDefault();
+
+    document.getElementById('form-add-pendampingan').onsubmit = function(e) { 
+        e.preventDefault();
         const btn = document.getElementById('btn-save-pendampingan'); btn.innerText = "Menyimpan..."; btn.disabled = true;
         const sel = document.getElementById('p-dropdown-siswa'); const namaSiswa = sel.options[sel.selectedIndex].text.split(' (')[0];
         const fd = new FormData(this);
-        // Data tersimpan dengan nama pembuat (bisa Guru Wali, Wali Kelas, atau BK)
-        callAPI('savePendampinganSiswa', { namaGuru: currentUser.nama, tanggal: fd.get('tanggal'), usernameSiswa: fd.get('usernameSiswa'), namaSiswa: namaSiswa, kategori: fd.get('kategori'), deskripsi: fd.get('deskripsi'), tindakLanjut: fd.get('tindakLanjut') }).then(res => {
-            btn.innerText = "Simpan Data Kasus"; btn.disabled = false; bootstrap.Modal.getInstance(document.getElementById('modalPendampinganGw')).hide();
-            showToast("Kasus berhasil disimpan dan diteruskan ke sistem!"); this.reset(); loadPendampinganGuruWali();
+        
+        callAPI('savePendampinganSiswa', { 
+            namaGuru: currentUser.nama, 
+            tanggal: fd.get('tanggal'), 
+            usernameSiswa: fd.get('usernameSiswa'), 
+            namaSiswa: namaSiswa, 
+            kategori: fd.get('kategori'), 
+            deskripsi: fd.get('deskripsi'), 
+            tindakLanjut: fd.get('tindakLanjut') 
+        }).then(res => {
+            btn.innerText = "Simpan Data Kasus"; btn.disabled = false; 
+            bootstrap.Modal.getInstance(document.getElementById('modalPendampinganGw')).hide();
+            showToast("Kasus berhasil dicatat!"); 
+            this.reset(); 
+            loadPendampinganGuruWali();
         });
     };
-    window.hapusPendampingan = function(id) { if(confirm("Hapus catatan kasus ini?")) callAPI('deletePendampingan', { id: id }).then(res => { showToast("Dihapus!", "danger"); loadPendampinganGuruWali(); }); };
 
-    // FUNGSI WALI KELAS: REVIEW KASUS
+    window.hapusPendampingan = function(id) { 
+        if(confirm("Hapus catatan kasus ini?")) {
+            callAPI('deletePendampingan', { id: id }).then(res => { showToast("Data dihapus!", "danger"); loadPendampinganGuruWali(); }); 
+        }
+    };
+
+    // 2. Dashboard Wali Kelas (Review Kasus) -> Dua Pilihan: Selesai & Teruskan ke Guru BK
     function loadPendampinganWaliKelas() {
-        const tbody = document.getElementById('wk-pendampingan-list'); tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
-        callAPI('getPendampinganWaliKelas', { namaWali: currentUser.nama }).then(res => {
-            currentPendampinganData = res.data.filter(p => p.Status === 'Menunggu Wali Kelas' || p.Status.includes('BK') || p.Status === 'Selesai');
-            if(currentPendampinganData.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted small">Tidak ada kasus untuk di-review.</td></tr>`; return; }
-            tbody.innerHTML = currentPendampinganData.map(p => {
-                let btn = p.Status === 'Menunggu Wali Kelas' ? `<button class="btn btn-sm text-white fw-bold py-0 px-2" style="background-color: var(--walikelas-color);" onclick="bukaModalWaliKelas('${p.ID}', '${p.Kategori_Kasus}', '${p.Bentuk_Pendampingan.replace(/'/g, "\\'")}')">Review</button>` : `<span class="small text-muted">-</span>`;
-                return `<tr><td class="small">${p.Tanggal}</td><td class="fw-bold">${p.Nama_Siswa}</td><td><span class="badge bg-light text-dark border">${p.Kategori_Kasus}</span><br><small class="text-muted">Oleh: ${p.Guru_Wali}</small></td><td><span class="status-badge ${p.Status==='Selesai'?'badge-done':(p.Status.includes('BK')?'badge-forward':'badge-wait')}">${p.Status}</span></td><td class="text-center no-print">${btn}</td></tr>`;
+        const tbody = document.getElementById('wk-pendampingan-list'); 
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
+        
+        callAPI('getPendampinganWaliKelas', {}).then(res => {
+            currentPendampinganData = res.data;
+            if(res.data.length === 0) { 
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted small">Tidak ada data kasus.</td></tr>`; 
+                return; 
+            }
+            tbody.innerHTML = res.data.map(p => {
+                let badgeClass = p.Status === 'Selesai' ? 'badge-done' : (p.Status.includes('BK') ? 'badge-forward' : 'badge-wait');
+                let aksi = `
+                    <button class="btn btn-sm btn-success py-0 px-2 fw-bold" onclick="updateStatus('${p.ID}', 'Selesai')">Selesai</button>
+                    <button class="btn btn-sm text-white py-0 px-2 fw-bold" style="background-color: var(--bk-color);" onclick="promptTeruskanBK('${p.ID}')">Teruskan ke BK</button>
+                `;
+                return `
+                    <tr>
+                        <td class="small">${p.Tanggal}</td>
+                        <td class="fw-bold">${p.Nama_Siswa}<br><small class="text-muted fw-normal">Pelapor: ${p.Guru_Wali}</small></td>
+                        <td><span class="badge bg-light text-dark border">${p.Kategori_Kasus}</span></td>
+                        <td><span class="status-badge ${badgeClass}">${p.Status}</span><br><small class="text-muted">${p.Catatan_Wali_Kelas || ''}</small></td>
+                        <td class="text-center no-print">${aksi}</td>
+                    </tr>
+                `;
             }).join('');
         });
     }
-    window.bukaModalWaliKelas = function(id, kat, desk) {
-        document.getElementById('wk-kasus-id').value = id; document.getElementById('wk-kasus-kategori').innerText = kat; document.getElementById('wk-kasus-deskripsi').innerText = desk;
-        new bootstrap.Modal(document.getElementById('modalWaliKelasProses')).show();
-    };
-    document.getElementById('form-wk-proses').onsubmit = function(e) { e.preventDefault();
-        const btn = document.getElementById('btn-wk-teruskan'); btn.innerText = "Memproses..."; btn.disabled = true;
-        const fd = new FormData(this);
-        callAPI('teruskanKeBK', { id: fd.get('kasusId'), catatanWali: fd.get('catatanWali') }).then(res => {
-            btn.innerText = "Simpan & Teruskan ke Guru BK"; btn.disabled = false; bootstrap.Modal.getInstance(document.getElementById('modalWaliKelasProses')).hide();
-            showToast("Kasus berhasil direview dan diteruskan ke Guru BK!"); this.reset(); loadPendampinganWaliKelas();
-        });
-    };
-    window.cetakLaporanWaliKelas = function() {
-        siapkanPrintPendampingan(currentPendampinganData, `REVIEW WALI KELAS: ${currentUser.nama.toUpperCase()}`); setTimeout(() => window.print(), 1000);
+
+    window.promptTeruskanBK = function(id) {
+        let catatan = prompt("Masukkan catatan pengantar untuk Guru BK:");
+        if (catatan !== null) {
+            updateStatus(id, 'Diteruskan ke BK', catatan);
+        }
     };
 
-    // FUNGSI GURU BK: PENANGANAN AKHIR
+    // 3. Dashboard Guru BK (Penanganan Akhir) -> Dua Pilihan: Selesai & Tindak Lanjut
     function loadPendampinganBK() {
-        const tbody = document.getElementById('bk-pendampingan-list'); tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
+        const tbody = document.getElementById('bk-pendampingan-list'); 
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
+        
         callAPI('getPendampinganBK', {}).then(res => {
             currentPendampinganData = res.data;
-            if(res.data.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted small">Tidak ada kasus yang diteruskan ke BK.</td></tr>`; return; }
+            if(res.data.length === 0) { 
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted small">Tidak ada data kasus.</td></tr>`; 
+                return; 
+            }
             tbody.innerHTML = res.data.map(p => {
-                let btn = p.Status !== 'Selesai' ? `<button class="btn btn-sm text-white fw-bold py-0 px-2" style="background-color: var(--bk-color);" onclick="bukaModalBK('${p.ID}', '${p.Nama_Siswa}', '${(p.Catatan_Wali_Kelas || p.Bentuk_Pendampingan).replace(/'/g, "\\'")}')">Selesaikan</button>` : `<span class="small text-success fw-bold">Selesai ✓</span>`;
-                return `<tr><td class="small">${p.Tanggal}</td><td class="fw-bold">${p.Nama_Siswa}</td><td><span class="badge bg-light text-dark border">${p.Kategori_Kasus}</span></td><td><span class="status-badge ${p.Status==='Selesai'?'badge-done':'badge-forward'}">${p.Status}</span></td><td class="text-center no-print">${btn}</td></tr>`;
+                let badgeClass = p.Status === 'Selesai' ? 'badge-done' : 'badge-forward';
+                let aksi = `
+                    <button class="btn btn-sm btn-success py-0 px-2 fw-bold" onclick="updateStatus('${p.ID}', 'Selesai')">Selesai</button>
+                    <button class="btn btn-sm btn-warning text-dark py-0 px-2 fw-bold" onclick="promptTindakLanjutBK('${p.ID}')">Tindak Lanjut</button>
+                `;
+                return `
+                    <tr>
+                        <td class="small">${p.Tanggal}</td>
+                        <td class="fw-bold">${p.Nama_Siswa}<br><small class="text-muted fw-normal">Pelapor: ${p.Guru_Wali}</small></td>
+                        <td><span class="badge bg-light text-dark border">${p.Kategori_Kasus}</span></td>
+                        <td><span class="status-badge ${badgeClass}">${p.Status}</span><br><small class="text-primary">${p.Tindak_Lanjut_BK || ''}</small></td>
+                        <td class="text-center no-print">${aksi}</td>
+                    </tr>
+                `;
             }).join('');
         });
     }
-    window.bukaModalBK = function(id, siswa, catatan) {
-        document.getElementById('bk-kasus-id').value = id; document.getElementById('bk-kasus-siswa').innerText = siswa; document.getElementById('bk-kasus-catatan').innerText = catatan;
-        new bootstrap.Modal(document.getElementById('modalBKProses')).show();
+
+    window.promptTindakLanjutBK = function(id) {
+        let tl = prompt("Masukkan detail Tindak Lanjut / Resolusi Guru BK:");
+        if (tl !== null) {
+            updateStatus(id, 'Tindak Lanjut BK', undefined, tl);
+        }
     };
-    document.getElementById('form-bk-proses').onsubmit = function(e) { e.preventDefault();
-        const btn = document.getElementById('btn-bk-selesai'); btn.innerText = "Memproses..."; btn.disabled = true;
-        const fd = new FormData(this);
-        callAPI('selesaikanKasusBK', { id: fd.get('kasusId'), tindakLanjutBK: fd.get('tindakLanjutBK') }).then(res => {
-            btn.innerText = "Selesaikan Kasus"; btn.disabled = false; bootstrap.Modal.getInstance(document.getElementById('modalBKProses')).hide();
-            showToast("Kasus berhasil diselesaikan secara definitif!"); this.reset(); loadPendampinganBK();
+
+    // Fungsi Universal Update Status Antar Role Terkoneksi
+    window.updateStatus = function(id, status, catatan, tindakLanjut) {
+        callAPI('updateStatusKasus', { id: id, status: status, catatan: catatan, tindakLanjut: tindakLanjut }).then(res => {
+            if(res.success) {
+                showToast("Status kasus berhasil diperbarui!");
+                if(currentUser.role === 'admin') loadPendampinganGuruWali();
+                if(currentUser.role === 'walikelas') loadPendampinganWaliKelas();
+                if(currentUser.role === 'gurubk') loadPendampinganBK();
+            } else {
+                showToast(res.message, "danger");
+            }
         });
     };
+
+    window.cetakLaporanWaliKelas = function() {
+        siapkanPrintPendampingan(currentPendampinganData, `REKAP KASUS WALI KELAS: ${currentUser.nama.toUpperCase()}`); setTimeout(() => window.print(), 1000);
+    };
+
     window.cetakLaporanBK = function() {
-        siapkanPrintPendampingan(currentPendampinganData, `PENANGANAN AKHIR GURU BK: ${currentUser.nama.toUpperCase()}`); setTimeout(() => window.print(), 1000);
+        siapkanPrintPendampingan(currentPendampinganData, `REKAP PENANGANAN AKHIR GURU BK: ${currentUser.nama.toUpperCase()}`); setTimeout(() => window.print(), 1000);
     };
 
     function siapkanPrintPendampingan(dataArray, subtitle) {
@@ -979,7 +1012,7 @@
         const today = new Date().toLocaleDateString('id-ID', { day:'2-digit', month:'long', year:'numeric'});
         
         document.getElementById('print-pendampingan-tbody').innerHTML = dataArray.map((p, i) => {
-            let info = `<strong>Awal (Oleh ${p.Guru_Wali}):</strong> ${p.Bentuk_Pendampingan}`;
+            let info = `<strong>Awal (${p.Guru_Wali}):</strong> ${p.Bentuk_Pendampingan}`;
             if(p.Catatan_Wali_Kelas) info += `<br><strong>Wali Kelas:</strong> ${p.Catatan_Wali_Kelas}`;
             if(p.Tindak_Lanjut_BK) info += `<br><strong>BK:</strong> ${p.Tindak_Lanjut_BK}`;
             return `<tr><td class="text-center">${i+1}</td><td class="text-center">${p.Tanggal}</td><td class="fw-bold">${p.Nama_Siswa}</td><td>${p.Kategori_Kasus}</td><td>${info}</td><td class="text-center fw-bold ${p.Status==='Selesai'?'text-success':''}">${p.Status}</td></tr>`;
