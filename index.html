@@ -247,7 +247,7 @@
                 </div>
             </div>
 
-            <!-- TAB BERSAMA: CATAT KASUS SISWA -->
+            <!-- TAB BERSAMA: CATAT KASUS SISWA (STRUKTUR GAMBAR 1) -->
             <div id="tab-guruwali-pendampingan" class="tab-pane d-none fade-in">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="fw-bold mb-0">Pencatatan Kasus Siswa</h4>
@@ -256,8 +256,17 @@
                 <div class="card p-3 shadow-sm border-0">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
-                            <thead class="table-light"><tr><th>Tgl</th><th>Siswa</th><th>Kategori</th><th>Status</th><th class="text-center">Aksi</th></tr></thead>
-                            <tbody id="gw-pendampingan-list"><tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr></tbody>
+                            <thead class="table-light">
+                                <tr>
+                                    <th width="110">Tgl</th>
+                                    <th width="220">Siswa</th>
+                                    <th>Kategori</th>
+                                    <th width="250">Penanganan</th>
+                                    <th width="110">Status</th>
+                                    <th class="text-center" width="100">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="gw-pendampingan-list"><tr><td colspan="6" class="text-center py-4">Memuat data...</td></tr></tbody>
                         </table>
                     </div>
                 </div>
@@ -378,7 +387,7 @@
                 </div>
             </div>
 
-            <!-- TAB WALI KELAS: REVIEW KASUS -->
+            <!-- TAB WALI KELAS: REVIEW KASUS (STRUKTUR GAMBAR 2) -->
             <div id="tab-walikelas-review" class="tab-pane d-none fade-in">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                     <h4 class="fw-bold mb-0">Review Kasus Kelas</h4>
@@ -388,14 +397,22 @@
                 <div class="card p-3 shadow-sm">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
-                            <thead class="table-light"><tr><th>Tgl</th><th>Siswa & Catatan Pelanggaran</th><th>Penanganan Wali Kelas</th><th>Status</th><th class="text-center no-print">Aksi (Selesai / Teruskan ke BK)</th></tr></thead>
+                            <thead class="table-light">
+                                <tr>
+                                    <th width="110">Tgl</th>
+                                    <th width="280">Siswa & Catatan Pelanggaran</th>
+                                    <th width="280">Penanganan Wali Kelas</th>
+                                    <th width="110">Status</th>
+                                    <th class="text-center no-print" width="180">Aksi (Selesai / Teruskan ke BK)</th>
+                                </tr>
+                            </thead>
                             <tbody id="wk-pendampingan-list"><tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr></tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB GURU BK: PENANGANAN AKHIR -->
+            <!-- TAB GURU BK: PENANGANAN AKHIR (STRUKTUR GAMBAR 3) -->
             <div id="tab-bk-dashboard" class="tab-pane d-none fade-in">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                     <h4 class="fw-bold mb-0">Penanganan Kasus Akhir (BK)</h4>
@@ -405,7 +422,15 @@
                 <div class="card p-3 shadow-sm border-0">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
-                            <thead class="table-light"><tr><th>Tgl</th><th>Siswa & Penanganan WK</th><th>Penanganan BK</th><th>Status</th><th class="text-center no-print">Aksi (Selesai / Tindak Lanjut)</th></tr></thead>
+                            <thead class="table-light">
+                                <tr>
+                                    <th width="110">Tgl</th>
+                                    <th width="280">Siswa & Penanganan WK</th>
+                                    <th width="280">Penanganan BK</th>
+                                    <th width="110">Status</th>
+                                    <th class="text-center no-print" width="180">Aksi (Selesai / Tindak Lanjut)</th>
+                                </tr>
+                            </thead>
                             <tbody id="bk-pendampingan-list"><tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr></tbody>
                         </table>
                     </div>
@@ -569,7 +594,7 @@
                     <input type="hidden" id="wk-kasus-id">
                     <div class="mb-3">
                         <label class="form-label small fw-bold">Tindakan Awal / Penanganan Wali Kelas</label>
-                        <textarea class="form-control" id="wk-penanganan-input" rows="4" placeholder="Contoh: Memanggil siswa, pembinaan di kelas, atau koordinasi dengan orang tua..." required></textarea>
+                        <textarea class="form-control" id="wk-penanganan-input" rows="4" placeholder="Contoh: Teguran Keras dan melaporkan kepada Guru BK untuk ditindaklanjuti..." required></textarea>
                     </div>
                     <button type="submit" class="btn text-white w-100 py-3 fw-bold" style="background-color: var(--walikelas-color);">Simpan & Teruskan ke Guru BK</button>
                 </form>
@@ -590,12 +615,8 @@
                 <form id="form-bk-action">
                     <input type="hidden" id="bk-kasus-id">
                     <div class="mb-3">
-                        <label class="form-label small fw-bold">Detail Tindak Lanjut</label>
-                        <input type="text" class="form-control mb-2" id="bk-tl-input" placeholder="Cth: Konseling Individual / Pemanggilan Orang Tua" required>
-                    </div>
-                    <div class="mb-3">
                         <label class="form-label small fw-bold">Tindakan Awal / Penanganan Guru BK</label>
-                        <textarea class="form-control" id="bk-penanganan-input" rows="3" placeholder="Contoh: Sesi konseling mendalam dan pembuatan surat perjanjian..." required></textarea>
+                        <textarea class="form-control" id="bk-penanganan-input" rows="3" placeholder="Contoh: Pemanggilan orang tua dan, membuat surat pernyataan yang ditandatangani orang tua..." required></textarea>
                     </div>
                     <button type="submit" class="btn text-white w-100 py-3 fw-bold" style="background-color: var(--bk-color);">Selesaikan Kasus</button>
                 </form>
@@ -892,31 +913,40 @@
     // ALUR PENDAMPINGAN KASUS TERKONEKSI (GW -> WK -> BK)
     // -------------------------------------------------------------
     
-    // 1. Dashboard Catatan Kasus Siswa (Guru Wali)
+    // 1. Dashboard Catatan Kasus Siswa (Guru Wali) - Sesuai Gambar 1
     function loadPendampinganGuruWali() {
         const tbody = document.getElementById('gw-pendampingan-list'); 
-        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4">Memuat data...</td></tr>`;
         
         callAPI('getPendampinganGuruWali', {}).then(res => {
             if(!res.success || res.data.length === 0) { 
-                tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted small">Belum ada kasus tercatat.</td></tr>`; 
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted small">Belum ada kasus tercatat.</td></tr>`; 
                 return; 
             }
             tbody.innerHTML = res.data.map(p => {
                 let badgeClass = p.Status === 'Selesai' ? 'badge-done' : (p.Status.includes('BK') ? 'badge-forward' : 'badge-wait');
-                let aksiBtn = `<span class="small text-muted">Terkunci</span>`;
+                let statusBadgeHtml = `<span class="status-badge ${badgeClass}">${p.Status}</span>`;
+                let aksiBtn = `<span class="small text-muted fw-bold">Terkunci</span>`;
+                
                 if (p.Status === 'Menunggu Wali Kelas') {
-                    aksiBtn = `
-                        <button class="btn btn-sm btn-success py-0 px-2 fw-bold" onclick="updateStatusDirect('${p.ID}', 'Selesai')">Selesai</button>
-                        <button class="btn btn-sm text-white py-0 px-2 fw-bold" style="background-color: var(--walikelas-color);" onclick="openWkModal('${p.ID}')">Teruskan ke WK</button>
-                    `;
+                    aksiBtn = `<span class="small text-muted">Diproses WK</span>`;
                 }
+
                 return `
                     <tr>
                         <td class="small">${p.Tanggal}</td>
-                        <td class="fw-bold">${p.Nama_Siswa}<br><small class="text-muted fw-normal">Pelapor: ${p.Guru_Wali}</small></td>
-                        <td><span class="badge bg-light text-dark border">${p.Kategori_Kasus}</span><br><small class="text-danger">Catatan: ${p.Bentuk_Pendampingan}</small></td>
-                        <td><span class="status-badge ${badgeClass}">${p.Status}</span></td>
+                        <td class="fw-bold">
+                            ${p.Nama_Siswa}
+                            <div class="text-muted fw-normal" style="font-size: 0.8rem;">Pelapor: ${p.Guru_Wali}</div>
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark border fw-bold">${p.Kategori_Kasus}</span>
+                            <div class="text-danger small mt-1">Catatan: ${p.Bentuk_Pendampingan}</div>
+                        </td>
+                        <td>
+                            <div class="small text-dark">${p.Hasil_Tindak_Lanjut || '-'}</div>
+                        </td>
+                        <td>${statusBadgeHtml}</td>
                         <td class="text-center">${aksiBtn}</td>
                     </tr>
                 `;
@@ -948,7 +978,7 @@
         });
     };
 
-    // 2. Dashboard Wali Kelas (Review Kasus & Input Tindak Lanjut via Modal)
+    // 2. Dashboard Wali Kelas (Review Kasus Kelas) - Sesuai Gambar 2
     function loadPendampinganWaliKelas() {
         const tbody = document.getElementById('wk-pendampingan-list'); 
         tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
@@ -961,16 +991,25 @@
             }
             tbody.innerHTML = res.data.map(p => {
                 let badgeClass = p.Status === 'Selesai' ? 'badge-done' : (p.Status.includes('BK') ? 'badge-forward' : 'badge-wait');
+                let statusBadgeHtml = `<span class="status-badge ${badgeClass}">${p.Status}</span>`;
+                
                 let aksi = `
-                    <button class="btn btn-sm btn-success py-0 px-2 fw-bold" onclick="updateStatusDirect('${p.ID}', 'Selesai')">Selesai</button>
-                    <button class="btn btn-sm text-white py-0 px-2 fw-bold" style="background-color: var(--bk-color);" onclick="openWkModal('${p.ID}')">Teruskan ke BK</button>
+                    <button class="btn btn-sm btn-success py-1 px-2 fw-bold text-white me-1" onclick="updateStatusDirect('${p.ID}', 'Selesai')">Selesai</button>
+                    <button class="btn btn-sm text-white py-1 px-2 fw-bold" style="background-color: #7c3aed;" onclick="openWkModal('${p.ID}')">Teruskan ke BK</button>
                 `;
                 return `
                     <tr>
                         <td class="small">${p.Tanggal}</td>
-                        <td class="fw-bold">${p.Nama_Siswa}<br><small class="text-danger fw-normal">Pelanggaran: ${p.Bentuk_Pendampingan}</small></td>
-                        <td><small class="text-primary fw-semibold">${p.Penanganan_Wali_Kelas || '<span class="text-muted italic">Belum ada penanganan</span>'}</small></td>
-                        <td><span class="status-badge ${badgeClass}">${p.Status}</span></td>
+                        <td class="fw-bold">
+                            ${p.Nama_Siswa}
+                            <div class="text-danger small fw-normal">Pelanggaran: ${p.Bentuk_Pendampingan}</div>
+                            <div class="text-dark small fw-semibold mt-1">Penanganan Guru Wali:</div>
+                            <div class="text-muted small fw-normal">${p.Hasil_Tindak_Lanjut || '-'}</div>
+                        </td>
+                        <td>
+                            <div class="small text-dark">${p.Penanganan_Wali_Kelas || '<span class="text-muted italic">-</span>'}</div>
+                        </td>
+                        <td>${statusBadgeHtml}</td>
                         <td class="text-center no-print">${aksi}</td>
                     </tr>
                 `;
@@ -1003,7 +1042,7 @@
         });
     };
 
-    // 3. Dashboard Guru BK (Penanganan Akhir & Tindak Lanjut via Modal)
+    // 3. Dashboard Guru BK (Penanganan Kasus Akhir) - Sesuai Gambar 3
     function loadPendampinganBK() {
         const tbody = document.getElementById('bk-pendampingan-list'); 
         tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
@@ -1016,16 +1055,23 @@
             }
             tbody.innerHTML = res.data.map(p => {
                 let badgeClass = p.Status === 'Selesai' ? 'badge-done' : 'badge-forward';
+                let statusBadgeHtml = `<span class="status-badge ${badgeClass}">${p.Status}</span>`;
+                
                 let aksi = `
-                    <button class="btn btn-sm btn-success py-0 px-2 fw-bold" onclick="updateStatusDirect('${p.ID}', 'Selesai')">Selesai</button>
-                    <button class="btn btn-sm btn-warning text-dark py-0 px-2 fw-bold" onclick="openBkModal('${p.ID}')">Tindak Lanjut</button>
+                    <button class="btn btn-sm btn-success py-1 px-2 fw-bold text-white me-1" onclick="updateStatusDirect('${p.ID}', 'Selesai')">Selesai</button>
+                    <button class="btn btn-sm text-dark py-1 px-2 fw-bold" style="background-color: #f59e0b;" onclick="openBkModal('${p.ID}')">Tindak Lanjut</button>
                 `;
                 return `
                     <tr>
                         <td class="small">${p.Tanggal}</td>
-                        <td class="fw-bold">${p.Nama_Siswa}<br><small class="text-info fw-normal">Penanganan WK: ${p.Penanganan_Wali_Kelas || '-'}</small></td>
-                        <td><small class="text-dark fw-semibold">${p.Penanganan_BK || '<span class="text-muted italic">Belum ada tindakan BK</span>'}</small></td>
-                        <td><span class="status-badge ${badgeClass}">${p.Status}</span></td>
+                        <td class="fw-bold">
+                            ${p.Nama_Siswa}
+                            <div class="text-info small fw-bold mt-1">Penanganan WK: <span class="fw-normal text-dark">${p.Penanganan_Wali_Kelas || '-'}</span></div>
+                        </td>
+                        <td>
+                            <div class="small text-dark">${p.Penanganan_BK || '<span class="text-muted italic">-</span>'}</div>
+                        </td>
+                        <td>${statusBadgeHtml}</td>
                         <td class="text-center no-print">${aksi}</td>
                     </tr>
                 `;
@@ -1035,7 +1081,6 @@
 
     window.openBkModal = function(id) {
         document.getElementById('bk-kasus-id').value = id;
-        document.getElementById('bk-tl-input').value = "";
         document.getElementById('bk-penanganan-input').value = "";
         new bootstrap.Modal(document.getElementById('modalBKAction')).show();
     };
@@ -1043,13 +1088,12 @@
     document.getElementById('form-bk-action').onsubmit = function(e) {
         e.preventDefault();
         const id = document.getElementById('bk-kasus-id').value;
-        const tindakLanjut = document.getElementById('bk-tl-input').value;
         const penangananBK = document.getElementById('bk-penanganan-input').value;
 
         callAPI('updateStatusKasus', { 
             id: id, 
             status: 'Tindak Lanjut BK', 
-            tindakLanjut: tindakLanjut, 
+            tindakLanjut: 'Konseling & Pembinaan', 
             penangananBK: penangananBK 
         }).then(res => {
             if(res.success) {
