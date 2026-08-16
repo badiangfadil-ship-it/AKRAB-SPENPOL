@@ -390,7 +390,7 @@
                 <div class="card p-3 shadow-sm">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
-                            <thead class="table-light"><tr><th>Tgl</th><th>Siswa</th><th>Kategori</th><th>Status</th><th class="text-center no-print">Tindakan (Selesai / Teruskan ke BK)</th></tr></thead>
+                            <thead class="table-light"><tr><th>Tgl</th><th>Siswa & Catatan Pelanggaran</th><th>Penanganan Wali Kelas</th><th>Status</th><th class="text-center no-print">Aksi (Selesai / Teruskan ke BK)</th></tr></thead>
                             <tbody id="wk-pendampingan-list"><tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr></tbody>
                         </table>
                     </div>
@@ -407,7 +407,7 @@
                 <div class="card p-3 shadow-sm border-0">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
-                            <thead class="table-light"><tr><th>Tgl</th><th>Siswa</th><th>Kategori</th><th>Status</th><th class="text-center no-print">Tindakan (Selesai / Tindak Lanjut)</th></tr></thead>
+                            <thead class="table-light"><tr><th>Tgl</th><th>Siswa & Penanganan WK</th><th>Penanganan BK</th><th>Status</th><th class="text-center no-print">Aksi (Selesai / Tindak Lanjut)</th></tr></thead>
                             <tbody id="bk-pendampingan-list"><tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr></tbody>
                         </table>
                     </div>
@@ -431,7 +431,7 @@
                 </div>
                 <table class="table table-bordered border-dark text-start align-middle mt-3 mb-4" style="font-size: 11px;">
                     <thead class="table-light text-center">
-                        <tr><th width="30">No</th><th width="70">Tanggal</th><th width="100">Nama Siswa</th><th width="100">Kategori</th><th>Tindak Lanjut / Catatan Akhir</th><th>Status</th></tr>
+                        <tr><th width="30">No</th><th width="70">Tanggal</th><th width="100">Nama Siswa</th><th width="100">Kategori</th><th>Riwayat Penanganan (GW ➔ WK ➔ BK)</th><th>Status</th></tr>
                     </thead>
                     <tbody id="print-pendampingan-tbody"></tbody>
                 </table>
@@ -548,7 +548,7 @@
                                 <option value="Kedisiplinan / Keterlambatan">Kedisiplinan / Keterlambatan</option><option value="Pelanggaran Aturan Sekolah">Pelanggaran Aturan Sekolah</option><option value="Masalah Akademik">Masalah Akademik</option><option value="Konseling Sosial">Konseling Sosial</option><option value="Lainnya">Lainnya</option>
                             </select>
                         </div>
-                        <div class="col-12"><label class="form-label small fw-bold">Kronologi Singkat / Temuan Awal</label><textarea class="form-control" name="deskripsi" rows="2" required></textarea></div>
+                        <div class="col-12"><label class="form-label small fw-bold">Kronologi Singkat / Catatan Pelanggaran</label><textarea class="form-control" name="deskripsi" rows="2" required></textarea></div>
                         <div class="col-12"><label class="form-label small fw-bold">Tindakan Awal / Penanganan Pertama</label><textarea class="form-control" name="tindakLanjut" rows="2" placeholder="Contoh: Teguran lisan & pencatatan" required></textarea></div>
                     </div>
                     <button type="submit" class="btn btn-primary w-100 mt-4 py-3 fw-bold" id="btn-save-pendampingan">Simpan Data Kasus</button>
@@ -843,10 +843,10 @@
     };
 
     // -------------------------------------------------------------
-    // ALUR PENDAMPINGAN KASUS TERKONEKSI (GW -> WK -> BK)
+    // ALUR PENDAMPINGAN KASUS TERKONEKSI (GW -> WK -> BK) DENGAN PENANGANAN LENGKAP
     // -------------------------------------------------------------
     
-    // 1. Dashboard Catat Kasus (Guru Wali / Semua Guru)
+    // 1. Dashboard Catatan Kasus Siswa (Semua Guru Bisa Akses & Input)
     function loadPendampinganGuruWali() {
         const tbody = document.getElementById('gw-pendampingan-list'); 
         tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
@@ -856,21 +856,20 @@
                 tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted small">Belum ada kasus tercatat.</td></tr>`; 
                 return; 
             }
-            // Guru Wali memiliki opsi aksi: Selesai atau Teruskan ke Wali Kelas jika status masih Menunggu Wali Kelas
             tbody.innerHTML = res.data.map(p => {
                 let badgeClass = p.Status === 'Selesai' ? 'badge-done' : (p.Status.includes('BK') ? 'badge-forward' : 'badge-wait');
                 let aksiBtn = `<span class="small text-muted">Terkunci</span>`;
                 if (p.Status === 'Menunggu Wali Kelas') {
                     aksiBtn = `
                         <button class="btn btn-sm btn-success py-0 px-2 fw-bold" onclick="updateStatus('${p.ID}', 'Selesai')">Selesai</button>
-                        <button class="btn btn-sm text-white py-0 px-2 fw-bold" style="background-color: var(--walikelas-color);" onclick="updateStatus('${p.ID}', 'Teruskan ke Wali Kelas', 'Catatan Guru Wali: Kasus diteruskan ke Wali Kelas')">Teruskan ke WK</button>
+                        <button class="btn btn-sm text-white py-0 px-2 fw-bold" style="background-color: var(--walikelas-color);" onclick="updateStatus('${p.ID}', 'Teruskan ke Wali Kelas')">Teruskan ke WK</button>
                     `;
                 }
                 return `
                     <tr>
                         <td class="small">${p.Tanggal}</td>
-                        <td class="fw-bold">${p.Nama_Siswa}<br><small class="text-muted fw-normal">Oleh: ${p.Guru_Wali}</small></td>
-                        <td><span class="badge bg-light text-dark border">${p.Kategori_Kasus}</span></td>
+                        <td class="fw-bold">${p.Nama_Siswa}<br><small class="text-muted fw-normal">Pelapor: ${p.Guru_Wali}</small></td>
+                        <td><span class="badge bg-light text-dark border">${p.Kategori_Kasus}</span><br><small class="text-danger">Catatan: ${p.Bentuk_Pendampingan}</small></td>
                         <td><span class="status-badge ${badgeClass}">${p.Status}</span></td>
                         <td class="text-center">${aksiBtn}</td>
                     </tr>
@@ -903,13 +902,7 @@
         });
     };
 
-    window.hapusPendampingan = function(id) { 
-        if(confirm("Hapus catatan kasus ini?")) {
-            callAPI('deletePendampingan', { id: id }).then(res => { showToast("Data dihapus!", "danger"); loadPendampinganGuruWali(); }); 
-        }
-    };
-
-    // 2. Dashboard Wali Kelas (Review Kasus) -> Dua Pilihan: Selesai & Teruskan ke Guru BK
+    // 2. Dashboard Wali Kelas (Review Kasus & Input Penanganan)
     function loadPendampinganWaliKelas() {
         const tbody = document.getElementById('wk-pendampingan-list'); 
         tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
@@ -924,14 +917,14 @@
                 let badgeClass = p.Status === 'Selesai' ? 'badge-done' : (p.Status.includes('BK') ? 'badge-forward' : 'badge-wait');
                 let aksi = `
                     <button class="btn btn-sm btn-success py-0 px-2 fw-bold" onclick="updateStatus('${p.ID}', 'Selesai')">Selesai</button>
-                    <button class="btn btn-sm text-white py-0 px-2 fw-bold" style="background-color: var(--bk-color);" onclick="promptTeruskanBK('${p.ID}')">Teruskan ke BK</button>
+                    <button class="btn btn-sm text-white py-0 px-2 fw-bold" style="background-color: var(--bk-color);" onclick="updateStatus('${p.ID}', 'Teruskan ke Guru BK')">Teruskan ke BK</button>
                 `;
                 return `
                     <tr>
                         <td class="small">${p.Tanggal}</td>
-                        <td class="fw-bold">${p.Nama_Siswa}<br><small class="text-muted fw-normal">Pelapor: ${p.Guru_Wali}</small></td>
-                        <td><span class="badge bg-light text-dark border">${p.Kategori_Kasus}</span></td>
-                        <td><span class="status-badge ${badgeClass}">${p.Status}</span><br><small class="text-muted">${p.Catatan_Wali_Kelas || ''}</small></td>
+                        <td class="fw-bold">${p.Nama_Siswa}<br><small class="text-danger fw-normal">Pelanggaran: ${p.Bentuk_Pendampingan}</small></td>
+                        <td><small class="text-primary fw-semibold">${p.Penanganan_Wali_Kelas || '<span class="text-muted italic">Belum ada penanganan</span>'}</small></td>
+                        <td><span class="status-badge ${badgeClass}">${p.Status}</span></td>
                         <td class="text-center no-print">${aksi}</td>
                     </tr>
                 `;
@@ -939,14 +932,7 @@
         });
     }
 
-    window.promptTeruskanBK = function(id) {
-        let catatan = prompt("Masukkan catatan pengantar untuk Guru BK:");
-        if (catatan !== null) {
-            updateStatus(id, 'Diteruskan ke BK', catatan);
-        }
-    };
-
-    // 3. Dashboard Guru BK (Penanganan Akhir) -> Dua Pilihan: Selesai & Tindak Lanjut
+    // 3. Dashboard Guru BK (Penanganan Akhir & Tindak Lanjut)
     function loadPendampinganBK() {
         const tbody = document.getElementById('bk-pendampingan-list'); 
         tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
@@ -961,14 +947,14 @@
                 let badgeClass = p.Status === 'Selesai' ? 'badge-done' : 'badge-forward';
                 let aksi = `
                     <button class="btn btn-sm btn-success py-0 px-2 fw-bold" onclick="updateStatus('${p.ID}', 'Selesai')">Selesai</button>
-                    <button class="btn btn-sm btn-warning text-dark py-0 px-2 fw-bold" onclick="promptTindakLanjutBK('${p.ID}')">Tindak Lanjut</button>
+                    <button class="btn btn-sm btn-warning text-dark py-0 px-2 fw-bold" onclick="updateStatus('${p.ID}', 'Tindak Lanjut BK')">Tindak Lanjut</button>
                 `;
                 return `
                     <tr>
                         <td class="small">${p.Tanggal}</td>
-                        <td class="fw-bold">${p.Nama_Siswa}<br><small class="text-muted fw-normal">Pelapor: ${p.Guru_Wali}</small></td>
-                        <td><span class="badge bg-light text-dark border">${p.Kategori_Kasus}</span></td>
-                        <td><span class="status-badge ${badgeClass}">${p.Status}</span><br><small class="text-primary">${p.Tindak_Lanjut_BK || ''}</small></td>
+                        <td class="fw-bold">${p.Nama_Siswa}<br><small class="text-info fw-normal">Penanganan WK: ${p.Penanganan_Wali_Kelas || '-'}</small></td>
+                        <td><small class="text-dark fw-semibold">${p.Penanganan_BK || '<span class="text-muted italic">Belum ada tindakan BK</span>'}</small></td>
+                        <td><span class="status-badge ${badgeClass}">${p.Status}</span></td>
                         <td class="text-center no-print">${aksi}</td>
                     </tr>
                 `;
@@ -976,18 +962,36 @@
         });
     }
 
-    window.promptTindakLanjutBK = function(id) {
-        let tl = prompt("Masukkan detail Tindak Lanjut / Resolusi Guru BK:");
-        if (tl !== null) {
-            updateStatus(id, 'Tindak Lanjut BK', undefined, tl);
-        }
-    };
+    // Fungsi Universal Update Status Antar Role dengan Input Catatan Penanganan Otomatis via Prompt
+    window.updateStatus = function(id, status) {
+        let catatan = "";
+        let penangananWK = "";
+        let tindakLanjut = "";
+        let penangananBK = "";
 
-    // Fungsi Universal Update Status Antar Role Terkoneksi
-    window.updateStatus = function(id, status, catatan, tindakLanjut) {
-        callAPI('updateStatusKasus', { id: id, status: status, catatan: catatan, tindakLanjut: tindakLanjut }).then(res => {
+        if (status === 'Teruskan ke Wali Kelas') {
+            catatan = prompt("Catatan pengantar untuk Wali Kelas:");
+            if (catatan === null) return;
+        } else if (status === 'Teruskan ke Guru BK') {
+            penangananWK = prompt("Masukkan Catatan / Penanganan Wali Kelas sebelum diteruskan ke BK:");
+            if (penangananWK === null) return;
+        } else if (status === 'Tindak Lanjut BK') {
+            tindakLanjut = prompt("Detail Tindak Lanjut:");
+            if (tindakLanjut === null) return;
+            penangananBK = prompt("Penanganan / Resolusi Akhir Guru BK:");
+            if (penangananBK === null) return;
+        }
+
+        callAPI('updateStatusKasus', { 
+            id: id, 
+            status: status, 
+            catatan: catatan, 
+            penangananWK: penangananWK, 
+            tindakLanjut: tindakLanjut, 
+            penangananBK: penangananBK 
+        }).then(res => {
             if(res.success) {
-                showToast("Status kasus berhasil diperbarui!");
+                showToast("Kasus berhasil diperbarui!");
                 if(currentUser.role === 'admin') loadPendampinganGuruWali();
                 if(currentUser.role === 'walikelas') loadPendampinganWaliKelas();
                 if(currentUser.role === 'gurubk') loadPendampinganBK();
@@ -1012,9 +1016,9 @@
         const today = new Date().toLocaleDateString('id-ID', { day:'2-digit', month:'long', year:'numeric'});
         
         document.getElementById('print-pendampingan-tbody').innerHTML = dataArray.map((p, i) => {
-            let info = `<strong>Awal (${p.Guru_Wali}):</strong> ${p.Bentuk_Pendampingan}`;
-            if(p.Catatan_Wali_Kelas) info += `<br><strong>Wali Kelas:</strong> ${p.Catatan_Wali_Kelas}`;
-            if(p.Tindak_Lanjut_BK) info += `<br><strong>BK:</strong> ${p.Tindak_Lanjut_BK}`;
+            let info = `<strong>Pelanggaran (${p.Guru_Wali}):</strong> ${p.Bentuk_Pendampingan}`;
+            if(p.Penanganan_Wali_Kelas) info += `<br><strong>Penanganan WK:</strong> ${p.Penanganan_Wali_Kelas}`;
+            if(p.Penanganan_BK) info += `<br><strong>Penanganan BK:</strong> ${p.Penanganan_BK}`;
             return `<tr><td class="text-center">${i+1}</td><td class="text-center">${p.Tanggal}</td><td class="fw-bold">${p.Nama_Siswa}</td><td>${p.Kategori_Kasus}</td><td>${info}</td><td class="text-center fw-bold ${p.Status==='Selesai'?'text-success':''}">${p.Status}</td></tr>`;
         }).join('');
 
