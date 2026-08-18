@@ -865,8 +865,14 @@
         });
     };
 
-    window.showPrintArea = function(tipe) {
+   window.showPrintArea = function(tipe) {
         if(!adminViewingUser) return;
+
+        // --- TAMBAHKAN 2 BARIS INI ---
+        document.getElementById('print-pendampingan-container').classList.remove('active-print');
+        document.getElementById('print-container').classList.add('active-print');
+        // -----------------------------
+
         const mSelect = document.getElementById('admin-report-month'); const yInput = document.getElementById('admin-report-year').value;
         const monthName = mSelect.options[mSelect.selectedIndex].text; const monthNum = parseInt(mSelect.value);
         const today = new Date().toLocaleDateString('id-ID', { day:'2-digit', month:'long', year:'numeric'});
@@ -1140,7 +1146,13 @@
         siapkanPrintPendampingan(currentPendampinganData, `REKAP PENANGANAN AKHIR GURU BK: ${currentUser.nama.toUpperCase()}`); setTimeout(() => window.print(), 1000);
     };
 
-    function siapkanPrintPendampingan(dataArray, subtitle) {
+   function siapkanPrintPendampingan(dataArray, subtitle) {
+
+        // --- TAMBAHKAN 2 BARIS INI ---
+        document.getElementById('print-container').classList.remove('active-print');
+        document.getElementById('print-pendampingan-container').classList.add('active-print');
+        // -----------------------------
+
         document.getElementById('print-p-logo-daerah').src = schoolSettings.logo_daerah || 'https://cdn.phototourl.com/member/2026-07-24-7da31f21-29e7-4dac-8841-dace531ebe04.png';
         document.getElementById('print-p-logo-sekolah').src = schoolSettings.logo_sekolah || 'https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png';
         document.getElementById('print-p-subtitle').innerText = subtitle;
