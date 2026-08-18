@@ -889,18 +889,23 @@
         ];
 
         const daysInMonth = new Date(yInput, monthNum, 0).getDate();
-        const qrKepsek = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(schoolSettings.nama_kepsek || 'Badiang, S.Pd.,M.Pd')}`;
-        const qrGuru = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(currentUser.nama || 'Guru')}`;
-
         const signatureHtml = `
         <table style="width: 100%; text-align: center; border: none !important; page-break-inside: avoid; margin-top: 30px; font-size:12px;">
             <tr>
-                <td style="width: 50%; vertical-align: top; border: none !important;"><p class="mb-2">Mengetahui,<br>Kepala Sekolah</p><img src="${qrKepsek}" style="height:55px; object-fit:contain; margin-bottom: 5px;" alt="QR"><p class="fw-bold mb-0 text-decoration-underline">${schoolSettings.nama_kepsek || 'Badiang, S.Pd.,M.Pd'}</p><p class="small">NIP. ${schoolSettings.nip_kepsek || '19801007 200502 1003'}</p></td>
-                <td style="width: 50%; vertical-align: top; border: none !important;"><p class="mb-2">${schoolSettings.tempat_ttd || 'Poli-Polia'}, ${today}<br>Guru Wali Kelas</p><img src="${qrGuru}" style="height:55px; object-fit:contain; margin-bottom: 5px;" alt="QR"><p class="fw-bold mb-0 text-decoration-underline">${currentUser.nama || '____________________'}</p></td>
+                <td style="width: 50%; vertical-align: top; border: none !important;">
+                    <p class="mb-2">Mengetahui,<br>Kepala Sekolah</p>
+                    <br><br><br>
+                    <p class="fw-bold mb-0 text-decoration-underline">${schoolSettings.nama_kepsek || 'Badiang, S.Pd.,M.Pd'}</p>
+                    <p class="small">NIP. ${schoolSettings.nip_kepsek || '19801007 200502 1003'}</p>
+                </td>
+                <td style="width: 50%; vertical-align: top; border: none !important;">
+                    <p class="mb-2">${schoolSettings.tempat_ttd || 'Poli-Polia'}, ${today}<br>Guru Wali Kelas</p>
+                    <br><br><br>
+                    <p class="fw-bold mb-0 text-decoration-underline">${currentUser.nama || '____________________'}</p>
+                </td>
             </tr>
         </table>
-        <div class="text-center mt-3" style="page-break-inside: avoid; font-size: 12px;"><p class="mb-4">Mengetahui,<br>Orang Tua/Wali</p><p class="fw-bold mb-0">...................................</p></div>`;
-
+        <div class="text-center mt-3" style="page-break-inside: avoid; font-size: 12px;"><p class="mb-4">Mengetahui,<br>Orang Tua/Wali</p><br><br><p class="fw-bold mb-0">...................................</p></div>`;
         if(tipe === 'bulanan') {
             document.getElementById('print-type-bulanan').classList.remove('d-none'); let bulananHtml = '';
             habitsList.forEach((h, idx) => {
