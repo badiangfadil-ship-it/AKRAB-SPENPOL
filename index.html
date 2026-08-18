@@ -68,17 +68,13 @@
             .sidebar-overlay.show { display: block; }
             .main-content { margin-left: 0; padding: 1rem !important; }
         }
-     .print-only { display: none; }
+
+        .print-only { display: none; }
         @media print {
-            /* Sembunyikan tombol, sidebar, dan tampilan dashboard utama */
             .no-print { display: none !important; }
             .tab-pane { display: none !important; }
-            
-            /* Sembunyikan area print secara default, KECUALI yang aktif */
             .print-only { display: none !important; }
             .print-only.active-print { display: block !important; }
-            
-            /* Reset background dan margin untuk kertas A4 */
             body { background: white !important; color: black !important; }
             .main-content { margin-left: 0 !important; padding: 0 !important; }
             @page { size: A4; margin: 15mm; }
@@ -104,17 +100,17 @@
         <div style="background: #f0fdf4; width: 70px; height: 70px; margin: 0 auto 12px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #5eead4;">
             <img src="https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png" alt="Logo" style="width: 45px; height: 45px; object-fit: contain;">
         </div>
-       <div class="text-center mb-3">
-    <h1 class="fw-extrabold mb-0" style="color: var(--primary-color); font-size: 2.5rem; letter-spacing: 4px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">
-        AKRAB
-    </h1>
-    <p class="text-muted small fw-bold mb-0" style="font-size: 0.8rem; letter-spacing: 1px;">
-        APLIKASI KARAKTER & PEMBIASAAN HEBAT
-    </p>
-    <div class="fw-bold text-dark mt-2" style="font-size: 0.9rem;">
-        SMP NEGERI 1 POLI-POLIA
-    </div>
-</div>
+        <div class="text-center mb-3">
+            <h1 class="fw-extrabold mb-0" style="color: var(--primary-color); font-size: 2.5rem; letter-spacing: 4px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">
+                AKRAB
+            </h1>
+            <p class="text-muted small fw-bold mb-0" style="font-size: 0.8rem; letter-spacing: 1px;">
+                APLIKASI KARAKTER & PEMBIASAAN HEBAT
+            </p>
+            <div class="fw-bold text-dark mt-2" style="font-size: 0.9rem;">
+                SMP NEGERI 1 POLI-POLIA
+            </div>
+        </div>
         
         <ul class="nav nav-pills nav-fill nav-pills-custom bg-light p-1 rounded-4 mb-4 border" role="tablist">
             <li class="nav-item"><button class="nav-link active rounded-3" data-bs-toggle="pill" data-bs-target="#login-siswa">Siswa</button></li>
@@ -164,8 +160,8 @@
         <div class="d-flex align-items-center mb-4 px-2 pt-2">
             <img src="https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png" alt="Logo" style="width: 38px; height: 38px; object-fit: contain;" class="me-2">
             <div class="lh-1">
-               <div class="small fw-bold text-muted mb-1" style="font-size: 0.55rem;">SMP NEGERI 1 POLI-POLIA</div>
-<h6 class="mb-0 fw-bold" id="sidebar-role-title" style="color: var(--primary-color); font-size: 0.8rem;">AKRAB</h6>
+               <div class="fw-bold mb-1" style="color: var(--primary-color); font-size: 1rem;">AKRAB</div>
+               <div class="small text-muted" style="font-size: 0.6rem;">SMP NEGERI 1 POLI-POLIA</div>
             </div>
         </div>
         
@@ -263,11 +259,14 @@
                 </div>
             </div>
 
-            <!-- TAB BERSAMA: CATAT KASUS SISWA (STRUKTUR GAMBAR 1) -->
+            <!-- TAB BERSAMA: CATAT KASUS SISWA -->
             <div id="tab-guruwali-pendampingan" class="tab-pane d-none fade-in">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="fw-bold mb-0">Pencatatan Kasus Siswa</h4>
-                    <button class="btn btn-primary shadow-sm py-2 px-3 fw-bold text-nowrap" data-bs-toggle="modal" data-bs-target="#modalPendampinganGw"><i data-lucide="plus-circle" size="18" class="me-1"></i> Kasus Baru</button>
+                    <div>
+                        <button class="btn btn-success shadow-sm py-2 px-3 fw-bold me-2" onclick="cetakLaporanGuruWaliKasus()"><i data-lucide="printer" size="18" class="me-1"></i> Cetak</button>
+                        <button class="btn btn-primary shadow-sm py-2 px-3 fw-bold text-nowrap" data-bs-toggle="modal" data-bs-target="#modalPendampinganGw"><i data-lucide="plus-circle" size="18" class="me-1"></i> Kasus Baru</button>
+                    </div>
                 </div>
                 <div class="card p-3 shadow-sm border-0">
                     <div class="table-responsive">
@@ -403,7 +402,7 @@
                 </div>
             </div>
 
-            <!-- TAB WALI KELAS: REVIEW KASUS (STRUKTUR GAMBAR 2) -->
+            <!-- TAB WALI KELAS: REVIEW KASUS -->
             <div id="tab-walikelas-review" class="tab-pane d-none fade-in">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                     <h4 class="fw-bold mb-0">Review Kasus Kelas</h4>
@@ -428,7 +427,7 @@
                 </div>
             </div>
 
-            <!-- TAB GURU BK: PENANGANAN AKHIR (STRUKTUR GAMBAR 3) -->
+            <!-- TAB GURU BK: PENANGANAN AKHIR -->
             <div id="tab-bk-dashboard" class="tab-pane d-none fade-in">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                     <h4 class="fw-bold mb-0">Penanganan Kasus Akhir (BK)</h4>
@@ -597,7 +596,6 @@
     </div>
 </div>
 
-<!-- MODAL INTERAKTIF: TINDAK LANJUT WALI KELAS -->
 <div class="modal fade" id="modalWaliKelasAction" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -619,7 +617,6 @@
     </div>
 </div>
 
-<!-- MODAL INTERAKTIF: TINDAK LANJUT GURU BK -->
 <div class="modal fade" id="modalBKAction" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -865,13 +862,10 @@
         });
     };
 
-   window.showPrintArea = function(tipe) {
+    window.showPrintArea = function(tipe) {
         if(!adminViewingUser) return;
-
-        // --- TAMBAHKAN 2 BARIS INI ---
         document.getElementById('print-pendampingan-container').classList.remove('active-print');
         document.getElementById('print-container').classList.add('active-print');
-        // -----------------------------
 
         const mSelect = document.getElementById('admin-report-month'); const yInput = document.getElementById('admin-report-year').value;
         const monthName = mSelect.options[mSelect.selectedIndex].text; const monthNum = parseInt(mSelect.value);
@@ -889,23 +883,29 @@
         ];
 
         const daysInMonth = new Date(yInput, monthNum, 0).getDate();
+
         const signatureHtml = `
-        <table style="width: 100%; text-align: center; border: none !important; page-break-inside: avoid; margin-top: 30px; font-size:12px;">
+        <table style="width: 100%; text-align: center; border: none !important; page-break-inside: avoid; margin-top: 40px; font-size:12px;">
             <tr>
                 <td style="width: 50%; vertical-align: top; border: none !important;">
-                    <p class="mb-2">Mengetahui,<br>Kepala Sekolah</p>
-                    <br><br><br>
+                    <p class="mb-1">Mengetahui,<br>Kepala Sekolah</p>
+                    <br><br><br><br>
                     <p class="fw-bold mb-0 text-decoration-underline">${schoolSettings.nama_kepsek || 'Badiang, S.Pd.,M.Pd'}</p>
                     <p class="small">NIP. ${schoolSettings.nip_kepsek || '19801007 200502 1003'}</p>
                 </td>
                 <td style="width: 50%; vertical-align: top; border: none !important;">
-                    <p class="mb-2">${schoolSettings.tempat_ttd || 'Poli-Polia'}, ${today}<br>Guru Wali Kelas</p>
-                    <br><br><br>
+                    <p class="mb-1">${schoolSettings.tempat_ttd || 'Poli-Polia'}, ${today}<br>Guru Wali Kelas</p>
+                    <br><br><br><br>
                     <p class="fw-bold mb-0 text-decoration-underline">${currentUser.nama || '____________________'}</p>
                 </td>
             </tr>
         </table>
-        <div class="text-center mt-3" style="page-break-inside: avoid; font-size: 12px;"><p class="mb-4">Mengetahui,<br>Orang Tua/Wali</p><br><br><p class="fw-bold mb-0">...................................</p></div>`;
+        <div class="text-center mt-4" style="page-break-inside: avoid; font-size: 12px;">
+            <p class="mb-1">Mengetahui,<br>Orang Tua/Wali</p>
+            <br><br><br>
+            <p class="fw-bold mb-0">...................................</p>
+        </div>`;
+
         if(tipe === 'bulanan') {
             document.getElementById('print-type-bulanan').classList.remove('d-none'); let bulananHtml = '';
             habitsList.forEach((h, idx) => {
@@ -940,15 +940,20 @@
     // ALUR PENDAMPINGAN KASUS TERKONEKSI (GW -> WK -> BK)
     // -------------------------------------------------------------
     
-    // 1. Dashboard Catatan Kasus Siswa (Guru Wali) - Sesuai Gambar 1
+    // 1. Dashboard Catatan Kasus Siswa (Guru Wali)
     function loadPendampinganGuruWali() {
         const tbody = document.getElementById('gw-pendampingan-list'); 
         tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4">Memuat data...</td></tr>`;
         
         callAPI('getPendampinganGuruWali', {}).then(res => {
-            if(!res.success || res.data.length === 0) { 
+            if(!res.success) { 
                 tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted small">Belum ada kasus tercatat.</td></tr>`; 
                 return; 
+            }
+            currentPendampinganData = res.data;
+            if(res.data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted small">Belum ada kasus tercatat.</td></tr>`; 
+                return;
             }
             tbody.innerHTML = res.data.map(p => {
                 let badgeClass = p.Status === 'Selesai' ? 'badge-done' : (p.Status.includes('BK') ? 'badge-forward' : 'badge-wait');
@@ -1005,7 +1010,7 @@
         });
     };
 
-    // 2. Dashboard Wali Kelas (Review Kasus Kelas) - Sesuai Gambar 2
+    // 2. Dashboard Wali Kelas (Review Kasus Kelas)
     function loadPendampinganWaliKelas() {
         const tbody = document.getElementById('wk-pendampingan-list'); 
         tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
@@ -1069,7 +1074,7 @@
         });
     };
 
-    // 3. Dashboard Guru BK (Penanganan Kasus Akhir) - Sesuai Gambar 3
+    // 3. Dashboard Guru BK (Penanganan Kasus Akhir)
     function loadPendampinganBK() {
         const tbody = document.getElementById('bk-pendampingan-list'); 
         tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
@@ -1143,20 +1148,24 @@
         });
     };
 
+    window.cetakLaporanGuruWaliKasus = function() {
+        siapkanPrintPendampingan(currentPendampinganData, `REKAP KASUS SISWA - GURU WALI: ${currentUser.nama.toUpperCase()}`); 
+        setTimeout(() => window.print(), 1000);
+    };
+
     window.cetakLaporanWaliKelas = function() {
-        siapkanPrintPendampingan(currentPendampinganData, `REKAP KASUS WALI KELAS: ${currentUser.nama.toUpperCase()}`); setTimeout(() => window.print(), 1000);
+        siapkanPrintPendampingan(currentPendampinganData, `REKAP KASUS WALI KELAS: ${currentUser.nama.toUpperCase()}`); 
+        setTimeout(() => window.print(), 1000);
     };
 
     window.cetakLaporanBK = function() {
-        siapkanPrintPendampingan(currentPendampinganData, `REKAP PENANGANAN AKHIR GURU BK: ${currentUser.nama.toUpperCase()}`); setTimeout(() => window.print(), 1000);
+        siapkanPrintPendampingan(currentPendampinganData, `REKAP PENANGANAN AKHIR GURU BK: ${currentUser.nama.toUpperCase()}`); 
+        setTimeout(() => window.print(), 1000);
     };
 
-   function siapkanPrintPendampingan(dataArray, subtitle) {
-
-        // --- TAMBAHKAN 2 BARIS INI ---
+    function siapkanPrintPendampingan(dataArray, subtitle) {
         document.getElementById('print-container').classList.remove('active-print');
         document.getElementById('print-pendampingan-container').classList.add('active-print');
-        // -----------------------------
 
         document.getElementById('print-p-logo-daerah').src = schoolSettings.logo_daerah || 'https://cdn.phototourl.com/member/2026-07-24-7da31f21-29e7-4dac-8841-dace531ebe04.png';
         document.getElementById('print-p-logo-sekolah').src = schoolSettings.logo_sekolah || 'https://cdn.phototourl.com/member/2026-07-21-0de133fa-2526-4239-ad76-cc617208cc99.png';
@@ -1170,12 +1179,21 @@
             return `<tr><td class="text-center">${i+1}</td><td class="text-center">${p.Tanggal}</td><td class="fw-bold">${p.Nama_Siswa}</td><td>${p.Kategori_Kasus}</td><td>${info}</td><td class="text-center fw-bold ${p.Status==='Selesai'?'text-success':''}">${p.Status}</td></tr>`;
         }).join('');
 
-        const qrKepsek = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(schoolSettings.nama_kepsek || 'Badiang, S.Pd.,M.Pd')}`;
-        const qrPenanda = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(currentUser.nama)}`;
         document.getElementById('print-p-signature').innerHTML = `
-        <table style="width: 100%; text-align: center; border: none !important; page-break-inside: avoid; margin-top: 30px; font-size:12px;">
-            <tr><td style="width: 50%; border: none !important;"><p class="mb-1">Mengetahui,<br>Kepala Sekolah</p><img src="${qrKepsek}" style="height:55px; margin-bottom:4px;" alt="QR"><p class="fw-bold mb-0 text-decoration-underline">${schoolSettings.nama_kepsek || 'Badiang, S.Pd.,M.Pd'}</p><p class="small">NIP. ${schoolSettings.nip_kepsek || '19801007 200502 1003'}</p></td>
-                <td style="width: 50%; border: none !important;"><p class="mb-1">${schoolSettings.tempat_ttd || 'Poli-Polia'}, ${today}<br>${currentUser.role === 'gurubk' ? 'Guru BK' : 'Wali Kelas'}</p><img src="${qrPenanda}" style="height:55px; margin-bottom:4px;" alt="QR"><p class="fw-bold mb-0 text-decoration-underline">${currentUser.nama}</p></td></tr>
+        <table style="width: 100%; text-align: center; border: none !important; page-break-inside: avoid; margin-top: 40px; font-size:12px;">
+            <tr>
+                <td style="width: 50%; border: none !important; vertical-align: top;">
+                    <p class="mb-1">Mengetahui,<br>Kepala Sekolah</p>
+                    <br><br><br><br>
+                    <p class="fw-bold mb-0 text-decoration-underline">${schoolSettings.nama_kepsek || 'Badiang, S.Pd.,M.Pd'}</p>
+                    <p class="small">NIP. ${schoolSettings.nip_kepsek || '19801007 200502 1003'}</p>
+                </td>
+                <td style="width: 50%; border: none !important; vertical-align: top;">
+                    <p class="mb-1">${schoolSettings.tempat_ttd || 'Poli-Polia'}, ${today}<br>${currentUser.role === 'gurubk' ? 'Guru BK' : 'Wali Kelas'}</p>
+                    <br><br><br><br>
+                    <p class="fw-bold mb-0 text-decoration-underline">${currentUser.nama}</p>
+                </td>
+            </tr>
         </table>`;
     }
 
