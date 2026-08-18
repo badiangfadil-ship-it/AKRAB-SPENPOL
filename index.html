@@ -68,28 +68,20 @@
             .sidebar-overlay.show { display: block; }
             .main-content { margin-left: 0; padding: 1rem !important; }
         }
-      .print-only { display: none; }
+     .print-only { display: none; }
         @media print {
-            /* Sembunyikan semua elemen kecuali yang memang khusus diprint dan sedang aktif */
-            body * { visibility: hidden; }
-            
-            /* Hanya tampilkan elemen yang diberi class active-print */
-            .print-only.active-print, .print-only.active-print * {
-                visibility: visible;
-            }
-            .print-only.active-print {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                display: block !important;
-            }
-            
+            /* Sembunyikan tombol, sidebar, dan tampilan dashboard utama */
             .no-print { display: none !important; }
-            body { background: white !important; color: black !important; margin: 0; padding: 0; }
-            .main-content { margin-left: 0 !important; padding: 0 !important; border: none; box-shadow: none; }
+            .tab-pane { display: none !important; }
+            
+            /* Sembunyikan area print secara default, KECUALI yang aktif */
+            .print-only { display: none !important; }
+            .print-only.active-print { display: block !important; }
+            
+            /* Reset background dan margin untuk kertas A4 */
+            body { background: white !important; color: black !important; }
+            .main-content { margin-left: 0 !important; padding: 0 !important; }
             @page { size: A4; margin: 15mm; }
-        }
         }
         .print-header-wrapper { display: flex; align-items: center; justify-content: space-between; border-bottom: 3px double #000; padding-bottom: 10px; margin-bottom: 20px; }
         .print-logo { width: 65px; height: 65px; object-fit: contain; }
