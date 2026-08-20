@@ -776,7 +776,7 @@
         if(tabId === 'tab-admin-reports') loadAdminReportStudents();
     };
 
-    // FUNGSI: Mengisi Dropdown Siswa Berdasarkan Guru Wali / Wali Kelas yang Login
+    // FUNGSI: Mengisi Dropdown Siswa Berdasarkan Guru Wali (Hanya untuk Cetak Laporan Jurnal)
     function loadAdminReportStudents() {
         const selectEl = document.getElementById('admin-report-select-siswa');
         selectEl.innerHTML = '<option value="">Memuat siswa bimbingan...</option>';
@@ -790,23 +790,45 @@
         });
     }
 
-    // FUNGSI: Membuka Modal Kasus Baru (Memfilter dropdown siswa sesuai guru wali/wali kelas yang login)
+    // FUNGSI: Membuka Modal Kasus Baru 
+    // - Jika Guru Wali (admin): Menampilkan SEMUA siswa
+    // - Jika Wali Kelas (walikelas): Menampilkan HANYA siswa bimbingan/perwaliannya
     window.bukaModalKasusBaru = function() {
         const selectEl = document.getElementById('p-dropdown-siswa');
         selectEl.innerHTML = '<option value="">Memuat siswa...</option>';
         
-        callAPI('getAdminStudents', { namaGuru: currentUser.nama }).then(res => {
-            if(res && res.length > 0) {
-                selectEl.innerHTML = '<option value="">-- Pilih Siswa --</option>' + 
-                    res.map(s => `<option value="${s.username}">${s.nama} (${s.kelas || '-'})</option>`).join('');
+        if (currentUser.role === 'admin') {
+            // Guru Wali melihat SEMUA siswa
+            if(allStudentsData && allStudentsData.length > 0) {
+                selectEl.innerHTML = '<option value="">-- Pilih Semua Siswa --</option>' + 
+                    allStudentsData.map(s => `<option value="${s.username}">${s.nama} (${s.kelas || '-'})</option>`).join('');
+                new bootstrap.Modal(document.getElementById('modalPendampinganGw')).show();
             } else {
-                selectEl.innerHTML = '<option value="">-- Tidak ada siswa bimbingan --</option>';
+                callAPI('getInitialData', {}).then(data => {
+                    allStudentsData = data.students || [];
+                    selectEl.innerHTML = '<option value="">-- Pilih Semua Siswa --</option>' + 
+                        allStudentsData.map(s => `<option value="${s.username}">${s.nama} (${s.kelas || '-'})</option>`).join('');
+                    new bootstrap.Modal(document.getElementById('modalPendampinganGw')).show();
+                }).catch(() => {
+                    selectEl.innerHTML = '<option value="">-- Gagal memuat siswa --</option>';
+                    new bootstrap.Modal(document.getElementById('modalPendampinganGw')).show();
+                });
             }
-            new bootstrap.Modal(document.getElementById('modalPendampinganGw')).show();
-        }).catch(() => {
-            selectEl.innerHTML = '<option value="">-- Gagal memuat siswa --</option>';
-            new bootstrap.Modal(document.getElementById('modalPendampinganGw')).show();
-        });
+        } else {
+            // Wali Kelas (walikelas) HANYA menampilkan siswa bimbingannya
+            callAPI('getAdminStudents', { namaGuru: currentUser.nama }).then(res => {
+                if(res && res.length > 0) {
+                    selectEl.innerHTML = '<option value="">-- Pilih Siswa Perwalian --</option>' + 
+                        res.map(s => `<option value="${s.username}">${s.nama} (${s.kelas || '-'})</option>`).join('');
+                } else {
+                    selectEl.innerHTML = '<option value="">-- Tidak ada siswa perwalian --</option>';
+                }
+                new bootstrap.Modal(document.getElementById('modalPendampinganGw')).show();
+            }).catch(() => {
+                selectEl.innerHTML = '<option value="">-- Gagal memuat siswa --</option>';
+                new bootstrap.Modal(document.getElementById('modalPendampinganGw')).show();
+            });
+        }
     };
 
     // -------------------------------------------------------------
