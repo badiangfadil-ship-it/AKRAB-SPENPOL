@@ -77,7 +77,7 @@
             .print-only.active-print { display: block !important; }
             body { background: white !important; color: black !important; }
             .main-content { margin-left: 0 !important; padding: 0 !important; }
-            @page { size: A4; margin: 15mm; }
+            @page { size: A4 landscape; margin: 10mm; }
             
             .print-page-item {
                 break-before: page;
@@ -88,8 +88,8 @@
                 page-break-before: avoid;
             }
         }
-        .print-header-wrapper { display: flex; align-items: center; justify-content: space-between; border-bottom: 3px double #000; padding-bottom: 10px; margin-bottom: 20px; }
-        .print-logo { width: 65px; height: 65px; object-fit: contain; }
+        .print-header-wrapper { display: flex; align-items: center; justify-content: space-between; border-bottom: 3px double #000; padding-bottom: 10px; margin-bottom: 15px; }
+        .print-logo { width: 55px; height: 55px; object-fit: contain; }
         .print-header-text { text-align: center; flex-grow: 1; }
     </style>
 </head>
@@ -407,7 +407,7 @@
                     <div class="alert alert-success d-flex flex-wrap justify-content-between align-items-center shadow-sm" style="background-color: #f0fdf4; border: 1px solid #bbf7d0;">
                         <span class="mb-2 mb-md-0 fw-bold text-success">Data siap. Pilih format laporan:</span>
                         <div class="d-flex flex-wrap gap-2">
-                            <button class="btn btn-success btn-sm px-3 fw-bold border-0" style="background-color: var(--primary-color);" onclick="showPrintArea('bulanan')">Cetak Detail Bulanan</button>
+                            <button class="btn btn-success btn-sm px-3 fw-bold border-0" style="background-color: var(--primary-color);" onclick="showPrintArea('bulanan')">Cetak Buku Jurnal (1 Lembar)</button>
                             <button class="btn btn-warning btn-sm text-dark px-3 fw-bold" style="background-color: #f59e0b; color: white !important;" onclick="showPrintArea('umum')">Cetak Rekap Umum</button>
                         </div>
                     </div>
@@ -501,13 +501,34 @@
                     </div>
                     <img id="print-logo-sekolah" class="print-logo" src="" alt="Kanan">
                 </div>
-                <div class="mb-4 mt-2">
-                    <table style="width: 100%; border: none !important; margin-bottom: 0;">
+                <div class="mb-3 mt-1">
+                    <table style="width: 100%; border: none !important; margin-bottom: 0; font-size: 11px;">
                         <tr><td width="50"><strong>Nama</strong></td><td width="10">:</td><td><span id="print-siswa-nama">...</span></td><td width="50" class="text-end"><strong>Bulan</strong></td><td width="10">:</td><td><span id="print-siswa-bulan">...</span></td></tr>
                         <tr><td><strong>Kelas</strong></td><td>:</td><td><span id="print-siswa-kelas">...</span></td><td class="text-end"><strong>Tahun</strong></td><td>:</td><td><span id="print-siswa-tahun">...</span></td></tr>
                     </table>
                 </div>
-                <div id="print-type-bulanan" class="d-none"><div id="bulanan-tables-container"></div></div>
+                
+                <div id="print-type-bulanan" class="d-none">
+                    <div class="text-center mb-2"><h6 class="fw-bold text-uppercase mb-0" style="font-size: 13px;">BUKU JURNAL TUJUH KEBIASAAN ANAK INDONESIA HEBAT</h6></div>
+                    <table class="table table-bordered border-dark text-center align-middle mb-2" style="font-size: 9.5px;">
+                        <thead class="table-light align-middle">
+                            <tr>
+                                <th width="30">Tgl</th>
+                                <th>Bangun Pagi</th>
+                                <th width="65">Beribadah</th>
+                                <th>Berolahraga</th>
+                                <th>Makan Sehat</th>
+                                <th>Gemar Belajar</th>
+                                <th>Bermasyarakat</th>
+                                <th>Tidur Cepat</th>
+                                <th width="75">Paraf Ortu</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body-matrix-bulanan"></tbody>
+                    </table>
+                    <div id="signature-area-matrix"></div>
+                </div>
+
                 <div id="print-type-umum" class="d-none" style="page-break-inside: avoid;">
                     <div class="text-center mb-3"><h5 class="fw-bold text-uppercase mb-0">REKAP PEMANTAUAN</h5><h6 class="fw-bold">Tujuh Kebiasaan Anak Indonesia Hebat</h6></div>
                     <table class="table table-bordered border-dark text-center align-middle mt-3 mb-2"><thead class="table-light"><tr><th width="40">No</th><th class="text-start">Tujuh Kebiasaan</th><th>Belum</th><th>Sudah</th></tr></thead><tbody id="table-body-umum"></tbody></table>
@@ -776,7 +797,6 @@
         if(tabId === 'tab-admin-reports') loadAdminReportStudents();
     };
 
-    // FUNGSI: Mengisi Dropdown Siswa Berdasarkan Guru Wali (Hanya untuk Cetak Laporan Jurnal)
     function loadAdminReportStudents() {
         const selectEl = document.getElementById('admin-report-select-siswa');
         selectEl.innerHTML = '<option value="">Memuat siswa bimbingan...</option>';
@@ -790,15 +810,11 @@
         });
     }
 
-    // FUNGSI: Membuka Modal Kasus Baru 
-    // - Jika Guru Wali (admin): Menampilkan SEMUA siswa
-    // - Jika Wali Kelas (walikelas): Menampilkan HANYA siswa bimbingan/perwaliannya
     window.bukaModalKasusBaru = function() {
         const selectEl = document.getElementById('p-dropdown-siswa');
         selectEl.innerHTML = '<option value="">Memuat siswa...</option>';
         
         if (currentUser.role === 'admin') {
-            // Guru Wali melihat SEMUA siswa
             if(allStudentsData && allStudentsData.length > 0) {
                 selectEl.innerHTML = '<option value="">-- Pilih Semua Siswa --</option>' + 
                     allStudentsData.map(s => `<option value="${s.username}">${s.nama} (${s.kelas || '-'})</option>`).join('');
@@ -815,7 +831,6 @@
                 });
             }
         } else {
-            // Wali Kelas (walikelas) HANYA menampilkan siswa bimbingannya
             callAPI('getAdminStudents', { namaGuru: currentUser.nama }).then(res => {
                 if(res && res.length > 0) {
                     selectEl.innerHTML = '<option value="">-- Pilih Siswa Perwalian --</option>' + 
@@ -831,9 +846,6 @@
         }
     };
 
-    // -------------------------------------------------------------
-    // FUNGSI GURU WALI: JURNAL SEKOLAH & PANTAU GPS & SISWA
-    // -------------------------------------------------------------
     const evaluationOptions = ["Tidak Hadir", "Melaksanakan Kurang Baik", "Melaksanakan Cukup Baik", "Melaksanakan Dengan Baik", "Melaksanakan Dengan Sangat Baik"];
     const jadwalSekolah = {
         1: ["Upacara Bendera (07.00-08.10)", "Pelita Iman (12.10-12.50)"], 2: ["Pelita Iman (12.50-13.30)"], 3: ["Sarapan Sehat Bersama (07.20-08.00)", "Pelita Iman (12.40-13.20)"],
@@ -942,63 +954,86 @@
         document.getElementById('print-siswa-bulan').innerText = monthName; document.getElementById('print-siswa-tahun').innerText = yInput;
         document.getElementById('print-type-bulanan').classList.add('d-none'); document.getElementById('print-type-umum').classList.add('d-none');
 
-        const habitsList = [
-            { k: 'bangun', n: 'Bangun Pagi', cols: ['Pukul/Jam'] }, { k: 'ibadah', n: 'Beribadah', cols: ['Subuh', 'Dzuhur', 'Ashar', 'Magrib', 'Isya', 'Keterangan'] },
-            { k: 'olahraga', n: 'Berolahraga', cols: ['Jenis Olahraga'] }, { k: 'makan', n: 'Makan Sehat dan Bergizi', cols: ['Menu Makanan Sehat'] },
-            { k: 'belajar', n: 'Gemar Belajar', cols: ['Materi Pelajaran'] }, { k: 'masyarakat', n: 'Bermasyarakat', cols: ['Kegiatan Sosial'] },
-            { k: 'tidur', n: 'Tidur Cepat', cols: ['Jam Tidur'] }
-        ];
-
         const daysInMonth = new Date(yInput, monthNum, 0).getDate();
 
         const signatureHtml = `
-        <table style="width: 100%; text-align: center; border: none !important; page-break-inside: avoid; margin-top: 30px; font-size:11px;">
+        <table style="width: 100%; text-align: center; border: none !important; page-break-inside: avoid; margin-top: 15px; font-size:10px;">
             <tr>
-                <td style="width: 50%; vertical-align: top; border: none !important;">
+                <td style="width: 33%; vertical-align: top; border: none !important;">
                     <p class="mb-1">Mengetahui,<br>Kepala Sekolah</p>
                     <br><br><br>
                     <p class="fw-bold mb-0 text-decoration-underline">${schoolSettings.nama_kepsek || 'Badiang, S.Pd.,M.Pd'}</p>
                     <p class="small">NIP. ${schoolSettings.nip_kepsek || '19801007 200502 1003'}</p>
                 </td>
-                <td style="width: 50%; vertical-align: top; border: none !important;">
+                <td style="width: 33%; vertical-align: top; border: none !important;">
                     <p class="mb-1">${schoolSettings.tempat_ttd || 'Poli-Polia'}, ${today}<br>Guru Wali Kelas</p>
                     <br><br><br>
                     <p class="fw-bold mb-0 text-decoration-underline">${currentUser.nama || '____________________'}</p>
                 </td>
+                <td style="width: 33%; vertical-align: top; border: none !important;">
+                    <p class="mb-1"><br>Orang Tua/Wali</p>
+                    <br><br><br>
+                    <p class="fw-bold mb-0 text-decoration-underline">...................................</p>
+                </td>
             </tr>
-        </table>
-        <div class="text-center mt-3" style="page-break-inside: avoid; font-size: 11px;">
-            <p class="mb-1">Mengetahui,<br>Orang Tua/Wali</p>
-            <br><br>
-            <p class="fw-bold mb-0">...................................</p>
-        </div>`;
+        </table>`;
 
         if(tipe === 'bulanan') {
-            document.getElementById('print-type-bulanan').classList.remove('d-none'); let bulananHtml = '';
-            habitsList.forEach((h, idx) => {
-                bulananHtml += `<div class="print-page-item"><div class="text-center mb-2"><h5 class="fw-bold text-uppercase mb-0" style="font-size: 14px;">BUKU JURNAL</h5><h6 class="fw-bold" style="font-size: 12px;">Tujuh Kebiasaan Anak Indonesia Hebat</h6></div>`;
-                bulananHtml += `<h6 class="fw-bold text-uppercase mb-2 mt-2 text-center text-decoration-underline" style="font-size: 12px;">${idx+1}. Jurnal ${h.n}</h6><table class="table table-bordered border-dark table-sm text-center align-middle mb-2" style="font-size: 10px;"><thead class="table-light"><tr><th width="50">Tanggal</th>`;
-                h.cols.forEach(col => bulananHtml += `<th>${col}</th>`); bulananHtml += `</tr></thead><tbody>`;
-                for(let d=1; d<=daysInMonth; d++) {
-                    const targetDate = `${yInput}-${String(monthNum).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-                    const entries = adminViewingHabits[h.k] ? adminViewingHabits[h.k].filter(e => e.tgl === targetDate) : []; const entry = entries.length > 0 ? entries[0] : null;
-                    bulananHtml += `<tr><td>${d}</td>`;
-                    if(h.k === 'ibadah') {
-                        const sholat = entry ? (entry.detail1 || '') : ''; const ket = entry ? (entry.detail2 || '') : '';
-                        bulananHtml += `<td>${sholat.includes('Subuh') ? 'V' : ''}</td><td>${sholat.includes('Dzuhur') ? 'V' : ''}</td><td>${sholat.includes('Ashar') ? 'V' : ''}</td><td>${sholat.includes('Magrib') ? 'V' : ''}</td><td>${sholat.includes('Isya') ? 'V' : ''}</td><td class="text-start px-2 small">${ket}</td>`;
-                    } else { bulananHtml += `<td class="text-start px-3">${entry ? (entry.detail1 ? entry.detail1 : 'Dilaksanakan (V)') : ''}</td>`; }
-                    bulananHtml += `</tr>`;
-                }
-                bulananHtml += `</tbody></table>${signatureHtml}</div>`;
-            });
-            document.getElementById('bulanan-tables-container').innerHTML = bulananHtml;
+            document.getElementById('print-type-bulanan').classList.remove('d-none'); 
+            let matrixHtml = '';
+            
+            for(let d=1; d<=daysInMonth; d++) {
+                const targetDate = `${yInput}-${String(monthNum).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                
+                // Ambil data tiap kebiasaan pada tanggal tersebut
+                const getVal = (key, isIbadah = false) => {
+                    const list = adminViewingHabits[key] ? adminViewingHabits[key].filter(e => e.tgl === targetDate) : [];
+                    if(list.length === 0) return '';
+                    if(isIbadah) {
+                        return list[0].detail1 ? `Sholat: ${list[0].detail1}` : '✓';
+                    }
+                    return list[0].detail1 || '✓';
+                };
+
+                const bangun = getVal('bangun');
+                const ibadah = getVal('ibadah', true);
+                const olahraga = getVal('olahraga');
+                const makan = getVal('makan');
+                const belajar = getVal('belajar');
+                const masyarakat = getVal('masyarakat');
+                const tidur = getVal('tidur');
+
+                matrixHtml += `
+                    <tr>
+                        <td class="fw-bold">${d}</td>
+                        <td class="text-start px-2">${bangun}</td>
+                        <td class="text-start px-1">${ibadah}</td>
+                        <td class="text-start px-2">${olahraga}</td>
+                        <td class="text-start px-2">${makan}</td>
+                        <td class="text-start px-2">${belajar}</td>
+                        <td class="text-start px-2">${masyarakat}</td>
+                        <td class="text-start px-2">${tidur}</td>
+                        <td></td>
+                    </tr>
+                `;
+            }
+            document.getElementById('table-body-matrix-bulanan').innerHTML = matrixHtml;
+            document.getElementById('signature-area-matrix').innerHTML = signatureHtml;
+
         } else if (tipe === 'umum') {
-            document.getElementById('print-type-umum').classList.remove('d-none'); let bodyHtml = '';
+            document.getElementById('print-type-umum').classList.remove('d-none'); 
+            const habitsList = [
+                { k: 'bangun', n: '1. Bangun Pagi' }, { k: 'ibadah', n: '2. Beribadah' }, { k: 'olahraga', n: '3. Berolahraga' },
+                { k: 'makan', n: '4. Makan Sehat dan Bergizi' }, { k: 'belajar', n: '5. Gemar Belajar' },
+                { k: 'masyarakat', n: '6. Bermasyarakat' }, { k: 'tidur', n: '7. Tidur Cepat' }
+            ];
+            let bodyHtml = '';
             habitsList.forEach((h, idx) => {
                 const isTerbiasa = adminViewingHabits[h.k] && adminViewingHabits[h.k].some(entry => entry.tgl.startsWith(`${yInput}-${String(monthNum).padStart(2, '0')}`));
                 bodyHtml += `<tr><td>${idx+1}</td><td class="text-start fw-semibold px-3">${h.n}</td><td>${!isTerbiasa ? 'V' : ''}</td><td>${isTerbiasa ? 'V' : ''}</td></tr>`;
             });
-            document.getElementById('table-body-umum').innerHTML = bodyHtml; document.getElementById('signature-area-umum').innerHTML = signatureHtml;
+            document.getElementById('table-body-umum').innerHTML = bodyHtml; 
+            document.getElementById('signature-area-umum').innerHTML = signatureHtml;
         }
         setTimeout(() => window.print(), 1000);
     };
@@ -1006,8 +1041,6 @@
     // -------------------------------------------------------------
     // ALUR PENDAMPINGAN KASUS TERKONEKSI (GW -> WK -> BK)
     // -------------------------------------------------------------
-    
-    // 1. Dashboard Catatan Kasus Siswa (Guru Wali & Wali Kelas)
     function loadPendampinganGuruWali() {
         const tbody = document.getElementById('gw-pendampingan-list'); 
         tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4">Memuat data...</td></tr>`;
@@ -1077,7 +1110,6 @@
         });
     };
 
-    // 2. Dashboard Wali Kelas (Review Kasus Kelas)
     function loadPendampinganWaliKelas() {
         const tbody = document.getElementById('wk-pendampingan-list'); 
         tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
@@ -1141,7 +1173,6 @@
         });
     };
 
-    // 3. Dashboard Guru BK (Penanganan Kasus Akhir)
     function loadPendampinganBK() {
         const tbody = document.getElementById('bk-pendampingan-list'); 
         tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
@@ -1264,9 +1295,6 @@
         </table>`;
     }
 
-    // -------------------------------------------------------------
-    // FUNGSI SISWA (JURNAL HARIAN)
-    // -------------------------------------------------------------
     function loadStudentDashboard() { 
         document.querySelectorAll('.current-user-name').forEach(el => el.innerText = currentUser.nama.split(" ")[0]); 
         document.getElementById('form-profile-siswa').elements['nama'].value = currentUser.nama; 
