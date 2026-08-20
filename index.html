@@ -79,7 +79,6 @@
             .main-content { margin-left: 0 !important; padding: 0 !important; }
             @page { size: A4; margin: 15mm; }
             
-            /* ATURAN HALAMAN TERPISAH UNTUK SETIAP JURNAL BULANAN */
             .print-page-item {
                 break-before: page;
                 page-break-before: always;
@@ -160,7 +159,6 @@
                 </form>
             </div>
         </div>
-        <!-- KREDIT PEMBUAT APLIKASI -->
         <div class="mt-4 pt-3 border-top text-center text-muted small" style="font-size: 0.75rem;">
             Design by: <strong class="text-dark">Badiang</strong> (<a href="https://s.id/diang" target="_blank" class="text-decoration-none text-muted">https://s.id/diang</a>)
         </div>
@@ -689,7 +687,6 @@
             populateDropdownKelas(allStudentsData); populateDropdownSiswa(allStudentsData);
             
             const allOpts = '<option value="">-- Pilih Siswa --</option>' + allStudentsData.map(s => `<option value="${s.username}">${s.nama} (${s.kelas || '-'})</option>`).join('');
-            document.getElementById('admin-report-select-siswa').innerHTML = allOpts;
             document.getElementById('p-dropdown-siswa').innerHTML = allOpts;
         }).catch(err => { document.getElementById('loader-text').innerHTML = `<div class="alert alert-danger mt-3 text-start small"><strong>Gagal Terhubung:</strong><br>${err.message}</div>`; });
     });
@@ -779,8 +776,22 @@
         if(tabId === 'tab-admin-students') loadAdminStudents();
         if(tabId === 'tab-admin-tracker') loadTrackingAdmin();
         if(tabId === 'tab-admin-school') updateSchoolActivities();
+        if(tabId === 'tab-admin-reports') loadAdminReportStudents();
     };
 
+    // FUNGSI KHUSUS: Mengisi Dropdown Siswa Berdasarkan Guru Wali yang Login
+    function loadAdminReportStudents() {
+        const selectEl = document.getElementById('admin-report-select-siswa');
+        selectEl.innerHTML = '<option value="">Memuat siswa bimbingan...</option>';
+        callAPI('getAdminStudents', { namaGuru: currentUser.nama }).then(res => {
+            if(res && res.length > 0) {
+                selectEl.innerHTML = '<option value="">-- Pilih Siswa Bimbingan --</option>' + 
+                    res.map(s => `<option value="${s.username}">${s.nama} (${s.kelas || '-'})</option>`).join('');
+            } else {
+                selectEl.innerHTML = '<option value="">-- Tidak ada siswa bimbingan --</option>';
+            }
+        });
+    }
 
     // -------------------------------------------------------------
     // FUNGSI GURU WALI: JURNAL SEKOLAH & PANTAU GPS & SISWA
