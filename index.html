@@ -277,7 +277,7 @@
                     <h4 class="fw-bold mb-0">Pencatatan Kasus Siswa</h4>
                     <div>
                         <button class="btn btn-success shadow-sm py-2 px-3 fw-bold me-2" onclick="cetakLaporanGuruWaliKasus()"><i data-lucide="printer" size="18" class="me-1"></i> Cetak</button>
-                        <button class="btn btn-primary shadow-sm py-2 px-3 fw-bold text-nowrap" data-bs-toggle="modal" data-bs-target="#modalPendampinganGw"><i data-lucide="plus-circle" size="18" class="me-1"></i> Kasus Baru</button>
+                        <button class="btn btn-primary shadow-sm py-2 px-3 fw-bold text-nowrap" onclick="bukaModalKasusBaru()"><i data-lucide="plus-circle" size="18" class="me-1"></i> Kasus Baru</button>
                     </div>
                 </div>
                 <div class="card p-3 shadow-sm border-0">
@@ -685,9 +685,6 @@
             document.getElementById('loader').classList.add('d-none'); document.getElementById('section-login').classList.remove('d-none');
             schoolSettings = data.settings || {}; allStudentsData = data.students || [];
             populateDropdownKelas(allStudentsData); populateDropdownSiswa(allStudentsData);
-            
-            const allOpts = '<option value="">-- Pilih Siswa --</option>' + allStudentsData.map(s => `<option value="${s.username}">${s.nama} (${s.kelas || '-'})</option>`).join('');
-            document.getElementById('p-dropdown-siswa').innerHTML = allOpts;
         }).catch(err => { document.getElementById('loader-text').innerHTML = `<div class="alert alert-danger mt-3 text-start small"><strong>Gagal Terhubung:</strong><br>${err.message}</div>`; });
     });
 
@@ -779,7 +776,7 @@
         if(tabId === 'tab-admin-reports') loadAdminReportStudents();
     };
 
-    // FUNGSI KHUSUS: Mengisi Dropdown Siswa Berdasarkan Guru Wali yang Login
+    // FUNGSI: Mengisi Dropdown Siswa Berdasarkan Guru Wali / Wali Kelas yang Login
     function loadAdminReportStudents() {
         const selectEl = document.getElementById('admin-report-select-siswa');
         selectEl.innerHTML = '<option value="">Memuat siswa bimbingan...</option>';
@@ -792,6 +789,25 @@
             }
         });
     }
+
+    // FUNGSI: Membuka Modal Kasus Baru (Memfilter dropdown siswa sesuai guru wali/wali kelas yang login)
+    window.bukaModalKasusBaru = function() {
+        const selectEl = document.getElementById('p-dropdown-siswa');
+        selectEl.innerHTML = '<option value="">Memuat siswa...</option>';
+        
+        callAPI('getAdminStudents', { namaGuru: currentUser.nama }).then(res => {
+            if(res && res.length > 0) {
+                selectEl.innerHTML = '<option value="">-- Pilih Siswa --</option>' + 
+                    res.map(s => `<option value="${s.username}">${s.nama} (${s.kelas || '-'})</option>`).join('');
+            } else {
+                selectEl.innerHTML = '<option value="">-- Tidak ada siswa bimbingan --</option>';
+            }
+            new bootstrap.Modal(document.getElementById('modalPendampinganGw')).show();
+        }).catch(() => {
+            selectEl.innerHTML = '<option value="">-- Gagal memuat siswa --</option>';
+            new bootstrap.Modal(document.getElementById('modalPendampinganGw')).show();
+        });
+    };
 
     // -------------------------------------------------------------
     // FUNGSI GURU WALI: JURNAL SEKOLAH & PANTAU GPS & SISWA
@@ -969,7 +985,7 @@
     // ALUR PENDAMPINGAN KASUS TERKONEKSI (GW -> WK -> BK)
     // -------------------------------------------------------------
     
-    // 1. Dashboard Catatan Kasus Siswa (Guru Wali)
+    // 1. Dashboard Catatan Kasus Siswa (Guru Wali & Wali Kelas)
     function loadPendampinganGuruWali() {
         const tbody = document.getElementById('gw-pendampingan-list'); 
         tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4">Memuat data...</td></tr>`;
