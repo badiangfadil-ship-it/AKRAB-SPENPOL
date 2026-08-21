@@ -262,10 +262,28 @@
                 <h4 class="fw-bold mb-1">Dashboard Guru Wali</h4>
                 <p class="text-muted small mb-4">Ringkasan aktivitas dan siswa bimbingan Anda.</p>
                 <div class="row g-3">
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card p-4 shadow-sm border-0 bg-white">
-                            <h6 class="text-muted fw-semibold mb-1">Total Siswa Bimbingan</h6>
-                            <h2 class="fw-extrabold display-5 text-teal mb-0" style="color: var(--primary-color);" id="admin-total-siswa">0</h2>
+                    <div class="col-md-6 col-lg-6">
+                        <div class="card p-4 shadow-sm border-0 bg-white h-100">
+                            <h6 class="text-muted fw-semibold mb-2">Total Siswa Bimbingan</h6>
+                            <h2 class="fw-extrabold display-4 mb-0" style="color: var(--primary-color);" id="admin-total-siswa">0</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                        <div class="card p-4 shadow-sm border-0 bg-white h-100">
+                            <h6 class="text-dark fw-bold mb-2">Persentasi Jurnal Sekolah</h6>
+                            <h2 class="fw-extrabold display-5 text-dark mb-0" id="admin-persen-sekolah">-</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                        <div class="card p-4 shadow-sm border-0 bg-white h-100">
+                            <h6 class="text-dark fw-bold mb-2">Persentasi Jurnal Murid</h6>
+                            <h2 class="fw-extrabold display-5 text-dark mb-0" id="admin-persen-murid">-</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                        <div class="card p-4 shadow-sm border-0 bg-white h-100">
+                            <h6 class="text-dark fw-bold mb-2">Total Penerapan Disiplin Positif</h6>
+                            <h2 class="fw-extrabold display-5 text-dark mb-0" id="admin-total-disiplin">-</h2>
                         </div>
                     </div>
                 </div>
@@ -430,7 +448,7 @@
                                     <th width="280">Siswa & Catatan Pelanggaran</th>
                                     <th width="280">Penanganan Wali Kelas</th>
                                     <th width="110">Status</th>
-                                    <th class="text-center no-print" width="180">Aksi (Selesai / Teruskan ke BK)</th>
+                                    <th class="text-center no-print" width="220">Aksi (Selesai / Teruskan ke BK)</th>
                                 </tr>
                             </thead>
                             <tbody id="wk-pendampingan-list"><tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr></tbody>
@@ -633,6 +651,7 @@
     </div>
 </div>
 
+<!-- MODAL WALI KELAS -->
 <div class="modal fade" id="modalWaliKelasAction" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -644,16 +663,17 @@
                 <form id="form-wk-action">
                     <input type="hidden" id="wk-kasus-id">
                     <div class="mb-3">
-                        <label class="form-label small fw-bold">Tindakan Awal / Penanganan Wali Kelas</label>
+                        <label class="form-label small fw-bold text-dark">Penanganan Wali Kelas</label>
                         <textarea class="form-control" id="wk-penanganan-input" rows="4" placeholder="Contoh: Teguran Keras dan melaporkan kepada Guru BK untuk ditindaklanjuti..." required></textarea>
                     </div>
-                    <button type="submit" class="btn text-white w-100 py-3 fw-bold" style="background-color: var(--walikelas-color);">Simpan & Teruskan ke Guru BK</button>
+                    <button type="submit" class="btn btn-success text-white w-100 py-3 fw-bold">Simpan & Selesaikan</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
+<!-- MODAL GURU BK -->
 <div class="modal fade" id="modalBKAction" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -665,7 +685,7 @@
                 <form id="form-bk-action">
                     <input type="hidden" id="bk-kasus-id">
                     <div class="mb-3">
-                        <label class="form-label small fw-bold">Tindakan Awal / Penanganan Guru BK</label>
+                        <label class="form-label small fw-bold text-dark">Penanganan Guru BK</label>
                         <textarea class="form-control" id="bk-penanganan-input" rows="3" placeholder="Contoh: Pemanggilan orang tua dan, membuat surat pernyataan yang ditandatangani orang tua..." required></textarea>
                     </div>
                     <button type="submit" class="btn text-white w-100 py-3 fw-bold" style="background-color: var(--bk-color);">Selesaikan Kasus</button>
@@ -903,7 +923,9 @@
     };
 
     function fetchAdminDashboard() {
-        callAPI('getAdminStudents', { namaGuru: currentUser.nama }).then(res => { document.getElementById('admin-total-siswa').innerText = res.length; });
+        callAPI('getAdminStudents', { namaGuru: currentUser.nama }).then(res => { 
+            document.getElementById('admin-total-siswa').innerText = res.length; 
+        });
     }
 
     function loadAdminStudents() {
@@ -985,7 +1007,6 @@
             for(let d=1; d<=daysInMonth; d++) {
                 const targetDate = `${yInput}-${String(monthNum).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
                 
-                // Ambil data tiap kebiasaan pada tanggal tersebut
                 const getVal = (key, isIbadah = false) => {
                     const list = adminViewingHabits[key] ? adminViewingHabits[key].filter(e => e.tgl === targetDate) : [];
                     if(list.length === 0) return '';
@@ -995,24 +1016,16 @@
                     return list[0].detail1 || '✓';
                 };
 
-                const bangun = getVal('bangun');
-                const ibadah = getVal('ibadah', true);
-                const olahraga = getVal('olahraga');
-                const makan = getVal('makan');
-                const belajar = getVal('belajar');
-                const masyarakat = getVal('masyarakat');
-                const tidur = getVal('tidur');
-
                 matrixHtml += `
                     <tr>
                         <td class="fw-bold">${d}</td>
-                        <td class="text-start px-2">${bangun}</td>
-                        <td class="text-start px-1">${ibadah}</td>
-                        <td class="text-start px-2">${olahraga}</td>
-                        <td class="text-start px-2">${makan}</td>
-                        <td class="text-start px-2">${belajar}</td>
-                        <td class="text-start px-2">${masyarakat}</td>
-                        <td class="text-start px-2">${tidur}</td>
+                        <td class="text-start px-2">${getVal('bangun')}</td>
+                        <td class="text-start px-1">${getVal('ibadah', true)}</td>
+                        <td class="text-start px-2">${getVal('olahraga')}</td>
+                        <td class="text-start px-2">${getVal('makan')}</td>
+                        <td class="text-start px-2">${getVal('belajar')}</td>
+                        <td class="text-start px-2">${getVal('masyarakat')}</td>
+                        <td class="text-start px-2">${getVal('tidur')}</td>
                         <td></td>
                     </tr>
                 `;
@@ -1125,8 +1138,8 @@
                 let statusBadgeHtml = `<span class="status-badge ${badgeClass}">${p.Status}</span>`;
                 
                 let aksi = `
-                    <button class="btn btn-sm btn-success py-1 px-2 fw-bold text-white me-1" onclick="updateStatusDirect('${p.ID}', 'Selesai')">Selesai</button>
-                    <button class="btn btn-sm text-white py-1 px-2 fw-bold" style="background-color: #7c3aed;" onclick="openWkModal('${p.ID}')">Teruskan ke BK</button>
+                    <button class="btn btn-sm btn-success py-1 px-2 fw-bold text-white me-1" onclick="openWkModal('${p.ID}')">Tindak Lanjut</button>
+                    <button class="btn btn-sm text-white py-1 px-2 fw-bold" style="background-color: #7c3aed;" onclick="updateStatusDirect('${p.ID}', 'Teruskan ke Guru BK')">Teruskan ke BK</button>
                 `;
                 return `
                     <tr>
@@ -1161,12 +1174,12 @@
         
         callAPI('updateStatusKasus', { 
             id: id, 
-            status: 'Teruskan ke Guru BK', 
+            status: 'Selesai', 
             penangananWK: penangananWK 
         }).then(res => {
             if(res.success) {
                 bootstrap.Modal.getInstance(document.getElementById('modalWaliKelasAction')).hide();
-                showToast("Kasus berhasil ditindaklanjuti & diteruskan ke BK!");
+                showToast("Kasus berhasil ditindaklanjuti & diselesaikan!");
                 if(currentUser.role === 'admin') loadPendampinganGuruWali();
                 if(currentUser.role === 'walikelas') loadPendampinganWaliKelas();
             }
@@ -1188,7 +1201,6 @@
                 let statusBadgeHtml = `<span class="status-badge ${badgeClass}">${p.Status}</span>`;
                 
                 let aksi = `
-                    <button class="btn btn-sm btn-success py-1 px-2 fw-bold text-white me-1" onclick="updateStatusDirect('${p.ID}', 'Selesai')">Selesai</button>
                     <button class="btn btn-sm text-dark py-1 px-2 fw-bold" style="background-color: #f59e0b;" onclick="openBkModal('${p.ID}')">Tindak Lanjut</button>
                 `;
                 return `
@@ -1222,13 +1234,13 @@
 
         callAPI('updateStatusKasus', { 
             id: id, 
-            status: 'Tindak Lanjut BK', 
+            status: 'Selesai', 
             tindakLanjut: 'Konseling & Pembinaan', 
             penangananBK: penangananBK 
         }).then(res => {
             if(res.success) {
                 bootstrap.Modal.getInstance(document.getElementById('modalBKAction')).hide();
-                showToast("Tindak lanjut BK berhasil disimpan!");
+                showToast("Tindak lanjut BK berhasil disimpan & kasus diselesaikan!");
                 loadPendampinganBK();
             }
         });
