@@ -271,19 +271,19 @@
                     <div class="col-md-6 col-lg-6">
                         <div class="card p-4 shadow-sm border-0 bg-white h-100">
                             <h6 class="text-dark fw-bold mb-2">Persentasi Jurnal Sekolah</h6>
-                            <h2 class="fw-extrabold display-5 text-dark mb-0" id="admin-persen-sekolah">-</h2>
+                            <h2 class="fw-extrabold display-5 text-dark mb-0" id="admin-persen-sekolah">0%</h2>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6">
                         <div class="card p-4 shadow-sm border-0 bg-white h-100">
                             <h6 class="text-dark fw-bold mb-2">Persentasi Jurnal Murid</h6>
-                            <h2 class="fw-extrabold display-5 text-dark mb-0" id="admin-persen-murid">-</h2>
+                            <h2 class="fw-extrabold display-5 text-dark mb-0" id="admin-persen-murid">0%</h2>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6">
                         <div class="card p-4 shadow-sm border-0 bg-white h-100">
                             <h6 class="text-dark fw-bold mb-2">Total Penerapan Disiplin Positif</h6>
-                            <h2 class="fw-extrabold display-5 text-dark mb-0" id="admin-total-disiplin">-</h2>
+                            <h2 class="fw-extrabold display-5 text-dark mb-0" id="admin-total-disiplin">0</h2>
                         </div>
                     </div>
                 </div>
@@ -815,6 +815,7 @@
         if(tabId === 'tab-admin-tracker') loadTrackingAdmin();
         if(tabId === 'tab-admin-school') updateSchoolActivities();
         if(tabId === 'tab-admin-reports') loadAdminReportStudents();
+        if(tabId === 'tab-admin-dash') fetchAdminDashboard();
     };
 
     function loadAdminReportStudents() {
@@ -907,6 +908,7 @@
         btn.innerText = "Menyimpan..."; btn.disabled = true;
         callAPI('saveSchoolHabits', { dateStr: dateStr, namaGuru: currentUser.nama, kegiatan: kegiatan, evaluationData: evaluationData }).then(() => {
             btn.innerText = "Simpan Penilaian Jurnal Sekolah"; btn.disabled = false; showToast("Penilaian berhasil disimpan!");
+            fetchAdminDashboard();
         });
     };
 
@@ -922,9 +924,32 @@
         });
     };
 
+    // FUNGSI UTAMA: MENARIK DAN MENGHITUNG STATISTIK DASHBOARD GURU WALI
     function fetchAdminDashboard() {
-        callAPI('getAdminStudents', { namaGuru: currentUser.nama }).then(res => { 
-            document.getElementById('admin-total-siswa').innerText = res.length; 
+        document.getElementById('admin-total-siswa').innerText = "...";
+        document.getElementById('admin-persen-sekolah').innerText = "...";
+        document.getElementById('admin-persen-murid').innerText = "...";
+        document.getElementById('admin-total-disiplin').innerText = "...";
+
+        callAPI('getAdminDashboardStats', { namaGuru: currentUser.nama }).then(res => {
+            if(res.success) {
+                document.getElementById('admin-total-siswa').innerText = res.totalSiswa || 0;
+                document.getElementById('admin-persen-sekolah').innerText = (res.persenSekolah || 0) + "%";
+                document.getElementById('admin-persen-murid').innerText = (res.persenMurid || 0) + "%";
+                document.getElementById('admin-total-disiplin').innerText = res.totalDisiplin || 0;
+            } else {
+                callAPI('getAdminStudents', { namaGuru: currentUser.nama }).then(st => {
+                    document.getElementById('admin-total-siswa').innerText = st.length;
+                    document.getElementById('admin-persen-sekolah').innerText = "0%";
+                    document.getElementById('admin-persen-murid').innerText = "0%";
+                    document.getElementById('admin-total-disiplin').innerText = "0";
+                });
+            }
+        }).catch(() => {
+            document.getElementById('admin-total-siswa').innerText = "0";
+            document.getElementById('admin-persen-sekolah').innerText = "0%";
+            document.getElementById('admin-persen-murid').innerText = "0%";
+            document.getElementById('admin-total-disiplin').innerText = "0";
         });
     }
 
@@ -936,13 +961,13 @@
         });
     }
 
-    window.hapusSiswa = function(uname) { if(confirm(`Hapus akun ${uname}?`)) callAPI('deleteStudent', { username: uname }).then(() => { showToast("Siswa dihapus!", "danger"); loadAdminStudents(); }); };
+    window.hapusSiswa = function(uname) { if(confirm(`Hapus akun ${uname}?`)) callAPI('deleteStudent', { username: uname }).then(() => { showToast("Siswa dihapus!", "danger"); loadAdminStudents(); fetchAdminDashboard(); }); };
 
     document.getElementById('form-admin-add-siswa').onsubmit = function(e) {
         e.preventDefault(); const btn = document.getElementById('btn-add-siswa'); btn.innerText = "Memproses..."; btn.disabled = true; const fd = new FormData(this);
         callAPI('addStudent', { nama: fd.get('nama'), username: fd.get('username'), pass: fd.get('password'), kelas: fd.get('kelas'), namaGuru: currentUser.nama }).then(res => {
             btn.innerText = "Buat Akun Baru"; btn.disabled = false;
-            if(res.success) { bootstrap.Modal.getInstance(document.getElementById('modalAddSiswa')).hide(); showToast("Berhasil ditambahkan!"); this.reset(); loadAdminStudents(); } 
+            if(res.success) { bootstrap.Modal.getInstance(document.getElementById('modalAddSiswa')).hide(); showToast("Berhasil ditambahkan!"); this.reset(); loadAdminStudents(); fetchAdminDashboard(); } 
             else { showToast(res.message, "danger"); }
         });
     };
@@ -1120,6 +1145,7 @@
             showToast("Kasus berhasil dicatat!"); 
             this.reset(); 
             loadPendampinganGuruWali();
+            fetchAdminDashboard();
         });
     };
 
