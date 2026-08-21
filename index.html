@@ -656,17 +656,18 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header text-white" style="background-color: var(--walikelas-color);">
-                <h6 class="modal-title fw-bold">Tindak Lanjut & Penanganan Wali Kelas</h6>
+                <h6 class="modal-title fw-bold" id="wk-modal-title">Tindak Lanjut & Penanganan Wali Kelas</h6>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4">
                 <form id="form-wk-action">
                     <input type="hidden" id="wk-kasus-id">
+                    <input type="hidden" id="wk-target-status" value="Selesai">
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-dark">Penanganan Wali Kelas</label>
                         <textarea class="form-control" id="wk-penanganan-input" rows="4" placeholder="Contoh: Teguran Keras dan melaporkan kepada Guru BK untuk ditindaklanjuti..." required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-success text-white w-100 py-3 fw-bold">Simpan & Selesaikan</button>
+                    <button type="submit" class="btn btn-success text-white w-100 py-3 fw-bold" id="btn-wk-save">Simpan & Selesaikan</button>
                 </form>
             </div>
         </div>
@@ -924,22 +925,23 @@
         });
     };
 
-    // FUNGSI UTAMA: MENARIK DAN MENGHITUNG STATISTIK DASHBOARD GURU WALI
+    // FUNGSI STATISTIK DASHBOARD GURU WALI
     function fetchAdminDashboard() {
+        if(!currentUser || currentUser.role !== 'admin') return;
         document.getElementById('admin-total-siswa').innerText = "...";
         document.getElementById('admin-persen-sekolah').innerText = "...";
         document.getElementById('admin-persen-murid').innerText = "...";
         document.getElementById('admin-total-disiplin').innerText = "...";
 
         callAPI('getAdminDashboardStats', { namaGuru: currentUser.nama }).then(res => {
-            if(res.success) {
+            if(res && res.success) {
                 document.getElementById('admin-total-siswa').innerText = res.totalSiswa || 0;
                 document.getElementById('admin-persen-sekolah').innerText = (res.persenSekolah || 0) + "%";
                 document.getElementById('admin-persen-murid').innerText = (res.persenMurid || 0) + "%";
                 document.getElementById('admin-total-disiplin').innerText = res.totalDisiplin || 0;
             } else {
                 callAPI('getAdminStudents', { namaGuru: currentUser.nama }).then(st => {
-                    document.getElementById('admin-total-siswa').innerText = st.length;
+                    document.getElementById('admin-total-siswa').innerText = st ? st.length : 0;
                     document.getElementById('admin-persen-sekolah').innerText = "0%";
                     document.getElementById('admin-persen-murid').innerText = "0%";
                     document.getElementById('admin-total-disiplin').innerText = "0";
@@ -1145,7 +1147,7 @@
             showToast("Kasus berhasil dicatat!"); 
             this.reset(); 
             loadPendampinganGuruWali();
-            fetchAdminDashboard();
+            fetchAdminDashboard(); // PANGGIL ULANG AGAR DISIPLIN POSITIF DI DASHBOARD GW LANGSUNG TERUPDATE
         });
     };
 
@@ -1164,8 +1166,8 @@
                 let statusBadgeHtml = `<span class="status-badge ${badgeClass}">${p.Status}</span>`;
                 
                 let aksi = `
-                    <button class="btn btn-sm btn-success py-1 px-2 fw-bold text-white me-1" onclick="openWkModal('${p.ID}')">Tindak Lanjut</button>
-                    <button class="btn btn-sm text-white py-1 px-2 fw-bold" style="background-color: #7c3aed;" onclick="updateStatusDirect('${p.ID}', 'Teruskan ke Guru BK')">Teruskan ke BK</button>
+                    <button class="btn btn-sm btn-success py-1 px-2 fw-bold text-white me-1" onclick="openWkModal('${p.ID}', 'Selesai')">Tindak Lanjut</button>
+                    <button class="btn btn-sm text-white py-1 px-2 fw-bold" style="background-color: #7c3aed;" onclick="openWkModal('${p.ID}', 'Teruskan ke Guru BK')">Teruskan ke BK</button>
                 `;
                 return `
                     <tr>
@@ -1187,25 +1189,42 @@
         });
     }
 
-    window.openWkModal = function(id) {
+    // MODAL WALI KELAS DIPANGGIL UNTUK DUA STATUS (SELESAI / TERUSKAN KE BK)
+    window.openWkModal = function(id, targetStatus) {
         document.getElementById('wk-kasus-id').value = id;
+        document.getElementById('wk-target-status').value = targetStatus;
         document.getElementById('wk-penanganan-input').value = "";
+        
+        const titleEl = document.getElementById('wk-modal-title');
+        const saveBtn = document.getElementById('btn-wk-save');
+        
+        if (targetStatus === 'Teruskan ke Guru BK') {
+            titleEl.innerText = "Penanganan & Teruskan ke Guru BK";
+            saveBtn.innerText = "Simpan & Teruskan ke Guru BK";
+            saveBtn.style.backgroundColor = "var(--bk-color)";
+        } else {
+            titleEl.innerText = "Tindak Lanjut & Penanganan Wali Kelas";
+            saveBtn.innerText = "Simpan & Selesaikan";
+            saveBtn.style.backgroundColor = "#16a34a";
+        }
+        
         new bootstrap.Modal(document.getElementById('modalWaliKelasAction')).show();
     };
 
     document.getElementById('form-wk-action').onsubmit = function(e) {
         e.preventDefault();
         const id = document.getElementById('wk-kasus-id').value;
+        const targetStatus = document.getElementById('wk-target-status').value;
         const penangananWK = document.getElementById('wk-penanganan-input').value;
         
         callAPI('updateStatusKasus', { 
             id: id, 
-            status: 'Selesai', 
+            status: targetStatus, 
             penangananWK: penangananWK 
         }).then(res => {
             if(res.success) {
                 bootstrap.Modal.getInstance(document.getElementById('modalWaliKelasAction')).hide();
-                showToast("Kasus berhasil ditindaklanjuti & diselesaikan!");
+                showToast(targetStatus === 'Teruskan ke Guru BK' ? "Kasus berhasil ditangani & diteruskan ke BK!" : "Kasus berhasil ditindaklanjuti & diselesaikan!");
                 if(currentUser.role === 'admin') loadPendampinganGuruWali();
                 if(currentUser.role === 'walikelas') loadPendampinganWaliKelas();
             }
@@ -1268,18 +1287,6 @@
                 bootstrap.Modal.getInstance(document.getElementById('modalBKAction')).hide();
                 showToast("Tindak lanjut BK berhasil disimpan & kasus diselesaikan!");
                 loadPendampinganBK();
-            }
-        });
-    };
-
-    window.updateStatusDirect = function(id, status) {
-        if(!confirm("Ubah status kasus menjadi " + status + "?")) return;
-        callAPI('updateStatusKasus', { id: id, status: status }).then(res => {
-            if(res.success) {
-                showToast("Status berhasil diperbarui!");
-                if(currentUser.role === 'admin') loadPendampinganGuruWali();
-                if(currentUser.role === 'walikelas') loadPendampinganWaliKelas();
-                if(currentUser.role === 'gurubk') loadPendampinganBK();
             }
         });
     };
